@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -17,14 +18,14 @@
   --pick-a-bg:rgba(255,85,34,0.15);--pick-b-bg:rgba(34,136,255,0.15);
   --radius:6px;--border-subtle:rgba(139,26,26,0.3);--border-bright:rgba(212,168,84,0.35);
 }
-html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;background:var(--bg-dark);color:var(--text);user-select:none;overflow-y:auto}
+html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','Noto Sans SC',sans-serif;background:var(--bg-dark);color:var(--text);user-select:none;overflow:hidden}
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 60%40% at 50%15%,rgba(180,40,40,0.10)0%,transparent 60%),radial-gradient(ellipse 50%50% at 80%75%,rgba(160,50,20,0.05)0%,transparent 55%),radial-gradient(ellipse 40%45% at 15%70%,rgba(120,20,20,0.06)0%,transparent 50%),linear-gradient(170deg,#120808,#1A0D0D 25%,#221010 50%,#1A0A0A 75%,#0E0606)}
 #bg-pattern{position:fixed;inset:0;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg width='60' height='52' viewBox='0 0 60 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill='none' stroke='%23D4A854' stroke-width='.5'/%3E%3C/svg%3E");background-size:52px 45px;pointer-events:none}
 #particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:1}
 .p{position:absolute;width:2px;height:2px;background:var(--gold);border-radius:50%;opacity:0;animation:drift linear infinite}
 @keyframes drift{0%{transform:translateY(100vh)scale(0);opacity:0}8%{opacity:.35}92%{opacity:.12}100%{transform:translateY(-5vh)scale(1);opacity:0}}
-#app{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column}
-#hero{position:relative;flex-shrink:0;height:45vh;min-height:200px;max-height:450px;overflow:hidden;background:linear-gradient(135deg,#1A0808,#2A1010)}
+#app{position:relative;z-index:10;height:100%;display:flex;flex-direction:column;overflow:hidden}
+#hero{position:relative;flex-shrink:0;height:28vh;min-height:130px;max-height:220px;overflow:hidden;background:linear-gradient(135deg,#1A0808,#2A1010)}
 #hero-img{width:100%;height:100%;object-fit:cover;object-position:center 30%;display:block}
 #hero-img.hide{display:none}#hero-fallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;font-size:15px;color:var(--text-dim);background:linear-gradient(135deg,#1A0808,#2A1010)}#hero-fallback.show{display:flex}
 #hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.1)0%,rgba(0,0,0,.35)50%,rgba(10,4,4,.92)100%);pointer-events:none}
@@ -44,7 +45,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 .tb-item select{cursor:pointer;color:var(--text)}.tb-item select option{background:#1A0A0A;color:var(--text)}
 .tb-item input:focus{outline:none;border-color:var(--gold)}.tb-div{width:1px;height:20px;background:var(--border-subtle);flex-shrink:0}
 .main{display:flex;gap:8px;flex:1;min-height:0;padding:5px 8px 8px}
-.team-panel{width:300px;flex-shrink:0;background:var(--bg-panel);border:2px solid var(--border-subtle);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(6px);max-height:calc(100vh - 390px)}
+.team-panel{width:300px;flex-shrink:0;background:var(--bg-panel);border:2px solid var(--border-subtle);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(6px);max-height:calc(100vh - 260px)}
 .team-panel.ta{border-color:rgba(255,85,34,.35)}.team-panel.tb{border-color:rgba(34,136,255,.35)}
 .tp-head{display:flex;align-items:center;gap:12px;padding:8px 10px;border-bottom:1px solid var(--border-subtle);flex-shrink:0}
 .ta .tp-head{background:linear-gradient(90deg,rgba(255,85,34,.08),transparent)}
@@ -66,16 +67,13 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 .tp-stitle .badge.pa{background:rgba(255,85,34,.12);color:var(--ta-color)}
 .tp-stitle .badge.pb{background:rgba(34,136,255,.12);color:var(--tb-color)}
 .tp-divider{height:1px;margin:2px 4px;background:linear-gradient(90deg,transparent,rgba(139,26,26,.06),transparent)}
-.tp-pool{display:flex;flex-direction:column;gap:3px;min-height:18px;padding:1px 2px}
-.tp-pool .slot{width:100%;height:86px;border-radius:6px;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;border:2px solid var(--border-subtle);background:rgba(30,12,12,.5);padding:3px 12px;transition:all .2s}
-.tp-pool .slot img{width:78px;height:78px;object-fit:cover;border-radius:5px;flex-shrink:0}
-.tp-pool .slot .tag{font-size:15px;color:var(--text);font-weight:700;flex:1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:none;padding:0;position:static}
+.tp-pool{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;min-height:18px;padding:1px 2px}
+.tp-pool .slot{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:2px solid var(--border-subtle);background:rgba(30,12,12,.5);padding:0;transition:all .2s;cursor:default}
+.tp-pool .slot img{width:100%;height:100%;object-fit:cover;border-radius:4px;display:block}
 .tp-pool .slot.ban{border-color:var(--ban-color);background:var(--ban-bg);box-shadow:0 0 8px rgba(255,59,59,.12)}
-.tp-pool .slot.ban .tag{color:#FF8888}
 .tp-pool .slot.pa{border-color:var(--ta-color);background:var(--pick-a-bg);box-shadow:0 0 8px rgba(255,85,34,.1)}
 .tp-pool .slot.pb{border-color:var(--tb-color);background:var(--pick-b-bg);box-shadow:0 0 8px rgba(34,136,255,.1)}
-.tp-pool .slot.empty{height:44px;border-style:dashed;opacity:.12;justify-content:center}
-.tp-pool .slot.empty .plh{font-size:16px;color:var(--text-dim)}
+.tp-pool .slot.empty{aspect-ratio:1;border-style:dashed;opacity:.12;justify-content:center;height:auto}
 .tp-footer{flex-shrink:0;padding:4px 6px;border-top:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:2px}
 .tp-fin-row{display:flex;align-items:center;justify-content:space-between;font-size:11px}
 .tp-fin-row .lbl{color:var(--text-dim);font-size:10px}
@@ -102,7 +100,15 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 .grid-tabs::-webkit-scrollbar{height:3px}.grid-tabs::-webkit-scrollbar-thumb{background:rgba(107,15,15,.2);border-radius:2px}
 .clstab{padding:4px 12px;font-size:11px;border-radius:4px;cursor:pointer;border:1px solid transparent;color:var(--text-dim);background:transparent;transition:all .2s;white-space:nowrap}
 .clstab:hover{border-color:rgba(212,168,84,.18)}.clstab.on{border-color:var(--gold);color:var(--gold-bright);background:rgba(212,168,84,.07)}
-.grid-scroll{flex:1;overflow-y:auto;padding:5px 8px}
+.pubban-row{display:flex;align-items:center;gap:6px;padding:4px 10px;flex-shrink:0;border-bottom:1px solid rgba(212,168,84,.12);background:rgba(212,168,84,.03)}
+.pubban-hd{font-size:11px;font-weight:700;color:var(--gold-bright);white-space:nowrap;letter-spacing:1px}
+.pubban-ops{display:flex;gap:4px;flex-wrap:wrap;flex:1}
+.pubban-ops .pbslot{width:38px;height:38px;border-radius:4px;overflow:hidden;border:1px solid rgba(212,168,84,.25);position:relative;cursor:pointer;transition:all .2s;flex-shrink:0}
+.pubban-ops .pbslot:hover{border-color:var(--ban-color);box-shadow:0 0 6px rgba(255,59,59,.2)}
+.pubban-ops .pbslot img{width:100%;height:100%;object-fit:cover;display:block}
+.pubban-ops .pbslot .pbdel{position:absolute;top:0;right:0;font-size:10px;color:var(--ban-color);background:rgba(0,0,0,.7);border-radius:0 3px;padding:1px 3px;display:none;line-height:1}
+.pubban-ops .pbslot:hover .pbdel{display:block}
+.grid-scroll{flex:1;overflow-y:auto;min-height:0;padding:5px 8px}
 .grid-scroll::-webkit-scrollbar{width:6px}
 .grid-scroll::-webkit-scrollbar-track{background:rgba(0,0,0,.06)}
 .grid-scroll::-webkit-scrollbar-thumb{background:rgba(139,26,26,.25);border-radius:3px}
@@ -175,7 +181,6 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 @media(max-width:1100px){
   .team-panel{width:240px}#hero-title .mt{font-size:32px;letter-spacing:6px}
   .op-grid{grid-template-columns:repeat(auto-fill,minmax(74px,1fr))}
-  .tp-pool .slot{height:68px}.tp-pool .slot img{width:60px;height:60px}
 }
 @media(max-width:800px){
   .main{flex-direction:column;padding:4px 5px;gap:3px}
@@ -183,7 +188,6 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
   #hero{height:28vh;min-height:140px;max-height:220px}
   #hero-title .mt{font-size:26px;letter-spacing:4px}#hero-title .st{font-size:11px}
   .op-grid{grid-template-columns:repeat(auto-fill,minmax(66px,1fr))}
-  .tp-pool .slot{height:60px}.tp-pool .slot img{width:52px;height:52px}
 }
 </style>
 </head>
@@ -196,7 +200,8 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 <div class="mf"><label>A队选手</label><input id="inpTaP" value="选手A"></div>
 <div class="mf"><label>B队名称</label><input id="inpTbN" value="萨卡兹王庭"></div>
 <div class="mf"><label>B队选手</label><input id="inpTbP" value="选手B"></div>
-<div class="mf-row"><div class="mf"><label>禁用位</label><input id="inpBan" type="number" value="4" min="0" max="20"></div><div class="mf"><label>选取位</label><input id="inpPick" type="number" value="6" min="0" max="20"></div></div>
+<div class="mf-row"><div class="mf"><label>禁用位</label><input id="inpBan" type="number" value="4" min="0" max="20"></div><div class="mf"><label>选取位</label><input id="inpPick" type="number" value="6" min="0" max="20"></div><div class="mf"><label>外援位</label><input id="inpGuest" type="number" value="1" min="0" max="10"></div></div>
+<div class="mf-row"><div class="mf"><label>BO赛制</label><select id="inpBo" style="width:100%;padding:6px 10px;background:rgba(0,0,0,.4);border:1px solid var(--border-subtle);border-radius:4px;color:var(--text);font-size:12px"><option value="1">BO1（单局）</option><option value="3">BO3（三局两胜）</option><option value="5">BO5（五局三胜）</option><option value="7">BO7（七局四胜）</option></select></div></div>
 <div class="m-acts"><button class="m-conf" onclick="applyCfg()">✓确认</button><button class="m-cancel" onclick="closeModal()">✕取消</button></div></div></div>
 
 <div id="app">
@@ -242,6 +247,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
     <div class="grid-wrap">
       <div class="grid-hd"><span class="gt">✦罗德岛六星干员<span id="totalOps">0</span></span><span class="gd">剩余<em id="availCount">0</em>人</span></div>
       <div class="grid-tabs" id="classTabs"></div>
+      <div id="pubBanRow" class="pubban-row" style="display:none"><div class="pubban-hd">📢公ban</div><div class="pubban-ops" id="pubBanOps"></div></div>
       <div class="grid-scroll" id="gridScroll"><div class="op-grid" id="opGrid"></div></div>
     </div>
     <div class="team-panel tb">
@@ -272,6 +278,8 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
     <div class="bb-div"></div>
     <div class="bb-section"><button class="abtn" data-a="guest_b" onclick="setAct('guest_b')">🔄外援</button><button class="abtn" data-a="pick_b" onclick="setAct('pick_b')">⭐选</button><button class="abtn" data-a="ban_b" onclick="setAct('ban_b')">⛔禁</button><span class="bb-label"><span class="dot rb"></span>B</span></div>
     <div class="bb-div"></div>
+    <div class="bb-section"><button class="abtn abtn-sm" data-a="pubban" onclick="setAct('pubban')">📢公ban</button></div>
+    <div class="bb-div"></div>
     <div class="bb-section">
       <button class="abtn abtn-sm" onclick="undo()">↩撤销</button>
       <button class="abtn abtn-sm" onclick="openCfg()">⚙配置</button>
@@ -283,6 +291,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
       <input id="bgm-file" type="file" accept="audio/*" onchange="loadBGM(this)">
       <audio id="bgmPlayer" loop></audio>
       <button class="abtn abtn-sm" onclick="confirmReset()">↻重置</button>
+      <button class="abtn abtn-sm" onclick="exportImage()">📷成图</button>
     </div>
   </div>
 </div>
@@ -293,8 +302,7 @@ var PRTS_HASH = {
   '赤刃明霄陈':'d/d0','怒潮凛冬':'8/81','焰狐龙梓兰':'2/20',
   '圣聆初雪':'a/ab','维伊':'5/56','缇缇':'a/aa',
   '凯尔希·思衡托':'5/57','溯光星源':'d/d0','娜斯提':'9/97',
-  '望':'3/38','领主·Sharp':'5/53','Raidian':'6/65',
-  'Sharp':'1/16','Mechanist':'4/4a','Stormeye':'5/5b',
+  '望':'3/38','Sharp':'1/16','Mechanist':'4/4a','Stormeye':'5/5b',
   'Pith':'1/1c','Touch':'2/25','Misery':'7/76','郁金香':'9/99'
 };
 function prtsUrl(name) {
@@ -305,7 +313,7 @@ function prtsUrl(name) {
 <script>
 var OPERATORS = [
 {id:'char_112_siege',name:'推进之王',cls:'先锋'},{id:'char_222_bpipe',name:'风笛',cls:'先锋'},{id:'char_362_saga',name:'嵯峨',cls:'先锋'},{id:'char_479_sleach',name:'琴柳',cls:'先锋'},{id:'char_420_flamtl',name:'焰尾',cls:'先锋'},{id:'char_427_vigil',name:'伺夜',cls:'先锋'},{id:'char_249_mlyss',name:'缪尔赛思',cls:'先锋'},{id:'char_4087_ines',name:'伊内丝',cls:'先锋'},{id:'char_4026_vulpis',name:'忍冬',cls:'先锋'},{id:'char_4228_closur',name:'可露希尔',cls:'先锋'},{id:'char_608_acpion',name:'郁金香',cls:'先锋'},{id:'char_1045_svash2',name:'凛御银灰',cls:'先锋'},
-{id:'char_172_svrash',name:'银灰',cls:'近卫'},{id:'char_350_surtr',name:'史尔特尔',cls:'近卫'},{id:'char_4064_mlynar',name:'玛恩纳',cls:'近卫'},{id:'char_293_thorns',name:'棘刺',cls:'近卫'},{id:'char_264_f12yin',name:'山',cls:'近卫'},{id:'char_1014_nearl2',name:'耀骑士临光',cls:'近卫'},{id:'char_010_chen',name:'陈',cls:'近卫'},{id:'char_263_skadi',name:'斯卡蒂',cls:'近卫'},{id:'char_4082_qiubai',name:'仇白',cls:'近卫'},{id:'char_4116_blkkgt',name:'锏',cls:'近卫'},{id:'char_4098_vvana',name:'薇薇安娜',cls:'近卫'},{id:'char_4088_hodrer',name:'赫德雷',cls:'近卫'},{id:'char_4011_lessng',name:'止颂',cls:'近卫'},{id:'char_4058_pepe',name:'佩佩',cls:'近卫'},{id:'char_2024_chyue',name:'重岳',cls:'近卫'},{id:'char_017_huang',name:'煌',cls:'近卫'},{id:'char_188_helage',name:'赫拉格',cls:'近卫'},{id:'char_485_pallas',name:'帕拉斯',cls:'近卫'},{id:'char_4009_irene',name:'艾丽妮',cls:'近卫'},{id:'char_1026_gvial2',name:'百炼嘉维尔',cls:'近卫'},{id:'char_1032_excu2',name:'圣约送葬人',cls:'近卫'},{id:'char_4121_zuole',name:'左乐',cls:'近卫'},{id:'char_4145_ulpia',name:'乌尔比安',cls:'近卫'},{id:'char_1019_siege2',name:'维娜·维多利亚',cls:'近卫'},{id:'char_4010_etlchi',name:'隐德来希',cls:'近卫'},{id:'char_1043_leizi2',name:'司霆惊蛰',cls:'近卫'},{id:'char_4037_demetr',name:'贝洛内',cls:'近卫'},{id:'char_1050_chen3',name:'赤刃明霄陈',cls:'近卫'},{id:'char_1051_headb2',name:'怒潮凛冬',cls:'近卫'},{id:'char_4182_oblvns',name:'丰川祥子',cls:'近卫'},{id:'char_609_acguad',name:'Sharp',cls:'近卫'},{id:'char_617_sharp2',name:'领主·Sharp',cls:'近卫'},
+{id:'char_172_svrash',name:'银灰',cls:'近卫'},{id:'char_350_surtr',name:'史尔特尔',cls:'近卫'},{id:'char_4064_mlynar',name:'玛恩纳',cls:'近卫'},{id:'char_293_thorns',name:'棘刺',cls:'近卫'},{id:'char_264_f12yin',name:'山',cls:'近卫'},{id:'char_1014_nearl2',name:'耀骑士临光',cls:'近卫'},{id:'char_010_chen',name:'陈',cls:'近卫'},{id:'char_263_skadi',name:'斯卡蒂',cls:'近卫'},{id:'char_4082_qiubai',name:'仇白',cls:'近卫'},{id:'char_4116_blkkgt',name:'锏',cls:'近卫'},{id:'char_4098_vvana',name:'薇薇安娜',cls:'近卫'},{id:'char_4088_hodrer',name:'赫德雷',cls:'近卫'},{id:'char_4011_lessng',name:'止颂',cls:'近卫'},{id:'char_4058_pepe',name:'佩佩',cls:'近卫'},{id:'char_2024_chyue',name:'重岳',cls:'近卫'},{id:'char_017_huang',name:'煌',cls:'近卫'},{id:'char_188_helage',name:'赫拉格',cls:'近卫'},{id:'char_485_pallas',name:'帕拉斯',cls:'近卫'},{id:'char_4009_irene',name:'艾丽妮',cls:'近卫'},{id:'char_1026_gvial2',name:'百炼嘉维尔',cls:'近卫'},{id:'char_1032_excu2',name:'圣约送葬人',cls:'近卫'},{id:'char_4121_zuole',name:'左乐',cls:'近卫'},{id:'char_4145_ulpia',name:'乌尔比安',cls:'近卫'},{id:'char_1019_siege2',name:'维娜·维多利亚',cls:'近卫'},{id:'char_4010_etlchi',name:'隐德来希',cls:'近卫'},{id:'char_1043_leizi2',name:'司霆惊蛰',cls:'近卫'},{id:'char_4037_demetr',name:'贝洛内',cls:'近卫'},{id:'char_1050_chen3',name:'赤刃明霄陈',cls:'近卫'},{id:'char_1051_headb2',name:'怒潮凛冬',cls:'近卫'},{id:'char_4182_oblvns',name:'丰川祥子',cls:'近卫'},{id:'char_609_acguad',name:'Sharp',cls:'近卫'},
 {id:'char_202_demkni',name:'塞雷娅',cls:'重装'},{id:'char_136_hsguma',name:'星熊',cls:'重装'},{id:'char_2014_nian',name:'年',cls:'重装'},{id:'char_416_zumama',name:'森蚺',cls:'重装'},{id:'char_4039_horn',name:'号角',cls:'重装'},{id:'char_423_blemsh',name:'瑕光',cls:'重装'},{id:'char_4065_judge',name:'斥罪',cls:'重装'},{id:'char_1034_jesca2',name:'涤火杰西卡',cls:'重装'},{id:'char_245_cello',name:'塑心',cls:'重装'},{id:'char_2025_shu',name:'黍',cls:'重装'},{id:'char_2026_yu',name:'余',cls:'重装'},{id:'char_311_mudrok',name:'泥岩',cls:'重装'},{id:'char_4194_rmixer',name:'信仰搅拌机',cls:'重装'},{id:'char_1044_hsgma2',name:'斩业星熊',cls:'重装'},{id:'char_610_acfend',name:'Mechanist',cls:'重装'},
 {id:'char_103_angel',name:'能天使',cls:'狙击'},{id:'char_1013_chen2',name:'假日威龙陈',cls:'狙击'},{id:'char_113_cqbw',name:'W',cls:'狙击'},{id:'char_340_shwaz',name:'黑',cls:'狙击'},{id:'char_197_poca',name:'早露',cls:'狙击'},{id:'char_391_rosmon',name:'迷迭香',cls:'狙击'},{id:'char_332_archet',name:'空弦',cls:'狙击'},{id:'char_430_fartth',name:'远牙',cls:'狙击'},{id:'char_300_phenxi',name:'菲亚梅塔',cls:'狙击'},{id:'char_4055_bgsnow',name:'鸿雪',cls:'狙击'},{id:'char_2012_typhon',name:'提丰',cls:'狙击'},{id:'char_4117_ray',name:'莱伊',cls:'狙击'},{id:'char_1035_wisdel',name:'维什戴尔',cls:'狙击'},{id:'char_4138_narant',name:'娜仁图亚',cls:'狙击'},{id:'char_4193_lemuen',name:'蕾缪安',cls:'狙击'},{id:'char_456_ash',name:'灰烬',cls:'狙击'},{id:'char_1048_orchd2',name:'焰狐龙梓兰',cls:'狙击'},{id:'char_611_acnipe',name:'Stormeye',cls:'狙击'},
 {id:'char_180_amgoat',name:'艾雅法拉',cls:'术士'},{id:'char_134_ifrit',name:'伊芙利特',cls:'术士'},{id:'char_213_mostma',name:'莫斯提马',cls:'术士'},{id:'char_2013_cerber',name:'刻俄柏',cls:'术士'},{id:'char_2015_dusk',name:'夕',cls:'术士'},{id:'char_426_billro',name:'卡涅利安',cls:'术士'},{id:'char_377_gdglow',name:'澄闪',cls:'术士'},{id:'char_4080_lin',name:'林',cls:'术士'},{id:'char_4027_heyak',name:'霍尔海雅',cls:'术士'},{id:'char_4133_logos',name:'逻各斯',cls:'术士'},{id:'char_472_pasngr',name:'异客',cls:'术士'},{id:'char_4046_ebnhlz',name:'黑键',cls:'术士'},{id:'char_4146_nymph',name:'妮芙',cls:'术士'},{id:'char_1038_whitw2',name:'荒芜拉普兰德',cls:'术士'},{id:'char_1040_blaze2',name:'烛煌',cls:'术士'},{id:'char_1046_sbell2',name:'圣聆初雪',cls:'术士'},{id:'char_4141_marcil',name:'玛露西尔',cls:'术士'},{id:'char_450_necras',name:'死芒',cls:'术士'},{id:'char_4204_mantra',name:'真言',cls:'术士'},{id:'char_4226_veen',name:'维伊',cls:'术士'},{id:'char_612_accast',name:'Pith',cls:'术士'},
@@ -319,23 +327,28 @@ var S = {
   teamA:{name:'泰拉联合',player:'选手A'},teamB:{name:'萨卡兹王庭',player:'选手B'},
   maxBan:4,maxPick:6,maxGuest:1,sched:'2026-07-04',
   ingA:300,ingB:300,budgetA:500,budgetB:500,side:'ab',
-  ops:[],banA:[],banB:[],pickA:[],pickB:[],guestA:[],guestB:[],
-  curAct:'ban_a',curCls:'all',history:[]
+  ops:[],banA:[],banB:[],pickA:[],pickB:[],guestA:[],guestB:[],pubBan:[],
+  curAct:'ban_a',curCls:'all',history:[],
+  bo:1,round:1,lockedOps:[],historyRounds:[]
 };
 
 function iu(op){return 'https://cdn.jsdelivr.net/gh/yuanyan3060/ArknightsGameResource@main/portrait/'+op.id+'_1.png'}
 function iu2(op){return 'https://raw.githubusercontent.com/yuanyan3060/ArknightsGameResource/main/portrait/'+op.id+'_1.png'}
 
-function init(){
+function init(keepBO){
   S.ops=OPERATORS.map(function(o){o=Object.assign({},o);o.status='avail';return o});
-  S.banA=[];S.banB=[];S.pickA=[];S.pickB=[];S.guestA=[];S.guestB=[];
-  S.curAct=S.side==='ab'?'ban_a':'ban_b';S.curCls='all';S.history=[];
+  S.banA=[];S.banB=[];S.pickA=[];S.pickB=[];S.guestA=[];S.guestB=[];S.pubBan=[];S.lockedOps=[];S.historyRounds=[];
+  S.round=1;S.history=[];
+  if(!keepBO){S.bo=1}
+  S.curAct=S.side==='ab'?'ban_a':'ban_b';S.curCls='all';
   S.ingA=300;S.ingB=300;S.budgetA=500;S.budgetB=500;
   var r1=document.getElementById('taRestartSw'),r2=document.getElementById('tbRestartSw');
   if(r1){r1.checked=false;document.getElementById('taRestCnt').value=0;document.getElementById('taRestCnt').disabled=true}
   if(r2){r2.checked=false;document.getElementById('tbRestCnt').value=0;document.getElementById('tbRestCnt').disabled=true}
+  saveState();
 }
 
+// render: 重建分类标签+网格+界面（页面初始化/切换分类/重置时使用）
 function render(){
   var tabs=document.getElementById('classTabs'),h='';
   h+='<button class="clstab '+(S.curCls==='all'?'on':'')+'" onclick="setCls(\'all\')">📋全部('+S.ops.length+')</button>';
@@ -345,6 +358,18 @@ function render(){
   });
   tabs.innerHTML=h;
   renderGrid();
+  renderUI();
+}
+// renderUI: 只更新界面（不重建干员网格图片），适用于BP操作后刷新
+function renderUI(){
+  // 更新干员卡片状态类（不重建img，防止图片闪现）
+  document.querySelectorAll('.op-card').forEach(function(card){
+    var oid=card.dataset.opid;if(!oid)return;
+    var op=S.ops.find(function(o){return o.id===oid});if(!op)return;
+    var st=op.status,sc=st==='avail'?'avail':st==='ban'||st==='pubban'||st==='locked'?'banned':st==='pa'?'picked-a':st==='pb'?'picked-b':st==='ga'?'guest-a':'guest-b';
+    var cls=card.className.replace(/\b(?:avail|banned|picked-a|picked-b|guest-a|guest-b)\b/g,'').trim();
+    card.className=(cls+' '+sc).trim();
+  });
   // Render pools
   var pools = [
     ['taBanP',S.banA,'ban',S.maxBan],['tbBanP',S.banB,'ban',S.maxBan],
@@ -356,26 +381,28 @@ function render(){
     var ph='';
     e[1].forEach(function(op){
       var tag=e[2];
-      ph+='<div class="slot '+tag+'" title="'+op.name+'"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\''+iu2(op)+'\';this.onerror=function(){this.onerror=null;var u=prtsUrl(\''+op.name+'\');if(u){this.src=u;this.onerror=function(){this.onerror=null;this.style.display=\'none\'}}else{this.style.display=\'none\'}}"><span class="tag">'+op.name+'</span></div>';
+      ph+='<div class="slot '+tag+'" title="'+op.name+'"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\''+iu2(op)+'\';this.onerror=function(){this.onerror=null;var u=prtsUrl(\''+op.name+'\');if(u){this.src=u;this.onerror=function(){this.onerror=null;this.style.display=\'none\'}}else{this.style.display=\'none\'}}"></div>';
     });
-    for(var i=e[1].length;i<e[3];i++)ph+='<div class="slot empty"><span class="plh">◇</span></div>';
+    for(var i=e[1].length;i<e[3];i++)ph+='<div class="slot empty"></div>';
     c.innerHTML=ph;
   });
+  // Public ban 栏
+  var pr=document.getElementById('pubBanRow'),po=document.getElementById('pubBanOps');
+  if(S.pubBan.length){pr.style.display='flex';var ph='';S.pubBan.forEach(function(op){ph+='<div class="pbslot" title="'+op.name+' (点击移除)" onclick="removePubBan(\''+op.id+'\')"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy"><span class="pbdel">✕</span></div>'});po.innerHTML=ph}else{pr.style.display='none'}
   document.getElementById('taName').textContent=S.teamA.name;
   document.getElementById('taPlayer').textContent=S.teamA.player;
   document.getElementById('tbName').textContent=S.teamB.name;
   document.getElementById('tbPlayer').textContent=S.teamB.player;
-  var a=S.curAct,team=(a==='guest_a'||a==='guest_b')?(a==='guest_a'?'A队':'B队'):(a.endsWith('_a')?'A队':'B队');
-  var am={ban_a:'禁用',ban_b:'禁用',pick_a:'选取',pick_b:'选取',guest_a:'选外援',guest_b:'选外援'};
-  var tc=(a==='guest_a'||a==='guest_b')?'guest':(a.endsWith('_a')?'ta':'tb');
-  var ac=a.startsWith('ban')?'ban':a.startsWith('pick')?'pick':'guest';
+  var a=S.curAct,team,tc,ac,am={ban_a:'禁用',ban_b:'禁用',pick_a:'选取',pick_b:'选取',guest_a:'选外援',guest_b:'选外援',pubban:'公ban'};
+  if(a==='pubban'){team='全局';tc='';ac='ban'}else{team=(a==='guest_a'||a==='guest_b')?(a==='guest_a'?'A队':'B队'):(a.endsWith('_a')?'A队':'B队');tc=(a==='guest_a'||a==='guest_b')?'guest':(a.endsWith('_a')?'ta':'tb');ac=a.startsWith('ban')?'ban':a.startsWith('pick')?'pick':'guest'}
   document.getElementById('phaseTxt').innerHTML='<span class="hl '+tc+'">'+team+'</span><span class="hl '+ac+'">'+(am[a]||'BP')+'</span>';
   var badges=[['taBanB',S.banA,S.maxBan],['tbBanB',S.banB,S.maxBan],['taPickB',S.pickA,S.maxPick],['tbPickB',S.pickB,S.maxPick],['taGuestB',S.guestA,S.maxGuest],['tbGuestB',S.guestB,S.maxGuest]];
   badges.forEach(function(e){var el=document.getElementById(e[0]);if(el)el.textContent=e[1].length+'/'+e[2];});
   document.querySelectorAll('.abtn').forEach(function(b){
     b.classList.remove('cur-a','cur-b','cur-ban','cur-guest-a','cur-guest-b');
     if(b.dataset.a===S.curAct){
-      if(b.dataset.a==='guest_a'||b.dataset.a==='guest_b')b.classList.add('cur-guest-a');
+      if(b.dataset.a==='pubban')b.classList.add('cur-ban');
+      else if(b.dataset.a==='guest_a'||b.dataset.a==='guest_b')b.classList.add('cur-guest-a');
       else if(b.dataset.a.endsWith('_a'))b.classList.add('cur-a');else b.classList.add('cur-b');
       if(b.dataset.a.startsWith('ban'))b.classList.add('cur-ban');
     }
@@ -384,6 +411,16 @@ function render(){
   document.getElementById('sideSelect').value=S.side;
   document.getElementById('totalOps').textContent='('+S.ops.length+')';
   document.getElementById('availCount').textContent=S.ops.filter(function(o){return o.status==='avail'}).length;
+  // BO回合显示
+  var rEl=document.getElementById('roundInfo');
+  if(S.bo>1){
+    if(!rEl){rEl=document.createElement('span');rEl.id='roundInfo';rEl.style.cssText='font-size:11px;color:var(--gold);margin-left:8px';document.querySelector('.grid-hd .gt').after(rEl)}
+    var pl=S.historyRounds.length+1;rEl.textContent='第'+pl+'/'+S.bo+'轮';
+    // 历史按钮
+    var hb=document.getElementById('roundHistBtn');
+    if(!hb&&S.historyRounds.length){hb=document.createElement('button');hb.id='roundHistBtn';hb.textContent='📜';hb.title='查看历史回合';hb.style.cssText='margin-left:4px;background:none;border:none;cursor:pointer;font-size:13px;color:var(--gold);padding:0 2px;vertical-align:middle';hb.onclick=showRoundHist;rEl.after(hb)}
+    if(hb&&!S.historyRounds.length)hb.remove()
+  }else{if(rEl)rEl.remove();var hb2=document.getElementById('roundHistBtn');if(hb2)hb2.remove()}
   updBal();
 }
 
@@ -392,9 +429,10 @@ function renderGrid(){
   var list=S.curCls==='all'?[...S.ops]:S.ops.filter(function(o){return o.cls===S.curCls});
   var h='';
   list.forEach(function(op){
-    var st=op.status,sc=st==='avail'?'avail':st==='ban'?'banned':st==='pa'?'picked-a':st==='pb'?'picked-b':st==='ga'?'guest-a':'guest-b';
+    var st=op.status,sc=st==='avail'?'avail':st==='ban'||st==='pubban'||st==='locked'?'banned':st==='pa'?'picked-a':st==='pb'?'picked-b':st==='ga'?'guest-a':'guest-b';
     var ic=CLS_ICON[op.cls]||'',init=op.name.charAt(0),safe=op.id.replace(/\W/g,'');
-    h+='<div class="op-card '+sc+'" onclick="onOp(\''+op.id+'\')" title="'+op.name+'('+op.cls+')">'
+    var ttl=op.name+'('+op.cls+')'+(st==='locked'?'[已锁定]':st==='pubban'?'[公ban]':'');
+    h+='<div class="op-card '+sc+'" data-opid="'+op.id+'" onclick="onOp(\''+op.id+'\')" title="'+ttl+'">'
       +'<div class="plh-bg" id="plh-'+safe+'">'+init+'</div>'
       +'<img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async"'
       +' onload="document.getElementById(\'plh-'+safe+'\')?.classList.add(\'hide\')"'
@@ -425,51 +463,190 @@ function loadBGM(i){var f=i.files[0];if(!f)return;var r=new FileReader();r.onloa
 try{var h=localStorage.getItem('ytb_hero');if(h){document.getElementById('hero-img').src=h;document.getElementById('hero-img').classList.remove('hide');document.getElementById('hero-fallback').classList.remove('show')}}catch(e){}
 try{var b=localStorage.getItem('ytb_bgm');if(b){bgmP.src=b;bgmBtn.textContent='🔊';bgmL=true}}catch(e){}
 
-function swapSide(){S.side=document.getElementById('sideSelect').value;if(S.history.length>0&&!confirm('切换红蓝方将重置当前BP，是否继续？')){document.getElementById('sideSelect').value=S.side;return}init();render();toast('🔀已切换红蓝方')}
+function swapSide(){S.side=document.getElementById('sideSelect').value;if(S.history.length>0&&!confirm('切换红蓝方将重置当前BP，是否继续？')){document.getElementById('sideSelect').value=S.side;return}init(true);render();toast('🔀已切换红蓝方')}
 function toggleRest(t){var sw=document.getElementById(t==='A'?'taRestartSw':'tbRestartSw'),inp=document.getElementById(t==='A'?'taRestCnt':'tbRestCnt');inp.disabled=!sw.checked;if(!sw.checked)inp.value=0}
-function setAct(a){S.curAct=a;render()}
+function setAct(a){S.curAct=a;renderUI()}
 function onOp(id){
   var op=S.ops.find(function(o){return o.id===id});if(!op||op.status!=='avail')return;
   var a=S.curAct;
-  if(a==='guest_a'||a==='guest_b'){var t=a==='guest_a'?'A':'B',p=t==='A'?S.guestA:S.guestB;if(p.length>=S.maxGuest){toast(t+'队外援位已满！');return}S.history.push({action:a,opId:id});op.status=t==='A'?'ga':'gb';p.push({...op});toast('🔄外援 '+t+'队→'+op.name,'t-pa');S.curAct=nextAct(a);render();return}
+  if(a==='pubban'){S.history.push({action:'pubban',opId:id});op.status='pubban';S.pubBan.push({...op});renderUI();saveState();return}
+  if(a==='guest_a'||a==='guest_b'){var t=a==='guest_a'?'A':'B',p=t==='A'?S.guestA:S.guestB;if(p.length>=S.maxGuest){toast(t+'队外援位已满！');return}S.history.push({action:a,opId:id});op.status=t==='A'?'ga':'gb';p.push({...op});toast('🔄外援 '+t+'队→'+op.name,'t-pa');S.curAct=nextAct(a);renderUI();saveState();return}
   var t=a.endsWith('_a')?'A':'B',b=a.startsWith('ban'),p=b?(t==='A'?S.banA:S.banB):(t==='A'?S.pickA:S.pickB);if(p.length>=(b?S.maxBan:S.maxPick)){toast(t+'队'+(b?'禁用':'选取')+'位已满！');return}
-  S.history.push({action:a,opId:id});op.status=b?'ban':(t==='A'?'pa':'pb');p.push({...op});toast((b?'⛔禁用':'⭐选取')+t+'队→'+op.name,b?'t-ban':(t==='A'?'t-pa':'t-pb'));S.curAct=nextAct(a);render()
+  S.history.push({action:a,opId:id});op.status=b?'ban':(t==='A'?'pa':'pb');p.push({...op});toast((b?'⛔禁用':'⭐选取')+t+'队→'+op.name,b?'t-ban':(t==='A'?'t-pa':'t-pb'));S.curAct=nextAct(a);renderUI();saveState()
 }
 function nextAct(cur){
   if(cur==='guest_a'||cur==='guest_b'){var t=cur==='guest_a'?'A':'B';if((t==='A'?S.guestA:S.guestB).length<S.maxGuest)return cur}
-  var seq=['ban_a','pick_a','ban_b','pick_b'],idx=seq.indexOf(cur);if(idx<0)idx=0;
+  var seq=S.side==='ab'?['ban_a','pick_b','ban_b','pick_a']:['ban_b','pick_a','ban_a','pick_b'],idx=seq.indexOf(cur);if(idx<0)idx=0;
   for(var i=1;i<=6;i++){var n=seq[(idx+i)%4],t=n.endsWith('_a')?'A':'B',b=n.startsWith('ban');if((b?(t==='A'?S.banA:S.banB):(t==='A'?S.pickA:S.pickB)).length<(b?S.maxBan:S.maxPick))return n}
-  if(S.guestA.length<S.maxGuest)return'guest_a';if(S.guestB.length<S.maxGuest)return'guest_b';toast('🎉全部BP已完成！');return cur
+  if(S.guestA.length<S.maxGuest)return'guest_a';if(S.guestB.length<S.maxGuest)return'guest_b';
+  // BO 回合完成判定
+  if(S.bo>1&&S.round<S.bo&&S.banA.length>=S.maxBan&&S.banB.length>=S.maxBan&&S.pickA.length>=S.maxPick&&S.pickB.length>=S.maxPick&&S.guestA.length>=S.maxGuest&&S.guestB.length>=S.maxGuest){
+    completeRound();return S.curAct
+  }
+  if(S.bo>1&&S.round>=S.bo)toast('🎉全部BO'+S.bo+'已完成！');
+  else toast('🎉全部BP已完成！');
+  return cur
 }
 function undo(){
   if(!S.history.length){toast('没有可撤销的操作');return}
   var last=S.history.pop(),op=S.ops.find(function(o){return o.id===last.opId});if(!op)return;
   var a=last.action;
-  if(a==='guest_a'||a==='guest_b'){var t=a==='guest_a'?'A':'B',p=t==='A'?S.guestA:S.guestB,i=p.findIndex(function(o){return o.id===last.opId});if(i!==-1)p.splice(i,1);op.status='avail';S.curAct=a;render();toast('↩已撤销外援');return}
-  var b=a.startsWith('ban'),t=a.endsWith('_a')?'A':'B',p=b?(t==='A'?S.banA:S.banB):(t==='A'?S.pickA:S.pickB),i=p.findIndex(function(o){return o.id===last.opId});if(i!==-1)p.splice(i,1);op.status='avail';S.curAct=a;render();toast('↩已撤销')
+  function restStatus(){op.status=S.lockedOps.find(function(o){return o.id===op.id})?'locked':'avail'}
+  if(a==='pubban'){var idx=S.pubBan.findIndex(function(o){return o.id===last.opId});if(idx!==-1)S.pubBan.splice(idx,1);restStatus();S.curAct='pubban';renderUI();saveState();toast('↩已撤销公ban');return}
+  if(a==='guest_a'||a==='guest_b'){var t=a==='guest_a'?'A':'B',p=t==='A'?S.guestA:S.guestB,i=p.findIndex(function(o){return o.id===last.opId});if(i!==-1)p.splice(i,1);restStatus();S.curAct=a;renderUI();saveState();toast('↩已撤销外援');return}
+  var b=a.startsWith('ban'),t=a.endsWith('_a')?'A':'B',p=b?(t==='A'?S.banA:S.banB):(t==='A'?S.pickA:S.pickB),i=p.findIndex(function(o){return o.id===last.opId});if(i!==-1)p.splice(i,1);restStatus();S.curAct=a;renderUI();saveState();toast('↩已撤销')
 }
 function setCls(cls){S.curCls=cls;renderGrid()}
-function openCfg(){document.getElementById('inpTaN').value=S.teamA.name;document.getElementById('inpTaP').value=S.teamA.player;document.getElementById('inpTbN').value=S.teamB.name;document.getElementById('inpTbP').value=S.teamB.player;document.getElementById('inpBan').value=S.maxBan;document.getElementById('inpPick').value=S.maxPick;document.getElementById('modal').classList.add('open')}
+// === 显示BO历史回合 ===
+function showRoundHist(){
+  if(!S.historyRounds.length){toast('暂无历史回合');return}
+  var h='<div style="max-height:70vh;overflow-y:auto;padding:5px">';
+  S.historyRounds.forEach(function(r,i){
+    h+='<div style="margin-bottom:10px;border:1px solid var(--border-subtle);border-radius:6px;padding:8px;background:rgba(0,0,0,.15)">';
+    h+='<div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:4px">📋 第'+(i+1)+'轮</div>';
+    ['A','B'].forEach(function(t){
+      var b=t==='A'?r.banA:r.banB,p=t==='A'?r.pickA:r.pickB,g=t==='A'?r.guestA:r.guestB;
+      var tc=t==='A'?'var(--ta-color)':'var(--tb-color)';
+      if(r.pubBan&&i===0)h+='<div style="font-size:11px;color:var(--text-dim);margin:2px 0">📢公ban:'+r.pubBan.map(function(o){return o.name}).join('、')+'</div>';
+      h+='<div style="font-size:11px;color:'+tc+';margin:2px 0">'+(t==='A'?'🔴':'🔵')+' 禁用:'+(b.length?b.map(function(o){return o.name}).join('、'):'—')+'</div>';
+      h+='<div style="font-size:11px;color:'+tc+';margin:2px 0">'+(t==='A'?'🔴':'🔵')+' 选取:'+(p.length?p.map(function(o){return o.name}).join('、'):'—')+'</div>';
+      h+='<div style="font-size:11px;color:var(--gold);margin:2px 0">🔄 外援:'+(g.length?g.map(function(o){return o.name}).join('、'):'—')+'</div>';
+    });
+    h+='</div>';
+  });
+  h+='</div>';
+  // 简易弹窗
+  var ov=document.createElement('div');
+  ov.style.cssText='position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center';
+  var box=document.createElement('div');
+  box.style.cssText='background:#1A0A0A;border:2px solid var(--gold);border-radius:10px;padding:16px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 0 60px rgba(139,26,26,.2)';
+  box.innerHTML='<div style="text-align:right;margin-bottom:6px"><button onclick="this.parentElement.parentElement.parentElement.remove()" style="background:none;border:1px solid var(--border-subtle);color:var(--text-dim);border-radius:4px;padding:2px 10px;cursor:pointer;font-size:12px">✕关闭</button></div>'+h;
+  ov.appendChild(box);document.body.appendChild(ov);
+  ov.onclick=function(e){if(e.target===ov)ov.remove()}
+}
+function removePubBan(id){
+  var idx=S.pubBan.findIndex(function(o){return o.id===id});if(idx===-1)return;
+  var op=S.ops.find(function(o){return o.id===id});if(op)op.status='avail';
+  for(var i=S.history.length-1;i>=0;i--){if(S.history[i].action==='pubban'&&S.history[i].opId===id){S.history.splice(i,1);break}}
+  S.pubBan.splice(idx,1);renderUI();saveState();
+}
+function openCfg(){document.getElementById('inpTaN').value=S.teamA.name;document.getElementById('inpTaP').value=S.teamA.player;document.getElementById('inpTbN').value=S.teamB.name;document.getElementById('inpTbP').value=S.teamB.player;document.getElementById('inpBan').value=S.maxBan;document.getElementById('inpPick').value=S.maxPick;document.getElementById('inpGuest').value=S.maxGuest;document.getElementById('inpBo').value=S.bo;document.getElementById('modal').classList.add('open')}
 function closeModal(){document.getElementById('modal').classList.remove('open')}
 function applyCfg(){
   S.teamA.name=document.getElementById('inpTaN').value.trim()||'泰拉联合';S.teamA.player=document.getElementById('inpTaP').value.trim()||'选手A';
   S.teamB.name=document.getElementById('inpTbN').value.trim()||'萨卡兹王庭';S.teamB.player=document.getElementById('inpTbP').value.trim()||'选手B';
-  var nb=Math.min(20,Math.max(0,parseInt(document.getElementById('inpBan').value)||4)),np=Math.min(20,Math.max(0,parseInt(document.getElementById('inpPick').value)||6));
-  if(nb<S.banA.length||nb<S.banB.length||np<S.pickA.length||np<S.pickB.length){
-    if(!confirm('减少槽位将重置超出部分，继续？'))return;
-    while(S.banA.length>nb){var o=S.banA.pop();var op=S.ops.find(function(x){return x.id===o.id});if(op)op.status='avail'}
-    while(S.banB.length>nb){o=S.banB.pop();op=S.ops.find(function(x){return x.id===o.id});if(op)op.status='avail'}
-    while(S.pickA.length>np){o=S.pickA.pop();op=S.ops.find(function(x){return x.id===o.id});if(op&&op.status!=='avail')op.status='avail'}
-    while(S.pickB.length>np){o=S.pickB.pop();op=S.ops.find(function(x){return x.id===o.id});if(op&&op.status!=='avail')op.status='avail'}
+  var nb=Math.min(20,Math.max(0,parseInt(document.getElementById('inpBan').value)||4)),np=Math.min(20,Math.max(0,parseInt(document.getElementById('inpPick').value)||6)),ng=Math.min(10,Math.max(0,parseInt(document.getElementById('inpGuest').value)||1));
+  var nbo=parseInt(document.getElementById('inpBo').value)||1;
+  if(nb!==S.maxBan||np!==S.maxPick||ng!==S.maxGuest||nbo!==S.bo){
+    if(S.history.length>0&&!confirm('修改BP参数将重置当前回合，继续？'))return;
+    // 重置当前回合（保留已锁定干员）
+    S.banA=[];S.banB=[];S.pickA=[];S.pickB=[];S.guestA=[];S.guestB=[];S.pubBan=[];S.history=[];
+    S.ops.forEach(function(o){if(o.status!=='locked')o.status='avail'});
+    S.curAct=S.side==='ab'?'ban_a':'ban_b';
   }
-  S.maxBan=nb;S.maxPick=np;closeModal();toast('✅配置已更新');render()
+  if(nbo!==S.bo){
+    // BO变了就清空历史
+    S.bo=nbo;S.round=1;S.lockedOps=[];S.historyRounds=[];S.history=[];
+    S.ops.forEach(function(o){o.status='avail'});
+  }
+  S.maxBan=nb;S.maxPick=np;S.maxGuest=ng;S.bo=nbo;closeModal();toast('✅配置已更新');saveState();render()
 }
 function confirmReset(){document.getElementById('cfrm-msg').textContent='确定一键重置？所有BP数据将被清空！';document.getElementById('cfrm-y').onclick=function(){document.getElementById('cfrm').classList.remove('open');resetAll()};document.getElementById('cfrm-n').onclick=function(){document.getElementById('cfrm').classList.remove('open')};document.getElementById('cfrm').classList.add('open')}
-function resetAll(){init();render();toast('↻已全部重置')}
+function resetAll(){localStorage.removeItem('ytb_bp');init();render();toast('↻已全部重置')}
 var tt=null;
 function toast(m,c){if(!c)c='';var e=document.getElementById('toast');e.textContent=m;e.className='toast '+c;clearTimeout(tt);void e.offsetWidth;e.classList.add('sh');tt=setTimeout(function(){e.classList.remove('sh')},2200)}
+// === 持久化存储：每次BP操作后自动保存 ===
+var SAVE_VER=1;
+function saveState(){
+  var data={_v:SAVE_VER,teamA:S.teamA,teamB:S.teamB,maxBan:S.maxBan,maxPick:S.maxPick,maxGuest:S.maxGuest,bo:S.bo,round:S.round,
+    ingA:S.ingA,ingB:S.ingB,budgetA:S.budgetA,budgetB:S.budgetB,side:S.side,sched:S.sched,
+    banA:S.banA,banB:S.banB,pickA:S.pickA,pickB:S.pickB,guestA:S.guestA,guestB:S.guestB,pubBan:S.pubBan,
+    lockedOps:S.lockedOps,historyRounds:S.historyRounds,
+    history:S.history.map(function(h){return{action:h.action,opId:h.opId}})};
+  try{localStorage.setItem('ytb_bp',JSON.stringify(data))}catch(e){}
+}
+function loadState(){
+  try{
+    var raw=localStorage.getItem('ytb_bp');if(!raw)return false;
+    var d=JSON.parse(raw);
+    if(d._v!==SAVE_VER){localStorage.removeItem('ytb_bp');return false}
+    // 必须先初始化干员列表，因为loadState成功后不会走init()
+    S.ops=OPERATORS.map(function(o){o=Object.assign({},o);o.status='avail';return o});
+    ['teamA','teamB','maxBan','maxPick','maxGuest','bo','round','ingA','ingB','budgetA','budgetB','side','sched',
+     'banA','banB','pickA','pickB','guestA','guestB','pubBan','lockedOps','historyRounds','history'].forEach(function(k){
+      if(d[k]!==undefined)S[k]=d[k];
+    });
+    S.ops.forEach(function(o){o.status='avail'});
+    S.lockedOps.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='locked'});
+    S.pubBan.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='pubban'});
+    S.banA.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='ban'});
+    S.banB.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='ban'});
+    S.pickA.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='pa'});
+    S.pickB.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='pb'});
+    S.guestA.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='ga'});
+    S.guestB.forEach(function(o){var x=S.ops.find(function(v){return v.id===o.id});if(x)x.status='gb'});
+    S.curAct=S.side==='ab'?'ban_a':'ban_b';S.curCls='all';
+    return true;
+  }catch(e){localStorage.removeItem('ytb_bp');return false}
+}
+// === BO回合完成：锁定本回合所有干员，进入下一轮 ===
+function completeRound(){
+  var used=[].concat(S.banA,S.banB,S.pickA,S.pickB,S.guestA,S.guestB,S.pubBan);
+  used.forEach(function(op){if(!S.lockedOps.find(function(v){return v.id===op.id}))S.lockedOps.push({...op})});
+  S.historyRounds.push({round:S.round,banA:[...S.banA],banB:[...S.banB],pickA:[...S.pickA],pickB:[...S.pickB],guestA:[...S.guestA],guestB:[...S.guestB],pubBan:[...S.pubBan]});
+  S.round++;S.banA=[];S.banB=[];S.pickA=[];S.pickB=[];S.guestA=[];S.guestB=[];S.pubBan=[];S.history=[];
+  S.ops.forEach(function(o){o.status='avail'});
+  S.lockedOps.forEach(function(op){var x=S.ops.find(function(o){return o.id===op.id});if(x)x.status='locked'});
+  S.curAct=S.side==='ab'?'ban_a':'ban_b';
+  saveState();render();toast('🎯第'+(S.round-1)+'轮结束·进入第'+S.round+'轮！')
+}
+function exportImage(){
+  toast('📷正在生成图片...');
+  var W=1200,rowH=90,padX=40,padY=40,secGap=4,imgSize=68,imgGap=6;
+  var hasBan=S.banA.length||S.banB.length,hasPick=S.pickA.length||S.pickB.length,hasGuest=S.guestA.length||S.guestB.length;
+  var rows=1+(hasBan?1:0)+(hasPick?1:0)+(hasGuest?1:0);
+  var H=padY*2+rows*rowH+secGap*3;
+  var c=document.createElement('canvas');c.width=W;c.height=H;
+  var cx=c.getContext('2d');
+  // 背景
+  var bg=cx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#1A0D0D');bg.addColorStop(1,'#0E0606');
+  cx.fillStyle=bg;cx.fillRect(0,0,W,H);
+  // 标题
+  cx.textAlign='center';cx.textBaseline='top';
+  cx.fillStyle='#FFE88A';cx.font='bold 34px "Microsoft YaHei",sans-serif';
+  cx.fillText('🏆应天杯 · Ban & Pick 选人结果',W/2,25);
+  cx.fillStyle='#D4A854';cx.font='15px "Microsoft YaHei",sans-serif';
+  cx.fillText('「萨卡兹的无终奇语」  '+(S.side==='ab'?'🔴A先手':'🔵B先手')+'  日期:'+S.sched,W/2,62);
+  // 队伍信息
+  var teamW=(W-80)/2;cx.textAlign='center';cx.textBaseline='top';
+  cx.fillStyle='#FF5522';cx.font='bold 22px "Microsoft YaHei",sans-serif';
+  cx.fillText('🔴 '+S.teamA.name+' ('+S.teamA.player+')',padX+teamW/2,90);
+  cx.fillStyle='#2288FF';
+  cx.fillText('🔵 '+S.teamB.name+' ('+S.teamB.player+')',padX+teamW+teamW/2,90);
+  // 加载并绘制图片
+  var allImgs=[];var loaded=0;
+  function drawSection(label,list,color,x,y){
+    cx.fillStyle=color;cx.font='bold 13px "Microsoft YaHei",sans-serif';cx.textAlign='left';
+    cx.fillText(label,x,y);
+    list.forEach(function(op,i){
+      var ix=x+80+i*(imgSize+imgGap);
+      var img=new Image();img.crossOrigin='anonymous';
+      img.onload=function(){cx.save();cx.beginPath();if(cx.roundRect)cx.roundRect(ix,y+16,imgSize,imgSize,4);else cx.rect(ix,y+16,imgSize,imgSize);cx.clip();cx.drawImage(img,ix,y+16,imgSize,imgSize);cx.restore();loaded++;if(loaded>=allImgs.length)finish()};
+      img.onerror=function(){loaded++;if(loaded>=allImgs.length)finish()};
+      img.src=iu(op);allImgs.push(img);
+    });
+  }
+  var curY=116;
+  if(hasBan){curY+=secGap;drawSection('⛔ 禁用 ('+S.maxBan+')',S.banA,'#FF3B3B',padX,curY);drawSection('⛔ 禁用 ('+S.maxBan+')',S.banB,'#FF3B3B',padX+teamW,curY);curY+=rowH}
+  if(hasPick){curY+=secGap;drawSection('⭐ 选取 ('+S.maxPick+')',S.pickA,'#FF5522',padX,curY);drawSection('⭐ 选取 ('+S.maxPick+')',S.pickB,'#2288FF',padX+teamW,curY);curY+=rowH}
+  if(hasGuest){curY+=secGap;drawSection('🔄 外援 ('+S.maxGuest+')',S.guestA,'#D4A854',padX,curY);drawSection('🔄 外援 ('+S.maxGuest+')',S.guestB,'#D4A854',padX+teamW,curY)}
+  function finish(){var lnk=document.createElement('a');lnk.download='应天杯_BP_'+S.sched+'.png';lnk.href=c.toDataURL('image/png');lnk.click();toast('✅图片已导出')}
+  // 立即完成如果没有图片
+  if(!allImgs.length)finish()
+}
 function mkParticles(){var c=document.getElementById('particles');for(var i=0;i<30;i++){var p=document.createElement('div');p.className='p';p.style.left=Math.random()*100+'%';p.style.width=p.style.height=(1+Math.random()*2.5)+'px';p.style.animationDuration=(15+Math.random()*30)+'s';p.style.animationDelay=(Math.random()*20)+'s';p.style.opacity=.08+Math.random()*.25;c.appendChild(p)}}
-init();render();mkParticles();
+if(!loadState()){init()}
+render();mkParticles();
 console.log('🏆应天杯已加载，共'+OPERATORS.length+'位干员');
 </script>
 </body>
