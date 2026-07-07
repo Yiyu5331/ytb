@@ -47,18 +47,21 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 .main{display:flex;gap:8px;flex:1;min-height:0;padding:5px 8px 8px}
 .team-panel{width:300px;flex-shrink:0;background:var(--bg-panel);border:2px solid var(--border-subtle);border-radius:8px;display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(6px);max-height:calc(100vh - 260px)}
 .team-panel.ta{border-color:rgba(255,85,34,.35)}.team-panel.tb{border-color:rgba(34,136,255,.35)}
-.tp-head{display:flex;align-items:center;gap:12px;padding:8px 10px;border-bottom:1px solid var(--border-subtle);flex-shrink:0}
+.tp-head{display:flex;align-items:center;gap:10px;padding:12px 10px 8px;border-bottom:1px solid var(--border-subtle);flex-shrink:0}
 .ta .tp-head{background:linear-gradient(90deg,rgba(255,85,34,.08),transparent)}
 .tb .tp-head{background:linear-gradient(90deg,rgba(34,136,255,.08),transparent)}
 .tp-avatar{width:64px;height:64px;border-radius:50%;border:2px solid var(--border-bright);overflow:hidden;flex-shrink:0;position:relative;cursor:pointer;background:rgba(0,0,0,.4)}
-.tp-avatar img{width:100%;height:100%;object-fit:cover}.tp-avatar .ahint{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--text-dim);background:rgba(0,0,0,.3);opacity:0;transition:opacity .2s}
-.tp-avatar:hover .ahint{opacity:1}.tp-avatar input{display:none}
+.tp-avatar img{width:100%;height:100%;object-fit:cover}.tp-avatar:hover .ah{opacity:1!important}
+.tp-pl-av{width:28px;height:28px;border-radius:50%;border:1px solid var(--border-bright);overflow:hidden;flex-shrink:0;position:relative;cursor:pointer;background:rgba(0,0,0,.4);display:inline-block;vertical-align:middle;margin-right:4px}
+.tp-pl-av img{width:100%;height:100%;object-fit:cover}
+.tp-pl-av .ah{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-dim);opacity:0;transition:.2s;background:rgba(0,0,0,.4);border-radius:50%}
+.tp-pl-av:hover .ah{opacity:1!important}
 .tp-info{flex:1;min-width:0}
-.tp-player{font-size:20px;font-weight:700;color:var(--text);line-height:1.3}
-.tp-player .lbl{font-size:12px;color:var(--text-dim);font-weight:400}
-.tp-name{font-size:14px;font-weight:600;margin-top:1px;opacity:.8}
+.tp-player{font-size:24px;font-weight:700;color:var(--text);line-height:1.4}
+.tp-player .lbl{font-size:12px;color:var(--text-dim);font-weight:400;margin-right:2px;vertical-align:middle}
+.tp-name{font-size:17px;font-weight:600;margin-top:2px;opacity:.9}
 .ta .tp-name{color:var(--ta-color)}.tb .tp-name{color:var(--tb-color)}
-.tp-body{flex:1;overflow-y:auto;padding:3px 5px;display:flex;flex-direction:column;gap:1px}
+.tp-body{flex:1;overflow-y:auto;padding:3px 5px;display:flex;flex-direction:column;gap:1px;--pick-s:68px;--pick-h:56px}
 .tp-body::-webkit-scrollbar{width:4px}
 .tp-body::-webkit-scrollbar-thumb{background:rgba(107,15,15,.25);border-radius:2px}
 .tp-stitle{font-size:11px;font-weight:700;color:var(--text);letter-spacing:1px;margin-bottom:2px;display:flex;justify-content:space-between;align-items:center;padding:0 2px}
@@ -69,11 +72,19 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 .tp-divider{height:1px;margin:2px 4px;background:linear-gradient(90deg,transparent,rgba(139,26,26,.06),transparent)}
 .tp-pool{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;min-height:18px;padding:1px 2px}
 .tp-pool .slot{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:2px solid var(--border-subtle);background:rgba(30,12,12,.5);padding:0;transition:all .2s;cursor:default}
-.tp-pool .slot img{width:100%;height:100%;object-fit:cover;border-radius:4px;display:block}
+.tp-pool .slot img{width:100%;height:100%;object-fit:cover;object-position:center 30%;border-radius:4px;display:block}
 .tp-pool .slot.ban{border-color:var(--ban-color);background:var(--ban-bg);box-shadow:0 0 8px rgba(255,59,59,.12)}
 .tp-pool .slot.pa{border-color:var(--ta-color);background:var(--pick-a-bg);box-shadow:0 0 8px rgba(255,85,34,.1)}
 .tp-pool .slot.pb{border-color:var(--tb-color);background:var(--pick-b-bg);box-shadow:0 0 8px rgba(34,136,255,.1)}
 .tp-pool .slot.empty{aspect-ratio:1;border-style:dashed;opacity:.12;justify-content:center;height:auto}
+.tp-body.sp .tp-pool .slot{aspect-ratio:unset;height:var(--pool-h)}
+.tp-body.sp .tp-pool .slot.empty{aspect-ratio:unset;height:var(--pool-h)}
+/* ---- Pick列表样式（一人一行+名称） ---- */
+.pick-pool{display:flex;flex-direction:column;gap:2px;min-height:18px;padding:1px 2px}
+.pick-pool .slot{display:flex;align-items:center;gap:10px;border-radius:6px;padding:3px 8px;position:relative;overflow:hidden;border:2px solid var(--border-subtle);background:rgba(30,12,12,.5);min-height:var(--pick-h,50px);transition:all .2s;cursor:default;aspect-ratio:auto}
+.pick-pool .slot img{width:var(--pick-s,56px);height:var(--pick-s,56px);object-fit:cover;object-position:center 30%;border-radius:4px;display:block;flex-shrink:0}
+.pick-pool .slot .sname{font-size:13px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;font-weight:500;line-height:1.3}
+.pick-pool .slot.empty{border-style:dashed;opacity:.12;min-height:var(--pick-h,36px);aspect-ratio:auto;justify-content:center}
 .tp-footer{flex-shrink:0;padding:4px 6px;border-top:1px solid var(--border-subtle);display:flex;flex-direction:column;gap:2px}
 .tp-fin-row{display:flex;align-items:center;justify-content:space-between;font-size:11px}
 .tp-fin-row .lbl{color:var(--text-dim);font-size:10px}
@@ -115,7 +126,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 .op-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:5px}
 .op-card{aspect-ratio:3/4;border-radius:5px;border:2px solid var(--border-subtle);background:rgba(30,12,12,.45);cursor:pointer;position:relative;overflow:hidden;transition:all .2s;display:flex;align-items:center;justify-content:center}
 .op-card:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(212,168,84,.1);transform:translateY(-2px);z-index:3}
-.op-card img{width:100%;height:100%;object-fit:cover;object-position:center 25%;transition:all .4s}
+.op-card img{width:100%;height:100%;object-fit:cover;transition:all .4s}
 .op-card:hover img{transform:scale(1.06)}
 .op-card .plh-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--gold-dim);background:linear-gradient(135deg,rgba(139,26,26,.1),rgba(30,12,12,.4));z-index:0;pointer-events:none;transition:opacity .4s}
 .op-card .plh-bg.hide{opacity:0}
@@ -201,7 +212,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 <div class="mf"><label>B队名称</label><input id="inpTbN" value="萨卡兹王庭"></div>
 <div class="mf"><label>B队选手</label><input id="inpTbP" value="选手B"></div>
 <div class="mf-row"><div class="mf"><label>禁用位</label><input id="inpBan" type="number" value="4" min="0" max="20"></div><div class="mf"><label>选取位</label><input id="inpPick" type="number" value="6" min="0" max="20"></div><div class="mf"><label>外援位</label><input id="inpGuest" type="number" value="1" min="0" max="10"></div></div>
-<div class="mf-row"><div class="mf"><label>BO赛制</label><select id="inpBo" style="width:100%;padding:6px 10px;background:rgba(0,0,0,.4);border:1px solid var(--border-subtle);border-radius:4px;color:var(--text);font-size:12px"><option value="1">BO1（单局）</option><option value="3">BO3（三局两胜）</option><option value="5">BO5（五局三胜）</option><option value="7">BO7（七局四胜）</option></select></div></div>
+<div class="mf-row"><div class="mf"><label>BO赛制</label><select id="inpBo" style="width:100%;padding:6px 10px;background:rgba(0,0,0,.4);border:1px solid var(--border-subtle);border-radius:4px;color:var(--text);font-size:12px"><option value="1">BO1（单局）</option><option value="3">BO3（三局两胜）</option><option value="5">BO5（五局三胜）</option><option value="7">BO7（七局四胜）</option></select></div><div class="mf"><label>⏱倒计时(秒)</label><div style="display:flex;align-items:center;gap:4px"><input id="inpCd" type="number" value="120" min="0" max="300"><label style="display:flex;align-items:center;gap:2px;font-size:11px;color:var(--text-dim);cursor:pointer;white-space:nowrap"><input type="checkbox" id="inpCdEn" checked style="width:auto;margin:0">启用</label></div></div></div>
 <div class="m-acts"><button class="m-conf" onclick="applyCfg()">✓确认</button><button class="m-cancel" onclick="closeModal()">✕取消</button></div></div></div>
 
 <div id="app">
@@ -221,21 +232,26 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
   <div id="top-bar">
     <div class="tb-item"><span>📅</span><input id="schedDate" value="2026-07-04" onchange="S.sched=this.value" style="width:80px"></div>
     <div class="tb-div"></div>
-    <div class="tb-item"><span>🔀</span><span class="lbl">先手</span><select id="sideSelect" onchange="swapSide()"><option value="ab">🔴A禁/🔵B选</option><option value="ba">🔵B禁/🔴A选</option></select></div>
+    <div class="tb-item"><span>🔀</span><span class="lbl">先手</span><select id="sideSelect" onchange="swapSide()"><option value="ab">🔴A禁/🔵B选</option><option value="ba">🔵B禁/🔴A选</option></select></div><span class="tb-div"></span><div class="tb-item"><span>⏱</span><span id="cdDisplay" style="color:var(--gold-bright);font-weight:700;font-size:13px">倒计时:120s</span><span id="cdPauseBtn" style="cursor:pointer;font-size:13px;padding:0 3px;color:var(--text-dim);transition:color .2s" onclick="toggleCdPause()">⏸</span></div>
   </div>
 
   <div class="main">
     <div class="team-panel ta">
       <div class="tp-head">
-        <div class="tp-avatar" onclick="document.getElementById('avAInp').click()"><img id="taAvatar" src="" alt=""><span class="ahint">📷</span><input id="avAInp" type="file" accept="image/*" onchange="upAv('taAvatar',this)"></div>
-        <div class="tp-info"><div class="tp-player"><span class="lbl">选手</span><span id="taPlayer">选手A</span></div><div class="tp-name" id="taName">泰拉联合</div></div>
+        <div class="tp-avatar" onclick="document.getElementById('avAInp').click()"><img id="taAvatar" src="" alt=""><span class="ah" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text-dim);opacity:0;transition:.2s;background:rgba(0,0,0,.4)">📷</span></div>
+        <div class="tp-info">
+          <div class="tp-player"><span class="tp-pl-av" onclick="event.stopPropagation();document.getElementById('plAInp').click()"><img id="taPlAvatar" src=""><span class="ah">📷</span></span><span id="taPlayer">选手A</span></div>
+          <div class="tp-name" id="taName">泰拉联合</div>
+        </div>
+        <input id="avAInp" type="file" accept="image/*" onchange="upAvA(this)" style="display:none;width:0;height:0;position:absolute;opacity:0">
+	<input id="plAInp" type="file" accept="image/*" onchange="upPlA(this)" style="display:none;width:0;height:0;position:absolute;opacity:0">
       </div>
       <div class="tp-body">
+        <div><div class="tp-stitle">🔄外援<span class="badge" id="taGuestB">0/1</span></div><div class="tp-pool" id="taGuestP"></div></div>
+        <div class="tp-divider"></div>
         <div><div class="tp-stitle">⛔<span style="color:var(--ban-color)">禁用</span><span class="badge bb" id="taBanB">0/4</span></div><div class="tp-pool" id="taBanP"></div></div>
         <div class="tp-divider"></div>
-        <div><div class="tp-stitle">⭐<span style="color:var(--ta-color)">选取</span><span class="badge pa" id="taPickB">0/6</span></div><div class="tp-pool" id="taPickP"></div></div>
-        <div class="tp-divider"></div>
-        <div><div class="tp-stitle">🔄外援<span class="badge" id="taGuestB">0/1</span></div><div class="tp-pool" id="taGuestP"></div></div>
+        <div><div class="tp-stitle">⭐<span style="color:var(--ta-color)">选取</span><span class="badge pa" id="taPickB">0/6</span></div><div class="tp-pool pick-pool" id="taPickP"></div></div>
       </div>
       <div class="tp-footer">
         <div class="tp-fin-row"><span class="lbl">💎已用源石锭</span><input id="ingotA" type="number" value="300" min="0" onchange="S.ingA=Math.max(0,this.valueAsNumber||0);updBal()"></div>
@@ -245,22 +261,27 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
       </div>
     </div>
     <div class="grid-wrap">
-      <div class="grid-hd"><span class="gt">✦罗德岛六星干员<span id="totalOps">0</span></span><span class="gd">剩余<em id="availCount">0</em>人</span></div>
+      <div class="grid-hd"><span class="gt">✦罗德岛六星干员<span id="totalOps">0</span></span><span id="phaseStatus" style="font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.5px"></span><span class="gd">剩余<em id="availCount">0</em>人</span></div>
       <div class="grid-tabs" id="classTabs"></div>
       <div id="pubBanRow" class="pubban-row" style="display:none"><div class="pubban-hd">📢公ban</div><div class="pubban-ops" id="pubBanOps"></div></div>
       <div class="grid-scroll" id="gridScroll"><div class="op-grid" id="opGrid"></div></div>
     </div>
     <div class="team-panel tb">
       <div class="tp-head">
-        <div class="tp-avatar" onclick="document.getElementById('avBInp').click()"><img id="tbAvatar" src="" alt=""><span class="ahint">📷</span><input id="avBInp" type="file" accept="image/*" onchange="upAv('tbAvatar',this)"></div>
-        <div class="tp-info"><div class="tp-player"><span class="lbl">选手</span><span id="tbPlayer">选手B</span></div><div class="tp-name" id="tbName">萨卡兹王庭</div></div>
+        <div class="tp-avatar" onclick="document.getElementById('avBInp').click()"><img id="tbAvatar" src="" alt=""><span class="ah" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--text-dim);opacity:0;transition:.2s;background:rgba(0,0,0,.4)">📷</span></div>
+        <div class="tp-info">
+          <div class="tp-player"><span class="tp-pl-av" onclick="event.stopPropagation();document.getElementById('plBInp').click()"><img id="tbPlAvatar" src=""><span class="ah">📷</span></span><span id="tbPlayer">选手B</span></div>
+          <div class="tp-name" id="tbName">萨卡兹王庭</div>
+        </div>
+        <input id="avBInp" type="file" accept="image/*" onchange="upAvB(this)" style="display:none;width:0;height:0;position:absolute;opacity:0">
+	<input id="plBInp" type="file" accept="image/*" onchange="upPlB(this)" style="display:none;width:0;height:0;position:absolute;opacity:0">
       </div>
       <div class="tp-body">
+        <div><div class="tp-stitle">🔄外援<span class="badge" id="tbGuestB">0/1</span></div><div class="tp-pool" id="tbGuestP"></div></div>
+        <div class="tp-divider"></div>
         <div><div class="tp-stitle">⛔<span style="color:var(--ban-color)">禁用</span><span class="badge bb" id="tbBanB">0/4</span></div><div class="tp-pool" id="tbBanP"></div></div>
         <div class="tp-divider"></div>
-        <div><div class="tp-stitle">⭐<span style="color:var(--tb-color)">选取</span><span class="badge pb" id="tbPickB">0/6</span></div><div class="tp-pool" id="tbPickP"></div></div>
-        <div class="tp-divider"></div>
-        <div><div class="tp-stitle">🔄外援<span class="badge" id="tbGuestB">0/1</span></div><div class="tp-pool" id="tbGuestP"></div></div>
+        <div><div class="tp-stitle">⭐<span style="color:var(--tb-color)">选取</span><span class="badge pb" id="tbPickB">0/6</span></div><div class="tp-pool pick-pool" id="tbPickP"></div></div>
       </div>
       <div class="tp-footer">
         <div class="tp-fin-row"><span class="lbl">💎已用源石锭</span><input id="ingotB" type="number" value="300" min="0" onchange="S.ingB=Math.max(0,this.valueAsNumber||0);updBal()"></div>
@@ -297,17 +318,35 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 </div>
 
 <script>
-var PRTS_HASH = {
-  '可露希尔':'a/a5','凛御银灰':'3/3d','贝洛内':'8/83',
-  '赤刃明霄陈':'d/d0','怒潮凛冬':'8/81','焰狐龙梓兰':'2/20',
-  '圣聆初雪':'a/ab','维伊':'5/56','缇缇':'a/aa',
-  '凯尔希·思衡托':'5/57','溯光星源':'d/d0','娜斯提':'9/97',
-  '望':'3/38','Sharp':'1/16','Mechanist':'4/4a','Stormeye':'5/5b',
-  'Pith':'1/1c','Touch':'2/25','Misery':'7/76','郁金香':'9/99'
+var PRTS_HALFBODY = {
+  "推进之王":"9/98","风笛":"e/ea","嵯峨":"a/a4","琴柳":"2/28","焰尾":"9/92","伺夜":"f/fc","缪尔赛思":"4/4a","伊内丝":"5/59","忍冬":"b/b5","可露希尔":"5/5f","郁金香":"7/75","凛御银灰":"0/03",
+  "银灰":"9/90","史尔特尔":"5/58","玛恩纳":"b/b1","棘刺":"0/08","山":"7/7b","耀骑士临光":"d/db","陈":"e/e1","斯卡蒂":"a/a5","仇白":"4/40","锏":"7/72","薇薇安娜":"5/5d","赫德雷":"b/b4","止颂":"4/49","佩佩":"2/24","重岳":"e/e5","煌":"1/1c","赫拉格":"8/82","帕拉斯":"7/72","艾丽妮":"b/bd","百炼嘉维尔":"e/ed","圣约送葬人":"7/71","左乐":"9/93","乌尔比安":"2/20","维娜·维多利亚":"1/16","隐德来希":"3/3f","司霆惊蛰":"c/c5","贝洛内":"1/1c","赤刃明霄陈":"5/50","怒潮凛冬":"9/9c","丰川祥子":"d/d9","Sharp":"d/d3",
+  "塞雷娅":"4/44","星熊":"2/22","年":"4/4d","森蚺":"4/4a","号角":"8/85","瑕光":"a/a6","斥罪":"e/e7","涤火杰西卡":"1/1e","塑心":"7/7e","黍":"5/52","余":"7/73","泥岩":"0/08","信仰搅拌机":"8/8a","斩业星熊":"f/f4","Mechanist":"4/43",
+  "能天使":"2/2e","假日威龙陈":"5/51","W":"4/45","黑":"2/23","早露":"9/92","迷迭香":"9/9a","空弦":"8/86","远牙":"4/4f","菲亚梅塔":"f/f8","鸿雪":"4/4d","提丰":"5/51","莱伊":"c/c8","维什戴尔":"5/5a","娜仁图亚":"3/3c","蕾缪安":"3/30","灰烬":"f/fa","焰狐龙梓兰":"3/3d","Stormeye":"e/e4",
+  "艾雅法拉":"3/36","伊芙利特":"2/23","莫斯提马":"f/fc","刻俄柏":"6/69","夕":"f/f2","卡涅利安":"3/36","澄闪":"1/17","林":"7/75","霍尔海雅":"5/5a","逻各斯":"0/0a","异客":"d/d3","黑键":"e/e6","妮芙":"4/49","荒芜拉普兰德":"a/ac","烛煌":"8/89","圣聆初雪":"2/25","玛露西尔":"1/13","死芒":"d/df","真言":"5/5d","维伊":"d/d2","Pith":"6/65",
+  "闪灵":"d/d6","夜莺":"e/e9","凯尔希":"c/c0","焰影苇草":"a/ae","纯烬艾雅法拉":"b/bd","流明":"9/9f","缇缇":"6/64","凯尔希·思衡托":"7/7b","Touch":"2/27",
+  "安洁莉娜":"3/30","铃兰":"f/fe","麦哲伦":"c/c7","令":"d/d6","灵知":"a/a9","白铁":"e/e5","浊心斯卡蒂":"7/7f","淬羽赫默":"5/54","魔王":"8/8c","酒神":"e/ef","溯光星源":"5/50","电弧":"2/24","遥":"0/03","娜斯提":"1/14","Raidian":"7/70",
+  "阿":"7/72","温蒂":"5/5f","歌蕾蒂娅":"3/33","水月":"2/22","归溟幽灵鲨":"f/f7","缄默德克萨斯":"0/0d","麒麟R夜刀":"1/16","阿斯卡纶":"0/08","傀影":"a/ad","老鲤":"e/e8","琳琅诗怀雅":"9/99","多萝西":"0/04","艾拉":"1/12","引星棘刺":"d/d7","新约能天使":"f/f6","弑君者":"e/e9","望":"1/15","Misery":"a/ab"
 };
+var PRTS_HEAD = {
+  "推进之王":"b/ba","风笛":"d/de","嵯峨":"6/6d","琴柳":"9/96","焰尾":"c/c8","伺夜":"d/df","缪尔赛思":"3/3a","伊内丝":"8/8c","忍冬":"7/79","可露希尔":"a/a5","郁金香":"f/f3","凛御银灰":"3/3d",
+  "银灰":"2/27","史尔特尔":"e/e1","玛恩纳":"0/08","棘刺":"2/2a","山":"e/ec","耀骑士临光":"0/03","陈":"c/cf","斯卡蒂":"5/53","仇白":"8/8a","锏":"0/0f","薇薇安娜":"4/4a","赫德雷":"f/f8","止颂":"7/72","佩佩":"8/85","重岳":"0/09","煌":"3/30","赫拉格":"c/cd","帕拉斯":"a/ad","艾丽妮":"5/57","百炼嘉维尔":"1/1b","圣约送葬人":"7/7e","左乐":"e/e0","乌尔比安":"3/33","维娜·维多利亚":"6/68","隐德来希":"4/4c","司霆惊蛰":"5/5c","贝洛内":"8/83","赤刃明霄陈":"d/d0","怒潮凛冬":"8/81","丰川祥子":"c/cb","Sharp":"b/b4",
+  "塞雷娅":"e/ee","星熊":"0/07","年":"9/9c","森蚺":"7/74","号角":"3/3f","瑕光":"f/f7","斥罪":"1/1c","涤火杰西卡":"1/14","塑心":"0/05","黍":"f/f2","余":"6/66","泥岩":"0/06","信仰搅拌机":"1/13","斩业星熊":"e/e5","Mechanist":"2/2c",
+  "能天使":"a/ad","假日威龙陈":"d/df","W":"d/d6","黑":"d/d4","早露":"6/63","迷迭香":"3/3b","空弦":"b/bb","远牙":"a/a1","菲亚梅塔":"b/b8","鸿雪":"1/1b","提丰":"7/70","莱伊":"6/6a","维什戴尔":"6/66","娜仁图亚":"b/ba","蕾缪安":"c/c5","灰烬":"6/64","焰狐龙梓兰":"2/20","Stormeye":"8/8e",
+  "艾雅法拉":"c/cc","伊芙利特":"e/ed","莫斯提马":"0/0b","刻俄柏":"4/4a","夕":"6/6b","卡涅利安":"d/dd","澄闪":"a/ab","林":"a/aa","霍尔海雅":"9/9e","逻各斯":"4/44","异客":"d/d2","黑键":"1/1e","妮芙":"1/1a","荒芜拉普兰德":"0/04","烛煌":"c/c4","圣聆初雪":"a/ab","玛露西尔":"8/84","死芒":"d/d9","真言":"6/63","维伊":"5/56","Pith":"5/59",
+  "闪灵":"5/54","夜莺":"6/64","凯尔希":"c/c5","焰影苇草":"9/94","纯烬艾雅法拉":"f/f0","流明":"7/72","缇缇":"a/aa","凯尔希·思衡托":"5/57","Touch":"3/35",
+  "安洁莉娜":"c/ca","铃兰":"5/55","麦哲伦":"4/4d","令":"2/2c","灵知":"9/9f","白铁":"2/2e","浊心斯卡蒂":"8/80","淬羽赫默":"0/0d","魔王":"d/de","酒神":"0/0d","溯光星源":"d/d0","电弧":"5/56","遥":"e/ec","娜斯提":"9/97","Raidian":"6/65",
+  "阿":"3/31","温蒂":"9/93","歌蕾蒂娅":"0/0d","水月":"0/05","归溟幽灵鲨":"b/be","缄默德克萨斯":"b/b8","麒麟R夜刀":"e/e5","阿斯卡纶":"7/76","傀影":"8/83","老鲤":"e/e5","琳琅诗怀雅":"7/74","多萝西":"4/4f","艾拉":"2/26","引星棘刺":"3/3b","新约能天使":"3/3a","弑君者":"1/12","望":"3/38","Misery":"3/3f"
+};
+function imgUrl(op, type) {
+  var map = type === 'head' ? PRTS_HEAD : PRTS_HALFBODY;
+  var h = map[op.name];
+  if (!h) return '';
+  var fn = type === 'head' ? '头像_' + op.name + '.png' : '半身像_' + op.name + '_1.png';
+  return 'https://media.prts.wiki/' + h + '/' + encodeURIComponent(fn);
+}
 function prtsUrl(name) {
-  var h = PRTS_HASH[name];
-  return h ? 'https://media.prts.wiki/' + h + '/' + encodeURIComponent('头像_' + name + '.png') : null;
+  return imgUrl({name:name}, 'halfbody');
 }
 </script>
 <script>
@@ -329,11 +368,13 @@ var S = {
   ingA:300,ingB:300,budgetA:500,budgetB:500,side:'ab',
   ops:[],banA:[],banB:[],pickA:[],pickB:[],guestA:[],guestB:[],pubBan:[],
   curAct:'ban_a',curCls:'all',history:[],
-  bo:1,round:1,lockedOps:[],historyRounds:[]
+  bo:1,round:1,lockedOps:[],historyRounds:[],
+  countdown:120,cdRemain:120,cdEnabled:true,cdPaused:false
 };
 
-function iu(op){return 'https://cdn.jsdelivr.net/gh/yuanyan3060/ArknightsGameResource@main/portrait/'+op.id+'_1.png'}
-function iu2(op){return 'https://raw.githubusercontent.com/yuanyan3060/ArknightsGameResource/main/portrait/'+op.id+'_1.png'}
+function iu(op){return imgUrl(op,'halfbody')}
+function iuHead(op){return imgUrl(op,'head')}
+function toggleCdPause(){S.cdPaused=!S.cdPaused;saveState();renderUI()}
 
 function init(keepBO){
   S.ops=OPERATORS.map(function(o){o=Object.assign({},o);o.status='avail';return o});
@@ -341,7 +382,7 @@ function init(keepBO){
   S.round=1;S.history=[];
   if(!keepBO){S.bo=1}
   S.curAct=S.side==='ab'?'ban_a':'ban_b';S.curCls='all';
-  S.ingA=300;S.ingB=300;S.budgetA=500;S.budgetB=500;
+  S.ingA=300;S.ingB=300;S.budgetA=500;S.budgetB=500;S.cdRemain=S.countdown;S.cdPaused=false;
   var r1=document.getElementById('taRestartSw'),r2=document.getElementById('tbRestartSw');
   if(r1){r1.checked=false;document.getElementById('taRestCnt').value=0;document.getElementById('taRestCnt').disabled=true}
   if(r2){r2.checked=false;document.getElementById('tbRestCnt').value=0;document.getElementById('tbRestCnt').disabled=true}
@@ -362,6 +403,9 @@ function render(){
 }
 // renderUI: 只更新界面（不重建干员网格图片），适用于BP操作后刷新
 function renderUI(){
+  // 阶段切换时重置倒计时（但首次加载保留已有状态）
+  if(!S._lastAct){S._lastAct=S.curAct;if(S.cdRemain===undefined)S.cdRemain=S.countdown}
+  else if(S.curAct!==S._lastAct){S._lastAct=S.curAct;if(!S.cdPaused){S.cdRemain=S.countdown}}
   // 更新干员卡片状态类（不重建img，防止图片闪现）
   document.querySelectorAll('.op-card').forEach(function(card){
     var oid=card.dataset.opid;if(!oid)return;
@@ -378,10 +422,11 @@ function renderUI(){
   ];
   pools.forEach(function(e){
     var c=document.getElementById(e[0]);if(!c)return;
+    var isPick=e[0].indexOf('Pick')!==-1;
     var ph='';
     e[1].forEach(function(op){
       var tag=e[2];
-      ph+='<div class="slot '+tag+'" title="'+op.name+'"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.src=\''+iu2(op)+'\';this.onerror=function(){this.onerror=null;var u=prtsUrl(\''+op.name+'\');if(u){this.src=u;this.onerror=function(){this.onerror=null;this.style.display=\'none\'}}else{this.style.display=\'none\'}}"></div>';
+      ph+='<div class="slot '+tag+'" title="'+op.name+'"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display=\'none\'">'+(isPick?'<span class="sname">'+op.name+'</span>':'')+'</div>';
     });
     for(var i=e[1].length;i<e[3];i++)ph+='<div class="slot empty"></div>';
     c.innerHTML=ph;
@@ -396,6 +441,26 @@ function renderUI(){
   var a=S.curAct,team,tc,ac,am={ban_a:'禁用',ban_b:'禁用',pick_a:'选取',pick_b:'选取',guest_a:'选外援',guest_b:'选外援',pubban:'公ban'};
   if(a==='pubban'){team='全局';tc='';ac='ban'}else{team=(a==='guest_a'||a==='guest_b')?(a==='guest_a'?'A队':'B队'):(a.endsWith('_a')?'A队':'B队');tc=(a==='guest_a'||a==='guest_b')?'guest':(a.endsWith('_a')?'ta':'tb');ac=a.startsWith('ban')?'ban':a.startsWith('pick')?'pick':'guest'}
   document.getElementById('phaseTxt').innerHTML='<span class="hl '+tc+'">'+team+'</span><span class="hl '+ac+'">'+(am[a]||'BP')+'</span>';
+  // 中间头部阶段状态
+  var psEl=document.getElementById('phaseStatus');
+  if(psEl){
+    var pMap={ban_a:'禁用阶段，A队禁用一名角色',ban_b:'禁用阶段，B队禁用一名角色',pick_a:'选取阶段，A队选择一名角色',pick_b:'选取阶段，B队选择一名角色',guest_a:'外援阶段，A队选择一名角色',guest_b:'外援阶段，B队选择一名角色',pubban:'公ban阶段，全局禁用一名角色'};
+    var pt='';
+    if(S.bo>1)pt='第'+S.round+'轮';
+    pt+=(pMap[a]||'');
+    psEl.textContent='当前'+pt;
+  }
+  // 倒计时显示
+  var cdEl=document.getElementById('cdDisplay');
+  var pauseBtn=document.getElementById('cdPauseBtn');
+  if(cdEl){
+    if(!S.cdEnabled||!S.countdown||S.countdown<=0){cdEl.style.display='none'}else{
+      cdEl.style.display='';var r=Math.max(0,S.cdRemain||0);
+      cdEl.textContent='倒计时:'+r+'s'+(S.cdPaused?' ⏸':'');
+      cdEl.style.color=r<=0?'var(--ban-color)':'var(--gold-bright)';
+      if(pauseBtn){pauseBtn.textContent=S.cdPaused?'▶':'⏸';pauseBtn.style.color=S.cdPaused?'var(--gold)':'var(--text-dim)'}
+    }
+  }
   var badges=[['taBanB',S.banA,S.maxBan],['tbBanB',S.banB,S.maxBan],['taPickB',S.pickA,S.maxPick],['tbPickB',S.pickB,S.maxPick],['taGuestB',S.guestA,S.maxGuest],['tbGuestB',S.guestB,S.maxGuest]];
   badges.forEach(function(e){var el=document.getElementById(e[0]);if(el)el.textContent=e[1].length+'/'+e[2];});
   document.querySelectorAll('.abtn').forEach(function(b){
@@ -421,8 +486,43 @@ function renderUI(){
     if(!hb&&S.historyRounds.length){hb=document.createElement('button');hb.id='roundHistBtn';hb.textContent='📜';hb.title='查看历史回合';hb.style.cssText='margin-left:4px;background:none;border:none;cursor:pointer;font-size:13px;color:var(--gold);padding:0 2px;vertical-align:middle';hb.onclick=showRoundHist;rEl.after(hb)}
     if(hb&&!S.historyRounds.length)hb.remove()
   }else{if(rEl)rEl.remove();var hb2=document.getElementById('roundHistBtn');if(hb2)hb2.remove()}
-  updBal();
+  updBal();fitPools();
 }
+
+// BP栏自适应缩放：线性比例缩小，网格+选取池都参与；允许缩到很小
+function fitPools(){
+  document.querySelectorAll('.team-panel').forEach(function(p){
+    var b=p.querySelector('.tp-body');if(!b)return;
+    b.style.removeProperty('--pick-s');b.style.removeProperty('--pick-h');b.style.removeProperty('--pool-h');
+    b.classList.remove('sp');
+    if(!b.querySelector('.slot:not(.empty)'))return;
+    requestAnimationFrame(function(){
+      if(b.scrollHeight<=b.clientHeight)return;
+      // 少于5个不缩（4个以内都能放下）
+      var pkn=b.querySelectorAll('.pick-pool .slot:not(.empty)').length;
+      var gpn=b.querySelectorAll('.tp-pool:not(.pick-pool) .slot:not(.empty)').length;
+      if(pkn<=4&&gpn<=4)return;
+      // 第一遍：基于原始内容高度计算比例
+      var oh=b.scrollHeight,ratio=Math.max(0.06,(b.clientHeight-8)/oh);
+      function ap(f){
+        var pk=b.querySelector('.pick-pool');
+        if(pk&&pk.querySelector('.slot:not(.empty)')){
+          b.style.setProperty('--pick-s',Math.max(8,Math.floor(56*f))+'px');
+          b.style.setProperty('--pick-h',Math.max(8,Math.floor(56*f))+'px');
+        }
+        if(b.querySelector('.tp-pool .slot:not(.empty)')){
+          b.classList.add('sp');
+          b.style.setProperty('--pool-h',Math.max(6,Math.floor(70*f))+'px');
+        }
+        requestAnimationFrame(function(){
+          if(b.scrollHeight>b.clientHeight&&f>0.06)ap(Math.max(0.06,f-0.03))
+        });
+      }
+      ap(ratio);
+    });
+  });
+}
+window.addEventListener('resize',fitPools);
 
 function renderGrid(){
   var g=document.getElementById('opGrid');if(!g)return;
@@ -436,7 +536,7 @@ function renderGrid(){
       +'<div class="plh-bg" id="plh-'+safe+'">'+init+'</div>'
       +'<img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async"'
       +' onload="document.getElementById(\'plh-'+safe+'\')?.classList.add(\'hide\')"'
-      +' onerror="var p=document.getElementById(\'plh-'+safe+'\');this.onerror=null;this.src=\''+iu2(op)+'\';this.onerror=function(){this.onerror=null;var u=prtsUrl(\''+op.name+'\');if(u){this.src=u;this.onerror=function(){this.onerror=null;this.style.display=\'none\';if(p)p.style.opacity=\'1\'}}else{this.style.display=\'none\';if(p)p.style.opacity=\'1\'}}">'
+      +' onerror="var p=document.getElementById(\'plh-'+safe+'\');this.onerror=null;this.style.display=\'none\';if(p)p.style.opacity=\'1\'">'
       +'<span class="oclass">'+ic+'</span>'
       +'<span class="oname">'+op.name+'</span></div>';
   });
@@ -454,14 +554,88 @@ function updBal(){
 function toggleHeroUrl(){var i=document.getElementById('hero-url-inp');i.style.display=i.style.display==='block'?'none':'block';if(i.style.display==='block')i.focus()}
 function setHeroUrl(u){if(!u)return;var img=document.getElementById('hero-img');img.src=u;img.classList.remove('hide');document.getElementById('hero-fallback').classList.remove('show');document.getElementById('hero-url-inp').style.display='none';document.getElementById('hero-url-inp').value='';try{localStorage.setItem('ytb_hero',u)}catch(e){}}
 function uploadHero(i){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){document.getElementById('hero-img').src=e.target.result;document.getElementById('hero-img').classList.remove('hide');document.getElementById('hero-fallback').classList.remove('show');try{localStorage.setItem('ytb_hero',e.target.result)}catch(e){}};r.readAsDataURL(f);i.value=''}
-function upAv(id,i){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){document.getElementById(id).src=e.target.result};r.readAsDataURL(f);i.value=''}
-
+function upAvA(i){
+  var f=i.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var src=e.target.result;
+    document.getElementById('taAvatar').src=src;
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas'),max=256,w=img.width,h=img.height;
+      if(w>max||h>max){if(w>h){c.width=max;c.height=Math.round(h*max/w)}else{c.height=max;c.width=Math.round(w*max/h)}}
+      else{c.width=w;c.height=h}
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      try{localStorage.setItem('ytb_av_taAvatar',c.toDataURL('image/jpeg',0.85));toast('✅A队头像已保存')}catch(e){toast('⚠A队头像保存失败，容量不足')}
+    };
+    img.src=src;
+  };
+  r.readAsDataURL(f);i.value=''
+}
+function upAvB(i){
+  var f=i.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var src=e.target.result;
+    document.getElementById('tbAvatar').src=src;
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas'),max=256,w=img.width,h=img.height;
+      if(w>max||h>max){if(w>h){c.width=max;c.height=Math.round(h*max/w)}else{c.height=max;c.width=Math.round(w*max/h)}}
+      else{c.width=w;c.height=h}
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      try{localStorage.setItem('ytb_av_tbAvatar',c.toDataURL('image/jpeg',0.85));toast('✅B队头像已保存')}catch(e){toast('⚠B队头像保存失败，容量不足')}
+    };
+    img.src=src;
+  };
+  r.readAsDataURL(f);i.value=''
+}
+function upPlA(i){
+  var f=i.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var src=e.target.result;
+    document.getElementById('taPlAvatar').src=src;
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas'),max=128,w=img.width,h=img.height;
+      if(w>max||h>max){if(w>h){c.width=max;c.height=Math.round(h*max/w)}else{c.height=max;c.width=Math.round(w*max/h)}}
+      else{c.width=w;c.height=h}
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      try{localStorage.setItem('ytb_pl_taPlAvatar',c.toDataURL('image/jpeg',0.85));toast('✅A队选手头像已保存')}catch(e){toast('⚠A队选手头像保存失败')}
+    };
+    img.src=src;
+  };
+  r.readAsDataURL(f);i.value=''
+}
+function upPlB(i){
+  var f=i.files[0];if(!f)return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var src=e.target.result;
+    document.getElementById('tbPlAvatar').src=src;
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas'),max=128,w=img.width,h=img.height;
+      if(w>max||h>max){if(w>h){c.width=max;c.height=Math.round(h*max/w)}else{c.height=max;c.width=Math.round(w*max/h)}}
+      else{c.width=w;c.height=h}
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      try{localStorage.setItem('ytb_pl_tbPlAvatar',c.toDataURL('image/jpeg',0.85));toast('✅B队选手头像已保存')}catch(e){toast('⚠B队选手头像保存失败')}
+    };
+    img.src=src;
+  };
+  r.readAsDataURL(f);i.value=''
+}
 var bgmP=document.getElementById('bgmPlayer'),bgmBtn=document.getElementById('bgmPlayBtn'),bgmL=false;
 bgmBtn.onclick=function(){if(!bgmL){document.getElementById('bgm-file').click();return}if(bgmP.paused){bgmP.play();this.textContent='🔊'}else{bgmP.pause();this.textContent='🎵'}};
 document.getElementById('bgmVol').oninput=function(){bgmP.volume=parseFloat(this.value)};
 function loadBGM(i){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=function(e){bgmP.src=e.target.result;bgmP.volume=parseFloat(document.getElementById('bgmVol').value);bgmP.play().catch(function(){});bgmBtn.textContent='🔊';bgmL=true;try{localStorage.setItem('ytb_bgm',e.target.result)}catch(e){}};r.readAsDataURL(f);i.value=''}
 try{var h=localStorage.getItem('ytb_hero');if(h){document.getElementById('hero-img').src=h;document.getElementById('hero-img').classList.remove('hide');document.getElementById('hero-fallback').classList.remove('show')}}catch(e){}
 try{var b=localStorage.getItem('ytb_bgm');if(b){bgmP.src=b;bgmBtn.textContent='🔊';bgmL=true}}catch(e){}
+try{var aa=localStorage.getItem('ytb_av_taAvatar');if(aa)document.getElementById('taAvatar').src=aa}catch(e){}
+try{var ab=localStorage.getItem('ytb_av_tbAvatar');if(ab)document.getElementById('tbAvatar').src=ab}catch(e){}
+try{var pla=localStorage.getItem('ytb_pl_taPlAvatar');if(pla)document.getElementById('taPlAvatar').src=pla}catch(e){}
+try{var plb=localStorage.getItem('ytb_pl_tbPlAvatar');if(plb)document.getElementById('tbPlAvatar').src=plb}catch(e){}
 
 function swapSide(){S.side=document.getElementById('sideSelect').value;if(S.history.length>0&&!confirm('切换红蓝方将重置当前BP，是否继续？')){document.getElementById('sideSelect').value=S.side;return}init(true);render();toast('🔀已切换红蓝方')}
 function toggleRest(t){var sw=document.getElementById(t==='A'?'taRestartSw':'tbRestartSw'),inp=document.getElementById(t==='A'?'taRestCnt':'tbRestCnt');inp.disabled=!sw.checked;if(!sw.checked)inp.value=0}
@@ -481,7 +655,7 @@ function nextAct(cur){
   if(S.guestA.length<S.maxGuest)return'guest_a';if(S.guestB.length<S.maxGuest)return'guest_b';
   // BO 回合完成判定
   if(S.bo>1&&S.round<S.bo&&S.banA.length>=S.maxBan&&S.banB.length>=S.maxBan&&S.pickA.length>=S.maxPick&&S.pickB.length>=S.maxPick&&S.guestA.length>=S.maxGuest&&S.guestB.length>=S.maxGuest){
-    completeRound();return S.curAct
+    showRoundConfirm();return S.curAct
   }
   if(S.bo>1&&S.round>=S.bo)toast('🎉全部BO'+S.bo+'已完成！');
   else toast('🎉全部BP已完成！');
@@ -530,7 +704,7 @@ function removePubBan(id){
   for(var i=S.history.length-1;i>=0;i--){if(S.history[i].action==='pubban'&&S.history[i].opId===id){S.history.splice(i,1);break}}
   S.pubBan.splice(idx,1);renderUI();saveState();
 }
-function openCfg(){document.getElementById('inpTaN').value=S.teamA.name;document.getElementById('inpTaP').value=S.teamA.player;document.getElementById('inpTbN').value=S.teamB.name;document.getElementById('inpTbP').value=S.teamB.player;document.getElementById('inpBan').value=S.maxBan;document.getElementById('inpPick').value=S.maxPick;document.getElementById('inpGuest').value=S.maxGuest;document.getElementById('inpBo').value=S.bo;document.getElementById('modal').classList.add('open')}
+function openCfg(){document.getElementById('inpTaN').value=S.teamA.name;document.getElementById('inpTaP').value=S.teamA.player;document.getElementById('inpTbN').value=S.teamB.name;document.getElementById('inpTbP').value=S.teamB.player;document.getElementById('inpBan').value=S.maxBan;document.getElementById('inpPick').value=S.maxPick;document.getElementById('inpGuest').value=S.maxGuest;document.getElementById('inpBo').value=S.bo;document.getElementById('inpCd').value=S.countdown;document.getElementById('inpCdEn').checked=S.cdEnabled;document.getElementById('modal').classList.add('open')}
 function closeModal(){document.getElementById('modal').classList.remove('open')}
 function applyCfg(){
   S.teamA.name=document.getElementById('inpTaN').value.trim()||'泰拉联合';S.teamA.player=document.getElementById('inpTaP').value.trim()||'选手A';
@@ -549,7 +723,7 @@ function applyCfg(){
     S.bo=nbo;S.round=1;S.lockedOps=[];S.historyRounds=[];S.history=[];
     S.ops.forEach(function(o){o.status='avail'});
   }
-  S.maxBan=nb;S.maxPick=np;S.maxGuest=ng;S.bo=nbo;closeModal();toast('✅配置已更新');saveState();render()
+  S.maxBan=nb;S.maxPick=np;S.maxGuest=ng;S.bo=nbo;S.countdown=Math.min(300,Math.max(0,parseInt(document.getElementById('inpCd').value)||120));S.cdRemain=S.countdown;S.cdPaused=false;S.cdEnabled=document.getElementById('inpCdEn').checked;closeModal();toast('✅配置已更新');saveState();render()
 }
 function confirmReset(){document.getElementById('cfrm-msg').textContent='确定一键重置？所有BP数据将被清空！';document.getElementById('cfrm-y').onclick=function(){document.getElementById('cfrm').classList.remove('open');resetAll()};document.getElementById('cfrm-n').onclick=function(){document.getElementById('cfrm').classList.remove('open')};document.getElementById('cfrm').classList.add('open')}
 function resetAll(){localStorage.removeItem('ytb_bp');init();render();toast('↻已全部重置')}
@@ -560,6 +734,7 @@ var SAVE_VER=1;
 function saveState(){
   var data={_v:SAVE_VER,teamA:S.teamA,teamB:S.teamB,maxBan:S.maxBan,maxPick:S.maxPick,maxGuest:S.maxGuest,bo:S.bo,round:S.round,
     ingA:S.ingA,ingB:S.ingB,budgetA:S.budgetA,budgetB:S.budgetB,side:S.side,sched:S.sched,
+    countdown:S.countdown,cdRemain:S.cdRemain,cdEnabled:S.cdEnabled,cdPaused:S.cdPaused,
     banA:S.banA,banB:S.banB,pickA:S.pickA,pickB:S.pickB,guestA:S.guestA,guestB:S.guestB,pubBan:S.pubBan,
     lockedOps:S.lockedOps,historyRounds:S.historyRounds,
     history:S.history.map(function(h){return{action:h.action,opId:h.opId}})};
@@ -573,7 +748,7 @@ function loadState(){
     // 必须先初始化干员列表，因为loadState成功后不会走init()
     S.ops=OPERATORS.map(function(o){o=Object.assign({},o);o.status='avail';return o});
     ['teamA','teamB','maxBan','maxPick','maxGuest','bo','round','ingA','ingB','budgetA','budgetB','side','sched',
-     'banA','banB','pickA','pickB','guestA','guestB','pubBan','lockedOps','historyRounds','history'].forEach(function(k){
+     'banA','banB','pickA','pickB','guestA','guestB','pubBan','lockedOps','historyRounds','history','countdown','cdRemain','cdEnabled','cdPaused'].forEach(function(k){
       if(d[k]!==undefined)S[k]=d[k];
     });
     S.ops.forEach(function(o){o.status='avail'});
@@ -589,6 +764,21 @@ function loadState(){
     return true;
   }catch(e){localStorage.removeItem('ytb_bp');return false}
 }
+// === BO回合切换：确认弹窗 ===
+function showRoundConfirm(){
+  document.getElementById('cfrm-msg').textContent='第'+S.round+'轮BP已完成，是否进入第'+(S.round+1)+'轮？';
+  document.getElementById('cfrm-y').onclick=function(){
+    document.getElementById('cfrm').classList.remove('open');
+    if(S.banA.length>=S.maxBan&&S.banB.length>=S.maxBan&&S.pickA.length>=S.maxPick&&S.pickB.length>=S.maxPick&&S.guestA.length>=S.maxGuest&&S.guestB.length>=S.maxGuest){
+      completeRound()
+    }else{toast('⏸BP未完成，继续操作')}
+  };
+  document.getElementById('cfrm-n').onclick=function(){
+    document.getElementById('cfrm').classList.remove('open');
+    toast('⏸已暂停，可以撤销调整后继续')
+  };
+  document.getElementById('cfrm').classList.add('open')
+}
 // === BO回合完成：锁定本回合所有干员，进入下一轮 ===
 function completeRound(){
   var used=[].concat(S.banA,S.banB,S.pickA,S.pickB,S.guestA,S.guestB,S.pubBan);
@@ -601,52 +791,289 @@ function completeRound(){
   saveState();render();toast('🎯第'+(S.round-1)+'轮结束·进入第'+S.round+'轮！')
 }
 function exportImage(){
-  toast('📷正在生成图片...');
-  var W=1200,rowH=90,padX=40,padY=40,secGap=4,imgSize=68,imgGap=6;
-  var hasBan=S.banA.length||S.banB.length,hasPick=S.pickA.length||S.pickB.length,hasGuest=S.guestA.length||S.guestB.length;
-  var rows=1+(hasBan?1:0)+(hasPick?1:0)+(hasGuest?1:0);
-  var H=padY*2+rows*rowH+secGap*3;
-  var c=document.createElement('canvas');c.width=W;c.height=H;
-  var cx=c.getContext('2d');
-  // 背景
-  var bg=cx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#1A0D0D');bg.addColorStop(1,'#0E0606');
-  cx.fillStyle=bg;cx.fillRect(0,0,W,H);
-  // 标题
-  cx.textAlign='center';cx.textBaseline='top';
-  cx.fillStyle='#FFE88A';cx.font='bold 34px "Microsoft YaHei",sans-serif';
-  cx.fillText('🏆应天杯 · Ban & Pick 选人结果',W/2,25);
-  cx.fillStyle='#D4A854';cx.font='15px "Microsoft YaHei",sans-serif';
-  cx.fillText('「萨卡兹的无终奇语」  '+(S.side==='ab'?'🔴A先手':'🔵B先手')+'  日期:'+S.sched,W/2,62);
-  // 队伍信息
-  var teamW=(W-80)/2;cx.textAlign='center';cx.textBaseline='top';
-  cx.fillStyle='#FF5522';cx.font='bold 22px "Microsoft YaHei",sans-serif';
-  cx.fillText('🔴 '+S.teamA.name+' ('+S.teamA.player+')',padX+teamW/2,90);
-  cx.fillStyle='#2288FF';
-  cx.fillText('🔵 '+S.teamB.name+' ('+S.teamB.player+')',padX+teamW+teamW/2,90);
-  // 加载并绘制图片
-  var allImgs=[];var loaded=0;
-  function drawSection(label,list,color,x,y){
-    cx.fillStyle=color;cx.font='bold 13px "Microsoft YaHei",sans-serif';cx.textAlign='left';
-    cx.fillText(label,x,y);
-    list.forEach(function(op,i){
-      var ix=x+80+i*(imgSize+imgGap);
-      var img=new Image();img.crossOrigin='anonymous';
-      img.onload=function(){cx.save();cx.beginPath();if(cx.roundRect)cx.roundRect(ix,y+16,imgSize,imgSize,4);else cx.rect(ix,y+16,imgSize,imgSize);cx.clip();cx.drawImage(img,ix,y+16,imgSize,imgSize);cx.restore();loaded++;if(loaded>=allImgs.length)finish()};
-      img.onerror=function(){loaded++;if(loaded>=allImgs.length)finish()};
-      img.src=iu(op);allImgs.push(img);
-    });
+  var W = 1920, H = 1080, padX = 30, padY = 30, allImgs = [], loaded = 0, bgImg = null;
+  var hasBan = S.banA.length || S.banB.length;
+  var hasPick = S.pickA.length || S.pickB.length;
+  var hasGuest = S.guestA.length || S.guestB.length;
+  var banSz = 115, pickW = 200, pickH = 400, guestSz = 140, gap = 10, labelH = 30, titleH = 135;
+  var c = document.createElement('canvas');
+  var imgCache = {};
+  // 加载队伍头像
+  var teamImgA = null, teamImgB = null, plImgA = null, plImgB = null;
+  try{
+    var taEl = document.getElementById('taAvatar');
+    if(taEl && taEl.src && taEl.src.length>100){teamImgA=new Image();teamImgA.crossOrigin='anonymous';teamImgA.src=taEl.src}
+    var tbEl = document.getElementById('tbAvatar');
+    if(tbEl && tbEl.src && tbEl.src.length>100){teamImgB=new Image();teamImgB.crossOrigin='anonymous';teamImgB.src=tbEl.src}
+    var plAEl = document.getElementById('taPlAvatar');
+    if(plAEl && plAEl.src && plAEl.src.length>100){plImgA=new Image();plImgA.crossOrigin='anonymous';plImgA.src=plAEl.src}
+    var plBEl = document.getElementById('tbPlAvatar');
+    if(plBEl && plBEl.src && plBEl.src.length>100){plImgB=new Image();plImgB.crossOrigin='anonymous';plImgB.src=plBEl.src}
+  }catch(e){}
+
+  // 底图渲染：默认红→蓝渐变 + 可选的用户上传底图（淡化）
+  function drawBackground(ctx){
+    var g = ctx.createLinearGradient(0, 0, W, 0);
+    g.addColorStop(0, '#FF3311');
+    g.addColorStop(0.25, '#662233');
+    g.addColorStop(0.5, '#333355');
+    g.addColorStop(0.75, '#224477');
+    g.addColorStop(1, '#2288FF');
+    ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = 'rgba(0,0,0,0.08)'; ctx.fillRect(0, 0, W, H);
+    if(bgImg){ ctx.save(); ctx.globalAlpha = 0.40; ctx.drawImage(bgImg, 0, 0, W, H); ctx.restore(); }
   }
-  var curY=116;
-  if(hasBan){curY+=secGap;drawSection('⛔ 禁用 ('+S.maxBan+')',S.banA,'#FF3B3B',padX,curY);drawSection('⛔ 禁用 ('+S.maxBan+')',S.banB,'#FF3B3B',padX+teamW,curY);curY+=rowH}
-  if(hasPick){curY+=secGap;drawSection('⭐ 选取 ('+S.maxPick+')',S.pickA,'#FF5522',padX,curY);drawSection('⭐ 选取 ('+S.maxPick+')',S.pickB,'#2288FF',padX+teamW,curY);curY+=rowH}
-  if(hasGuest){curY+=secGap;drawSection('🔄 外援 ('+S.maxGuest+')',S.guestA,'#D4A854',padX,curY);drawSection('🔄 外援 ('+S.maxGuest+')',S.guestB,'#D4A854',padX+teamW,curY)}
-  function finish(){var lnk=document.createElement('a');lnk.download='应天杯_BP_'+S.sched+'.png';lnk.href=c.toDataURL('image/png');lnk.click();toast('✅图片已导出')}
-  // 立即完成如果没有图片
-  if(!allImgs.length)finish()
+
+  // 内容绘制
+  function drawContent(ctx){
+    ctx.textBaseline = 'top';
+    var boText = S.bo>1 ? 'BO'+S.bo+' 第'+S.round+'轮' : 'BO1';
+    // A队 左侧
+    ctx.textAlign = 'left';
+    // 队伍头像
+    if(teamImgA && teamImgA.complete && teamImgA.naturalWidth>0){
+      ctx.save(); ctx.beginPath(); ctx.arc(padX+26, padY+26, 26, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(teamImgA, padX, padY, 52, 52); ctx.restore();
+    }else{
+      ctx.beginPath(); ctx.arc(padX+26, padY+26, 26, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,51,17,0.15)'; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(padX+26, padY+26, 26, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(255,51,17,0.3)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#FF5522'; ctx.font = 'bold 38px "Microsoft YaHei",sans-serif';
+    ctx.fillText(S.teamA.name, padX+90, padY+4);
+    ctx.fillStyle = '#D4A854'; ctx.font = '30px "Microsoft YaHei",sans-serif';
+    if(plImgA&&plImgA.complete&&plImgA.naturalWidth>0){
+      ctx.save(); ctx.beginPath(); ctx.arc(padX+90, padY+53, 18, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(plImgA, padX+72, padY+35, 36, 36); ctx.restore();
+      ctx.fillText(S.teamA.player, padX+114, padY+44);
+    }else{
+      ctx.fillText(S.teamA.player, padX+90, padY+46);
+    }
+    // B队 右侧
+    ctx.textAlign = 'right';
+    if(teamImgB && teamImgB.complete && teamImgB.naturalWidth>0){
+      ctx.save(); ctx.beginPath(); ctx.arc(W-padX-26, padY+26, 26, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(teamImgB, W-padX-52, padY, 52, 52); ctx.restore();
+    }else{
+      ctx.beginPath(); ctx.arc(W-padX-26, padY+26, 26, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(34,136,255,0.15)'; ctx.fill();
+    }
+    ctx.beginPath(); ctx.arc(W-padX-26, padY+26, 26, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(34,136,255,0.3)'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.fillStyle = '#2288FF'; ctx.font = 'bold 38px "Microsoft YaHei",sans-serif';
+    ctx.fillText(S.teamB.name, W-padX-90, padY+4);
+    ctx.fillStyle = '#D4A854'; ctx.font = '30px "Microsoft YaHei",sans-serif';
+    if(plImgB&&plImgB.complete&&plImgB.naturalWidth>0){
+      ctx.save(); ctx.beginPath(); ctx.arc(W-padX-112, padY+53, 18, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(plImgB, W-padX-130, padY+35, 36, 36); ctx.restore();
+      ctx.fillText(S.teamB.player, W-padX-90, padY+44);
+    }else{
+      ctx.fillText(S.teamB.player, W-padX-90, padY+46);
+    }
+    // 中标题
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#FFE88A'; ctx.font = 'bold 42px "Microsoft YaHei",sans-serif';
+    ctx.fillText('🏆应天杯 · '+boText+' · BP定阵', W/2, padY+16);
+    ctx.fillStyle = '#A09080'; ctx.font = '18px "Microsoft YaHei",sans-serif';
+    ctx.fillText('「萨卡兹的无终奇语」 '+(S.side==='ab'?'🔴A先手':'🔵B先手'), W/2, padY+78);
+    var sepY = padY + titleH;
+    ctx.strokeStyle = 'rgba(212,168,84,0.2)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padX+20, sepY); ctx.lineTo(W-padX-20, sepY); ctx.stroke();
+    var curY = sepY + 32;
+    // === 禁用+外援 同一行（A从左→中间，B从右→中间，对称）===
+    if(hasBan || hasGuest){
+      // A队 左→右（朝向中间）
+      ctx.textAlign = 'left';
+      var aLx = padX + 20;
+      ctx.fillStyle = '#FF3B3B'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillText('⛔禁用', aLx, curY);
+      aLx += 70;
+      S.banA.forEach(function(op,i){ placeHead(ctx, aLx+(banSz+gap)*i, curY+labelH+4, banSz, op, '#FF3B3B'); });
+      aLx += Math.max(1, S.banA.length) * (banSz + gap);
+      if(S.guestA.length){
+        aLx += 16;
+        ctx.fillStyle = '#D4A854'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+        ctx.fillText('🔄外援', aLx, curY);
+        aLx += 70;
+        S.guestA.forEach(function(op,i){ placeHead(ctx, aLx+(guestSz+gap)*i, curY+labelH+4, guestSz, op, '#D4A854'); });
+      }
+      // B队 右→左（朝向中间，对称）
+      ctx.textAlign = 'right';
+      var bRx = W - padX - 20;
+      ctx.fillStyle = '#FF3B3B'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillText('⛔禁用', bRx, curY);
+      bRx -= 70;
+      S.banB.forEach(function(op,i){ placeHead(ctx, bRx-(banSz+gap)*i-banSz, curY+labelH+4, banSz, op, '#FF3B3B'); });
+      bRx -= Math.max(1, S.banB.length) * (banSz + gap);
+      if(S.guestB.length){
+        bRx -= 16;
+        ctx.fillStyle = '#D4A854'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+        ctx.fillText('🔄外援', bRx, curY);
+        bRx -= 70;
+        S.guestB.forEach(function(op,i){ placeHead(ctx, bRx-(guestSz+gap)*i-guestSz, curY+labelH+4, guestSz, op, '#D4A854'); });
+      }
+      curY += labelH + Math.max(banSz, guestSz) + 18;
+    }
+    // === 选取（单行，3-5人自动间距，以四分位点为中心；5人以上缩小尺寸）===
+    if(hasPick){
+      curY += 28;
+      var centerMax = Math.max(S.pickA.length, S.pickB.length);
+      // 5人以上缩小图片尺寸和间距
+      var pW = pickW, pH = pickH;
+      if(centerMax >= 5){ pW = 160; pH = 320; }
+      var autoGap = Math.max(4, Math.floor(centerMax >= 5 ? 80 / centerMax : 130 / centerMax));
+      // A队 以左四分位点为中心
+      var aCenterX = W * 0.25;
+      var aCnt = S.pickA.length, aTotal = aCnt * pW + (aCnt-1) * autoGap;
+      var aStartX = aCenterX - aTotal/2;
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#FF5522'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillText('⭐选取', padX+20, curY);
+      S.pickA.forEach(function(op,i){
+        placePick(ctx, aStartX + i*(pW+autoGap), curY+labelH+6, pW, pH, op, '#FF5522');
+      });
+      // B队 以右四分位点为中心（对称镜像）
+      var bCenterX = W * 0.75;
+      var bCnt = S.pickB.length, bTotal = bCnt * pW + (bCnt-1) * autoGap;
+      var bStartX = bCenterX - bTotal/2;
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#2288FF'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillText('⭐选取', W-padX-20, curY);
+      S.pickB.forEach(function(op,i){
+        placePick(ctx, bStartX + (bCnt-1-i)*(pW+autoGap), curY+labelH+6, pW, pH, op, '#2288FF');
+      });
+      curY += labelH + pH + 30;
+    }
+    // === 底部信息 ===
+    curY += 22;
+    ctx.strokeStyle = 'rgba(212,168,84,0.15)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(padX+80, curY); ctx.lineTo(W-padX-80, curY); ctx.stroke();
+    curY += 14;
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#A09080'; ctx.font = '17px "Microsoft YaHei",sans-serif';
+    ctx.fillText('📅 '+S.sched+'  |  '+boText+'  |  '+(S.side==='ab'?'🔴A队先手':'🔵B队先手')+'  |  ⛔'+S.maxBan+'禁  ⭐'+S.maxPick+'选  🔄'+S.maxGuest+'援', W/2, curY);
+  }
+
+  function placeHead(ctx, x, y, sz, op, color){
+    var img = imgCache[iuHead(op)] || (imgCache[iuHead(op)] = new Image());
+    img.crossOrigin = 'anonymous';
+    allImgs.push(img);
+    (function(x2,y2,m){
+      m.onload=function(){
+        ctx.save(); ctx.beginPath(); ctx.arc(x2+sz/2,y2+sz/2,sz/2,0,Math.PI*2); ctx.clip();
+        ctx.drawImage(m,x2,y2,sz,sz); ctx.restore();
+        ctx.beginPath(); ctx.arc(x2+sz/2,y2+sz/2,sz/2,0,Math.PI*2);
+        ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+        if(++loaded>=allImgs.length)showPreview();
+      };
+      m.onerror=function(){if(++loaded>=allImgs.length)showPreview()};
+      if(!m._src){ m._src=1; m.src=iuHead(op); }
+    })(x,y,img);
+  }
+
+  function placePick(ctx, x, y, w, h, op, color){
+    var img = imgCache[iu(op)] || (imgCache[iu(op)] = new Image());
+    img.crossOrigin = 'anonymous';
+    allImgs.push(img);
+    (function(x2,y2,m){
+      m.onload=function(){
+        ctx.save(); ctx.beginPath();
+        if(ctx.roundRect)ctx.roundRect(x2,y2,w,h,4);else ctx.rect(x2,y2,w,h);
+        ctx.clip(); ctx.drawImage(m,x2,y2,w,h); ctx.restore();
+        ctx.strokeStyle=color; ctx.lineWidth=1.5; ctx.save(); ctx.beginPath();
+        if(ctx.roundRect)ctx.roundRect(x2,y2,w,h,6);else ctx.rect(x2,y2,w,h);
+        ctx.stroke(); ctx.restore();
+        if(++loaded>=allImgs.length)showPreview();
+      };
+      m.onerror=function(){if(++loaded>=allImgs.length)showPreview()};
+      if(!m._src){ m._src=1; m.src=iu(op); }
+    })(x,y,img);
+  }
+
+
+  // 初次渲染
+  c.width=W; c.height=H;
+  var ctx = c.getContext('2d');
+  drawBackground(ctx);
+  drawContent(ctx);
+
+  function showPreview(){
+    var pm = document.getElementById('previewModal'), pc;
+    if(!pm){
+      pm = document.createElement('div'); pm.id = 'previewModal';
+      pm.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.85);display:flex;flex-direction:column;align-items:center;justify-content:center';
+      var box = document.createElement('div');
+      box.style.cssText = 'position:relative;max-width:92vw;max-height:72vh;overflow:auto;border-radius:8px;background:transparent';
+      pc = document.createElement('canvas'); pc.id = 'previewCanvas';
+      pc.style.cssText = 'width:100%;display:block';
+      box.appendChild(pc); pm.appendChild(box);
+      var acts = document.createElement('div');
+      acts.style.cssText = 'display:flex;gap:12px;margin-top:14px;align-items:center;flex-wrap:wrap;justify-content:center';
+      // 底图上传
+      var bgBtn = document.createElement('button');
+      bgBtn.textContent = '🖼上传底图';
+      bgBtn.style.cssText = 'padding:8px 16px;border:1px solid rgba(255,255,255,.15);border-radius:5px;background:rgba(0,0,0,.5);color:#A09080;font-size:12px;cursor:pointer';
+      var bgInp = document.createElement('input');
+      bgInp.type = 'file'; bgInp.accept = 'image/*';
+      bgInp.style.display = 'none';
+      bgBtn.onclick = function(){ bgInp.click(); };
+      bgInp.onchange = function(){
+        var f = bgInp.files[0]; if(!f) return;
+        var r = new FileReader();
+        r.onload = function(e){
+          var im = new Image();
+          im.crossOrigin = 'anonymous';
+          im.onload = function(){
+            bgImg = im;
+            // 重新渲染
+            loaded = 0; allImgs = []; imgCache = {};
+            c.width = W; c.height = H;
+            var ctx2 = c.getContext('2d');
+            drawBackground(ctx2);
+            drawContent(ctx2);
+          };
+          im.src = e.target.result;
+        };
+        r.readAsDataURL(f);
+        bgInp.value = '';
+      };
+      acts.appendChild(bgBtn); acts.appendChild(bgInp);
+      var btnC = document.createElement('button');
+      btnC.textContent = '✓ 确认生成';
+      btnC.style.cssText = 'padding:10px 30px;border:none;border-radius:6px;background:linear-gradient(135deg,#D4A854,#CC3333);color:#fff;font-size:15px;font-weight:700;cursor:pointer';
+      var btnX = document.createElement('button');
+      btnX.textContent = '✕ 取消';
+      btnX.style.cssText = 'padding:10px 30px;border:1px solid rgba(255,255,255,.15);border-radius:6px;background:rgba(0,0,0,.5);color:#A09080;font-size:15px;font-weight:700;cursor:pointer';
+      btnC.onclick = function(){
+        document.body.removeChild(pm);
+        var lnk = document.createElement('a'); lnk.download = '应天杯_BP_'+S.sched+'.png';
+        lnk.href = c.toDataURL('image/png'); lnk.click(); toast('✅图片已导出');
+      };
+      btnX.onclick = function(){ document.body.removeChild(pm); };
+      acts.appendChild(btnC); acts.appendChild(btnX); pm.appendChild(acts);
+      document.body.appendChild(pm);
+    }
+    pc = document.getElementById('previewCanvas');
+    pc.width = W; pc.height = H;
+    var pctx = pc.getContext('2d');
+    pctx.drawImage(c, 0, 0);
+    var maxW = window.innerWidth*0.9, maxH = window.innerHeight*0.68;
+    var scale = Math.min(1, maxW/W, maxH/H);
+    pc.style.width = (W*scale)+'px'; pc.style.height = (H*scale)+'px';
+  }
 }
 function mkParticles(){var c=document.getElementById('particles');for(var i=0;i<30;i++){var p=document.createElement('div');p.className='p';p.style.left=Math.random()*100+'%';p.style.width=p.style.height=(1+Math.random()*2.5)+'px';p.style.animationDuration=(15+Math.random()*30)+'s';p.style.animationDelay=(Math.random()*20)+'s';p.style.opacity=.08+Math.random()*.25;c.appendChild(p)}}
 if(!loadState()){init()}
 render();mkParticles();
+// 倒计时实时更新（每秒）
+setInterval(function(){
+  var cdEl=document.getElementById('cdDisplay');
+  if(!cdEl||!S.cdEnabled||!S.countdown||S.countdown<=0){if(cdEl)cdEl.style.display='none';return}
+  if(!S.cdPaused&&S.cdRemain>0){S.cdRemain--}
+  cdEl.textContent='倒计时:'+Math.max(0,S.cdRemain||0)+'s'+(S.cdPaused?'⏸':'');
+  cdEl.style.color=(S.cdRemain||0)<=0?'var(--ban-color)':'var(--gold-bright)';
+}, 1000);
 console.log('🏆应天杯已加载，共'+OPERATORS.length+'位干员');
 </script>
 </body>
