@@ -126,7 +126,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 .op-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:5px}
 .op-card{aspect-ratio:3/4;border-radius:5px;border:2px solid var(--border-subtle);background:rgba(30,12,12,.45);cursor:pointer;position:relative;overflow:hidden;transition:all .2s;display:flex;align-items:center;justify-content:center}
 .op-card:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(212,168,84,.1);transform:translateY(-2px);z-index:3}
-.op-card img{width:100%;height:100%;object-fit:cover;transition:all .4s}
+.op-card img{width:100%;height:100%;object-fit:cover;object-position:center 25%;position:relative;z-index:1;transition:all .4s}
 .op-card:hover img{transform:scale(1.06)}
 .op-card .plh-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;color:var(--gold-dim);background:linear-gradient(135deg,rgba(139,26,26,.1),rgba(30,12,12,.4));z-index:0;pointer-events:none;transition:opacity .4s}
 .op-card .plh-bg.hide{opacity:0}
@@ -204,14 +204,14 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 </head>
 <body>
 <div id="bg"><div id="bg-pattern"></div><div id="particles"></div></div>
-<div id="cfrm" class="cfrm-bg"><div class="cfrm-box"><p id="cfrm-msg">确定执行此操作？</p><div class="cfrm-acts"><button class="cfrm-y" id="cfrm-y">✓确定</button><button class="cfrm-n" id="cfrm-n">✕取消</button></div></div></div>
+<div id="cfrm" class="cfrm-bg"><div class="cfrm-box"><p id="cfrm-msg">确定执行此操作？</p><div class="cfrm-acts"><button class="cfrm-y" id="cfrm-y">✓确定</button><button class="cfrm-n" id="cfrm-n">✕取消</button><button class="cfrm-y" id="cfrm-3rd" style="display:none">↻重置本轮</button></div></div></div>
 <div id="toast" class="toast"></div>
 <div id="modal" class="modal-overlay"><div class="modal-box"><h2>⚙比赛配置</h2>
 <div class="mf"><label>A队名称</label><input id="inpTaN" value="泰拉联合"></div>
 <div class="mf"><label>A队选手</label><input id="inpTaP" value="选手A"></div>
 <div class="mf"><label>B队名称</label><input id="inpTbN" value="萨卡兹王庭"></div>
 <div class="mf"><label>B队选手</label><input id="inpTbP" value="选手B"></div>
-<div class="mf-row"><div class="mf"><label>禁用位</label><input id="inpBan" type="number" value="4" min="0" max="20"></div><div class="mf"><label>选取位</label><input id="inpPick" type="number" value="6" min="0" max="20"></div><div class="mf"><label>外援位</label><input id="inpGuest" type="number" value="1" min="0" max="10"></div></div>
+<div class="mf-row"><div class="mf"><label>禁用位</label><input id="inpBan" type="number" value="3" min="0" max="20"></div><div class="mf"><label>选取位</label><input id="inpPick" type="number" value="3" min="0" max="20"></div><div class="mf"><label>外援位</label><input id="inpGuest" type="number" value="1" min="0" max="10"></div></div>
 <div class="mf-row"><div class="mf"><label>BO赛制</label><select id="inpBo" style="width:100%;padding:6px 10px;background:rgba(0,0,0,.4);border:1px solid var(--border-subtle);border-radius:4px;color:var(--text);font-size:12px"><option value="1">BO1（单局）</option><option value="3">BO3（三局两胜）</option><option value="5">BO5（五局三胜）</option><option value="7">BO7（七局四胜）</option></select></div><div class="mf"><label>⏱倒计时(秒)</label><div style="display:flex;align-items:center;gap:4px"><input id="inpCd" type="number" value="120" min="0" max="300"><label style="display:flex;align-items:center;gap:2px;font-size:11px;color:var(--text-dim);cursor:pointer;white-space:nowrap"><input type="checkbox" id="inpCdEn" checked style="width:auto;margin:0">启用</label></div></div></div>
 <div class="m-acts"><button class="m-conf" onclick="applyCfg()">✓确认</button><button class="m-cancel" onclick="closeModal()">✕取消</button></div></div></div>
 
@@ -230,7 +230,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
   </div>
 
   <div id="top-bar">
-    <div class="tb-item"><span>📅</span><input id="schedDate" value="2026-07-04" onchange="S.sched=this.value" style="width:80px"></div>
+    <div class="tb-item"><span>📅</span><input id="schedDate" onchange="S.sched=this.value;saveState()" style="width:80px"></div>
     <div class="tb-div"></div>
     <div class="tb-item"><span>🔀</span><span class="lbl">先手</span><select id="sideSelect" onchange="swapSide()"><option value="ab">🔴A禁/🔵B选</option><option value="ba">🔵B禁/🔴A选</option></select></div><span class="tb-div"></span><div class="tb-item"><span>⏱</span><span id="cdDisplay" style="color:var(--gold-bright);font-weight:700;font-size:13px">倒计时:120s</span><span id="cdPauseBtn" style="cursor:pointer;font-size:13px;padding:0 3px;color:var(--text-dim);transition:color .2s" onclick="toggleCdPause()">⏸</span></div>
   </div>
@@ -257,7 +257,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
         <div class="tp-fin-row"><span class="lbl">💎已用源石锭</span><input id="ingotA" type="number" value="300" min="0" onchange="S.ingA=Math.max(0,this.valueAsNumber||0);updBal()"></div>
         <div class="tp-fin-row"><span class="lbl">📦预算上限</span><input id="budgetA" type="number" value="500" min="0" onchange="S.budgetA=Math.max(1,this.valueAsNumber||500);updBal()"></div>
         <div class="tp-balance"><span class="lbl">💰取钱余额</span><span class="val" id="taBal">200</span></div>
-        <div class="tp-restart"><label class="switch"><input type="checkbox" id="taRestartSw" onchange="toggleRest('A')"><span class="sl"></span></label><span class="lbl">重开</span><input type="number" id="taRestCnt" value="0" min="0" disabled></div>
+        <div class="tp-restart"><label class="switch"><input type="checkbox" id="taRestartSw" onchange="toggleRest('A')"><span class="sl"></span></label><span class="lbl">重开</span><input type="number" id="taRestCnt" value="0" min="0" disabled onchange="saveRestCnt('A')"></div>
       </div>
     </div>
     <div class="grid-wrap">
@@ -287,7 +287,7 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
         <div class="tp-fin-row"><span class="lbl">💎已用源石锭</span><input id="ingotB" type="number" value="300" min="0" onchange="S.ingB=Math.max(0,this.valueAsNumber||0);updBal()"></div>
         <div class="tp-fin-row"><span class="lbl">📦预算上限</span><input id="budgetB" type="number" value="500" min="0" onchange="S.budgetB=Math.max(1,this.valueAsNumber||500);updBal()"></div>
         <div class="tp-balance"><span class="lbl">💰取钱余额</span><span class="val" id="tbBal">200</span></div>
-        <div class="tp-restart"><label class="switch"><input type="checkbox" id="tbRestartSw" onchange="toggleRest('B')"><span class="sl"></span></label><span class="lbl">重开</span><input type="number" id="tbRestCnt" value="0" min="0" disabled></div>
+        <div class="tp-restart"><label class="switch"><input type="checkbox" id="tbRestartSw" onchange="toggleRest('B')"><span class="sl"></span></label><span class="lbl">重开</span><input type="number" id="tbRestCnt" value="0" min="0" disabled onchange="saveRestCnt('B')"></div>
       </div>
     </div>
   </div>
@@ -311,7 +311,10 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
       </span>
       <input id="bgm-file" type="file" accept="audio/*" onchange="loadBGM(this)">
       <audio id="bgmPlayer" loop></audio>
-      <button class="abtn abtn-sm" onclick="confirmReset()">↻重置</button>
+      <button class="abtn abtn-sm" onclick="showResetOptions()">🗑重置</button>
+      <button class="abtn abtn-sm" onclick="prevRound()" id="btnPrevRound">◀上轮</button>
+      <span id="roundNavInfo" style="font-size:11px;color:var(--gold);font-weight:600"></span>
+      <button class="abtn abtn-sm" onclick="nextRound()" id="btnNextRound">下轮▶</button>
       <button class="abtn abtn-sm" onclick="exportImage()">📷成图</button>
     </div>
   </div>
@@ -319,25 +322,23 @@ html,body{height:100%;font-family:'Segoe UI','Microsoft YaHei','PingFang SC','No
 
 <script>
 var PRTS_HALFBODY = {
-  "推进之王":"9/98","风笛":"e/ea","嵯峨":"a/a4","琴柳":"2/28","焰尾":"9/92","伺夜":"f/fc","缪尔赛思":"4/4a","伊内丝":"5/59","忍冬":"b/b5","可露希尔":"5/5f","郁金香":"7/75","凛御银灰":"0/03",
-  "银灰":"9/90","史尔特尔":"5/58","玛恩纳":"b/b1","棘刺":"0/08","山":"7/7b","耀骑士临光":"d/db","陈":"e/e1","斯卡蒂":"a/a5","仇白":"4/40","锏":"7/72","薇薇安娜":"5/5d","赫德雷":"b/b4","止颂":"4/49","佩佩":"2/24","重岳":"e/e5","煌":"1/1c","赫拉格":"8/82","帕拉斯":"7/72","艾丽妮":"b/bd","百炼嘉维尔":"e/ed","圣约送葬人":"7/71","左乐":"9/93","乌尔比安":"2/20","维娜·维多利亚":"1/16","隐德来希":"3/3f","司霆惊蛰":"c/c5","贝洛内":"1/1c","赤刃明霄陈":"5/50","怒潮凛冬":"9/9c","丰川祥子":"d/d9","Sharp":"d/d3",
+  "推进之王":"9/98","风笛":"e/ea","嵯峨":"a/a4","琴柳":"2/28","焰尾":"9/92","伺夜":"f/fc","缪尔赛思":"4/4a","伊内丝":"5/59","忍冬":"b/b5","可露希尔":"5/5f","凛御银灰":"0/03",
+  "银灰":"9/90","史尔特尔":"5/58","玛恩纳":"b/b1","棘刺":"0/08","山":"7/7b","耀骑士临光":"d/db","陈":"e/e1","斯卡蒂":"a/a5","仇白":"4/40","锏":"7/72","薇薇安娜":"5/5d","赫德雷":"b/b4","止颂":"4/49","佩佩":"2/24","重岳":"e/e5","煌":"1/1c","赫拉格":"8/82","帕拉斯":"7/72","艾丽妮":"b/bd","百炼嘉维尔":"e/ed","圣约送葬人":"7/71","左乐":"9/93","乌尔比安":"2/20","维娜·维多利亚":"1/16","隐德来希":"3/3f","司霆惊蛰":"c/c5","贝洛内":"1/1c","赤刃明霄陈":"5/50","怒潮凛冬":"9/9c","丰川祥子":"d/d9",
   "塞雷娅":"4/44","星熊":"2/22","年":"4/4d","森蚺":"4/4a","号角":"8/85","瑕光":"a/a6","斥罪":"e/e7","涤火杰西卡":"1/1e","塑心":"7/7e","黍":"5/52","余":"7/73","泥岩":"0/08","信仰搅拌机":"8/8a","斩业星熊":"f/f4","Mechanist":"4/43",
-  "能天使":"2/2e","假日威龙陈":"5/51","W":"4/45","黑":"2/23","早露":"9/92","迷迭香":"9/9a","空弦":"8/86","远牙":"4/4f","菲亚梅塔":"f/f8","鸿雪":"4/4d","提丰":"5/51","莱伊":"c/c8","维什戴尔":"5/5a","娜仁图亚":"3/3c","蕾缪安":"3/30","灰烬":"f/fa","焰狐龙梓兰":"3/3d","Stormeye":"e/e4",
-  "艾雅法拉":"3/36","伊芙利特":"2/23","莫斯提马":"f/fc","刻俄柏":"6/69","夕":"f/f2","卡涅利安":"3/36","澄闪":"1/17","林":"7/75","霍尔海雅":"5/5a","逻各斯":"0/0a","异客":"d/d3","黑键":"e/e6","妮芙":"4/49","荒芜拉普兰德":"a/ac","烛煌":"8/89","圣聆初雪":"2/25","玛露西尔":"1/13","死芒":"d/df","真言":"5/5d","维伊":"d/d2","Pith":"6/65",
-  "闪灵":"d/d6","夜莺":"e/e9","凯尔希":"c/c0","焰影苇草":"a/ae","纯烬艾雅法拉":"b/bd","流明":"9/9f","缇缇":"6/64","凯尔希·思衡托":"7/7b","Touch":"2/27",
-  "安洁莉娜":"3/30","铃兰":"f/fe","麦哲伦":"c/c7","令":"d/d6","灵知":"a/a9","白铁":"e/e5","浊心斯卡蒂":"7/7f","淬羽赫默":"5/54","魔王":"8/8c","酒神":"e/ef","溯光星源":"5/50","电弧":"2/24","遥":"0/03","娜斯提":"1/14","Raidian":"7/70",
-  "阿":"7/72","温蒂":"5/5f","歌蕾蒂娅":"3/33","水月":"2/22","归溟幽灵鲨":"f/f7","缄默德克萨斯":"0/0d","麒麟R夜刀":"1/16","阿斯卡纶":"0/08","傀影":"a/ad","老鲤":"e/e8","琳琅诗怀雅":"9/99","多萝西":"0/04","艾拉":"1/12","引星棘刺":"d/d7","新约能天使":"f/f6","弑君者":"e/e9","望":"1/15","Misery":"a/ab"
-};
+  "能天使":"2/2e","假日威龙陈":"5/51","W":"4/45","黑":"2/23","早露":"9/92","迷迭香":"9/9a","空弦":"8/86","远牙":"4/4f","菲亚梅塔":"f/f8","鸿雪":"4/4d","提丰":"5/51","莱伊":"c/c8","维什戴尔":"5/5a","娜仁图亚":"3/3c","蕾缪安":"3/30","灰烬":"f/fa","焰狐龙梓兰":"3/3d",
+  "艾雅法拉":"3/36","伊芙利特":"2/23","莫斯提马":"f/fc","刻俄柏":"6/69","夕":"f/f2","卡涅利安":"3/36","澄闪":"1/17","林":"7/75","霍尔海雅":"5/5a","逻各斯":"0/0a","异客":"d/d3","黑键":"e/e6","妮芙":"4/49","荒芜拉普兰德":"a/ac","烛煌":"8/89","圣聆初雪":"2/25","玛露西尔":"1/13","死芒":"d/df","真言":"5/5d","维伊":"d/d2",
+  "闪灵":"d/d6","夜莺":"e/e9","凯尔希":"c/c0","焰影苇草":"a/ae","纯烬艾雅法拉":"b/bd","流明":"9/9f","缇缇":"6/64","凯尔希·思衡托":"7/7b",
+  "安洁莉娜":"3/30","铃兰":"f/fe","麦哲伦":"c/c7","令":"d/d6","灵知":"a/a9","白铁":"e/e5","浊心斯卡蒂":"7/7f","淬羽赫默":"5/54","魔王":"8/8c","酒神":"e/ef","溯光星源":"5/50","电弧":"2/24","遥":"0/03","娜斯提":"1/14",
+  "阿":"7/72","温蒂":"5/5f","歌蕾蒂娅":"3/33","水月":"2/22","归溟幽灵鲨":"f/f7","缄默德克萨斯":"0/0d","麒麟R夜刀":"1/16","阿斯卡纶":"0/08","傀影":"a/ad","老鲤":"e/e8","琳琅诗怀雅":"9/99","多萝西":"0/04","艾拉":"1/12","引星棘刺":"d/d7","新约能天使":"f/f6","弑君者":"e/e9","望":"1/15"};
 var PRTS_HEAD = {
-  "推进之王":"b/ba","风笛":"d/de","嵯峨":"6/6d","琴柳":"9/96","焰尾":"c/c8","伺夜":"d/df","缪尔赛思":"3/3a","伊内丝":"8/8c","忍冬":"7/79","可露希尔":"a/a5","郁金香":"f/f3","凛御银灰":"3/3d",
-  "银灰":"2/27","史尔特尔":"e/e1","玛恩纳":"0/08","棘刺":"2/2a","山":"e/ec","耀骑士临光":"0/03","陈":"c/cf","斯卡蒂":"5/53","仇白":"8/8a","锏":"0/0f","薇薇安娜":"4/4a","赫德雷":"f/f8","止颂":"7/72","佩佩":"8/85","重岳":"0/09","煌":"3/30","赫拉格":"c/cd","帕拉斯":"a/ad","艾丽妮":"5/57","百炼嘉维尔":"1/1b","圣约送葬人":"7/7e","左乐":"e/e0","乌尔比安":"3/33","维娜·维多利亚":"6/68","隐德来希":"4/4c","司霆惊蛰":"5/5c","贝洛内":"8/83","赤刃明霄陈":"d/d0","怒潮凛冬":"8/81","丰川祥子":"c/cb","Sharp":"b/b4",
+  "推进之王":"b/ba","风笛":"d/de","嵯峨":"6/6d","琴柳":"9/96","焰尾":"c/c8","伺夜":"d/df","缪尔赛思":"3/3a","伊内丝":"8/8c","忍冬":"7/79","可露希尔":"a/a5","凛御银灰":"3/3d",
+  "银灰":"2/27","史尔特尔":"e/e1","玛恩纳":"0/08","棘刺":"2/2a","山":"e/ec","耀骑士临光":"0/03","陈":"c/cf","斯卡蒂":"5/53","仇白":"8/8a","锏":"0/0f","薇薇安娜":"4/4a","赫德雷":"f/f8","止颂":"7/72","佩佩":"8/85","重岳":"0/09","煌":"3/30","赫拉格":"c/cd","帕拉斯":"a/ad","艾丽妮":"5/57","百炼嘉维尔":"1/1b","圣约送葬人":"7/7e","左乐":"e/e0","乌尔比安":"3/33","维娜·维多利亚":"6/68","隐德来希":"4/4c","司霆惊蛰":"5/5c","贝洛内":"8/83","赤刃明霄陈":"d/d0","怒潮凛冬":"8/81","丰川祥子":"c/cb",
   "塞雷娅":"e/ee","星熊":"0/07","年":"9/9c","森蚺":"7/74","号角":"3/3f","瑕光":"f/f7","斥罪":"1/1c","涤火杰西卡":"1/14","塑心":"0/05","黍":"f/f2","余":"6/66","泥岩":"0/06","信仰搅拌机":"1/13","斩业星熊":"e/e5","Mechanist":"2/2c",
-  "能天使":"a/ad","假日威龙陈":"d/df","W":"d/d6","黑":"d/d4","早露":"6/63","迷迭香":"3/3b","空弦":"b/bb","远牙":"a/a1","菲亚梅塔":"b/b8","鸿雪":"1/1b","提丰":"7/70","莱伊":"6/6a","维什戴尔":"6/66","娜仁图亚":"b/ba","蕾缪安":"c/c5","灰烬":"6/64","焰狐龙梓兰":"2/20","Stormeye":"8/8e",
-  "艾雅法拉":"c/cc","伊芙利特":"e/ed","莫斯提马":"0/0b","刻俄柏":"4/4a","夕":"6/6b","卡涅利安":"d/dd","澄闪":"a/ab","林":"a/aa","霍尔海雅":"9/9e","逻各斯":"4/44","异客":"d/d2","黑键":"1/1e","妮芙":"1/1a","荒芜拉普兰德":"0/04","烛煌":"c/c4","圣聆初雪":"a/ab","玛露西尔":"8/84","死芒":"d/d9","真言":"6/63","维伊":"5/56","Pith":"5/59",
-  "闪灵":"5/54","夜莺":"6/64","凯尔希":"c/c5","焰影苇草":"9/94","纯烬艾雅法拉":"f/f0","流明":"7/72","缇缇":"a/aa","凯尔希·思衡托":"5/57","Touch":"3/35",
-  "安洁莉娜":"c/ca","铃兰":"5/55","麦哲伦":"4/4d","令":"2/2c","灵知":"9/9f","白铁":"2/2e","浊心斯卡蒂":"8/80","淬羽赫默":"0/0d","魔王":"d/de","酒神":"0/0d","溯光星源":"d/d0","电弧":"5/56","遥":"e/ec","娜斯提":"9/97","Raidian":"6/65",
-  "阿":"3/31","温蒂":"9/93","歌蕾蒂娅":"0/0d","水月":"0/05","归溟幽灵鲨":"b/be","缄默德克萨斯":"b/b8","麒麟R夜刀":"e/e5","阿斯卡纶":"7/76","傀影":"8/83","老鲤":"e/e5","琳琅诗怀雅":"7/74","多萝西":"4/4f","艾拉":"2/26","引星棘刺":"3/3b","新约能天使":"3/3a","弑君者":"1/12","望":"3/38","Misery":"3/3f"
-};
+  "能天使":"a/ad","假日威龙陈":"d/df","W":"d/d6","黑":"d/d4","早露":"6/63","迷迭香":"3/3b","空弦":"b/bb","远牙":"a/a1","菲亚梅塔":"b/b8","鸿雪":"1/1b","提丰":"7/70","莱伊":"6/6a","维什戴尔":"6/66","娜仁图亚":"b/ba","蕾缪安":"c/c5","灰烬":"6/64","焰狐龙梓兰":"2/20",
+  "艾雅法拉":"c/cc","伊芙利特":"e/ed","莫斯提马":"0/0b","刻俄柏":"4/4a","夕":"6/6b","卡涅利安":"d/dd","澄闪":"a/ab","林":"a/aa","霍尔海雅":"9/9e","逻各斯":"4/44","异客":"d/d2","黑键":"1/1e","妮芙":"1/1a","荒芜拉普兰德":"0/04","烛煌":"c/c4","圣聆初雪":"a/ab","玛露西尔":"8/84","死芒":"d/d9","真言":"6/63","维伊":"5/56",
+  "闪灵":"5/54","夜莺":"6/64","凯尔希":"c/c5","焰影苇草":"9/94","纯烬艾雅法拉":"f/f0","流明":"7/72","缇缇":"a/aa","凯尔希·思衡托":"5/57",
+  "安洁莉娜":"c/ca","铃兰":"5/55","麦哲伦":"4/4d","令":"2/2c","灵知":"9/9f","白铁":"2/2e","浊心斯卡蒂":"8/80","淬羽赫默":"0/0d","魔王":"d/de","酒神":"0/0d","溯光星源":"d/d0","电弧":"5/56","遥":"e/ec","娜斯提":"9/97",
+  "阿":"3/31","温蒂":"9/93","歌蕾蒂娅":"0/0d","水月":"0/05","归溟幽灵鲨":"b/be","缄默德克萨斯":"b/b8","麒麟R夜刀":"e/e5","阿斯卡纶":"7/76","傀影":"8/83","老鲤":"e/e5","琳琅诗怀雅":"7/74","多萝西":"4/4f","艾拉":"2/26","引星棘刺":"3/3b","新约能天使":"3/3a","弑君者":"1/12","望":"3/38"};
 function imgUrl(op, type) {
   var map = type === 'head' ? PRTS_HEAD : PRTS_HALFBODY;
   var h = map[op.name];
@@ -348,28 +349,41 @@ function imgUrl(op, type) {
 function prtsUrl(name) {
   return imgUrl({name:name}, 'halfbody');
 }
+// 图片加载容错：PRTS wiki 失败时切换到 jsDelivr CDN
+var CDN_BASE = 'https://cdn.jsdelivr.net/gh/yuanyan3060/ArknightsGameResource@main/portrait/';
+function imgRetry(el, safe, opId) {
+  var p = document.getElementById('plh-'+safe);
+  if(el.dataset.rt) {
+    el.onerror = null; el.style.display = 'none';
+    if(p) p.style.opacity = '1'; return;
+  }
+  el.dataset.rt = '1';
+  el.src = CDN_BASE + opId + '_1.png';
+}
+function cdnUrl(opId) { return CDN_BASE + opId + '_1.png'; }
 </script>
 <script>
 var OPERATORS = [
-{id:'char_112_siege',name:'推进之王',cls:'先锋'},{id:'char_222_bpipe',name:'风笛',cls:'先锋'},{id:'char_362_saga',name:'嵯峨',cls:'先锋'},{id:'char_479_sleach',name:'琴柳',cls:'先锋'},{id:'char_420_flamtl',name:'焰尾',cls:'先锋'},{id:'char_427_vigil',name:'伺夜',cls:'先锋'},{id:'char_249_mlyss',name:'缪尔赛思',cls:'先锋'},{id:'char_4087_ines',name:'伊内丝',cls:'先锋'},{id:'char_4026_vulpis',name:'忍冬',cls:'先锋'},{id:'char_4228_closur',name:'可露希尔',cls:'先锋'},{id:'char_608_acpion',name:'郁金香',cls:'先锋'},{id:'char_1045_svash2',name:'凛御银灰',cls:'先锋'},
-{id:'char_172_svrash',name:'银灰',cls:'近卫'},{id:'char_350_surtr',name:'史尔特尔',cls:'近卫'},{id:'char_4064_mlynar',name:'玛恩纳',cls:'近卫'},{id:'char_293_thorns',name:'棘刺',cls:'近卫'},{id:'char_264_f12yin',name:'山',cls:'近卫'},{id:'char_1014_nearl2',name:'耀骑士临光',cls:'近卫'},{id:'char_010_chen',name:'陈',cls:'近卫'},{id:'char_263_skadi',name:'斯卡蒂',cls:'近卫'},{id:'char_4082_qiubai',name:'仇白',cls:'近卫'},{id:'char_4116_blkkgt',name:'锏',cls:'近卫'},{id:'char_4098_vvana',name:'薇薇安娜',cls:'近卫'},{id:'char_4088_hodrer',name:'赫德雷',cls:'近卫'},{id:'char_4011_lessng',name:'止颂',cls:'近卫'},{id:'char_4058_pepe',name:'佩佩',cls:'近卫'},{id:'char_2024_chyue',name:'重岳',cls:'近卫'},{id:'char_017_huang',name:'煌',cls:'近卫'},{id:'char_188_helage',name:'赫拉格',cls:'近卫'},{id:'char_485_pallas',name:'帕拉斯',cls:'近卫'},{id:'char_4009_irene',name:'艾丽妮',cls:'近卫'},{id:'char_1026_gvial2',name:'百炼嘉维尔',cls:'近卫'},{id:'char_1032_excu2',name:'圣约送葬人',cls:'近卫'},{id:'char_4121_zuole',name:'左乐',cls:'近卫'},{id:'char_4145_ulpia',name:'乌尔比安',cls:'近卫'},{id:'char_1019_siege2',name:'维娜·维多利亚',cls:'近卫'},{id:'char_4010_etlchi',name:'隐德来希',cls:'近卫'},{id:'char_1043_leizi2',name:'司霆惊蛰',cls:'近卫'},{id:'char_4037_demetr',name:'贝洛内',cls:'近卫'},{id:'char_1050_chen3',name:'赤刃明霄陈',cls:'近卫'},{id:'char_1051_headb2',name:'怒潮凛冬',cls:'近卫'},{id:'char_4182_oblvns',name:'丰川祥子',cls:'近卫'},{id:'char_609_acguad',name:'Sharp',cls:'近卫'},
+{id:'char_112_siege',name:'推进之王',cls:'先锋'},{id:'char_222_bpipe',name:'风笛',cls:'先锋'},{id:'char_362_saga',name:'嵯峨',cls:'先锋'},{id:'char_479_sleach',name:'琴柳',cls:'先锋'},{id:'char_420_flamtl',name:'焰尾',cls:'先锋'},{id:'char_427_vigil',name:'伺夜',cls:'先锋'},{id:'char_249_mlyss',name:'缪尔赛思',cls:'先锋'},{id:'char_4087_ines',name:'伊内丝',cls:'先锋'},{id:'char_4026_vulpis',name:'忍冬',cls:'先锋'},{id:'char_4228_closur',name:'可露希尔',cls:'先锋'},{id:'char_1045_svash2',name:'凛御银灰',cls:'先锋'},
+{id:'char_172_svrash',name:'银灰',cls:'近卫'},{id:'char_350_surtr',name:'史尔特尔',cls:'近卫'},{id:'char_4064_mlynar',name:'玛恩纳',cls:'近卫'},{id:'char_293_thorns',name:'棘刺',cls:'近卫'},{id:'char_264_f12yin',name:'山',cls:'近卫'},{id:'char_1014_nearl2',name:'耀骑士临光',cls:'近卫'},{id:'char_010_chen',name:'陈',cls:'近卫'},{id:'char_263_skadi',name:'斯卡蒂',cls:'近卫'},{id:'char_4082_qiubai',name:'仇白',cls:'近卫'},{id:'char_4116_blkkgt',name:'锏',cls:'近卫'},{id:'char_4098_vvana',name:'薇薇安娜',cls:'近卫'},{id:'char_4088_hodrer',name:'赫德雷',cls:'近卫'},{id:'char_4011_lessng',name:'止颂',cls:'近卫'},{id:'char_4058_pepe',name:'佩佩',cls:'近卫'},{id:'char_2024_chyue',name:'重岳',cls:'近卫'},{id:'char_017_huang',name:'煌',cls:'近卫'},{id:'char_188_helage',name:'赫拉格',cls:'近卫'},{id:'char_485_pallas',name:'帕拉斯',cls:'近卫'},{id:'char_4009_irene',name:'艾丽妮',cls:'近卫'},{id:'char_1026_gvial2',name:'百炼嘉维尔',cls:'近卫'},{id:'char_1032_excu2',name:'圣约送葬人',cls:'近卫'},{id:'char_4121_zuole',name:'左乐',cls:'近卫'},{id:'char_4145_ulpia',name:'乌尔比安',cls:'近卫'},{id:'char_1019_siege2',name:'维娜·维多利亚',cls:'近卫'},{id:'char_4010_etlchi',name:'隐德来希',cls:'近卫'},{id:'char_1043_leizi2',name:'司霆惊蛰',cls:'近卫'},{id:'char_4037_demetr',name:'贝洛内',cls:'近卫'},{id:'char_1050_chen3',name:'赤刃明霄陈',cls:'近卫'},{id:'char_1051_headb2',name:'怒潮凛冬',cls:'近卫'},{id:'char_4182_oblvns',name:'丰川祥子',cls:'近卫'},
 {id:'char_202_demkni',name:'塞雷娅',cls:'重装'},{id:'char_136_hsguma',name:'星熊',cls:'重装'},{id:'char_2014_nian',name:'年',cls:'重装'},{id:'char_416_zumama',name:'森蚺',cls:'重装'},{id:'char_4039_horn',name:'号角',cls:'重装'},{id:'char_423_blemsh',name:'瑕光',cls:'重装'},{id:'char_4065_judge',name:'斥罪',cls:'重装'},{id:'char_1034_jesca2',name:'涤火杰西卡',cls:'重装'},{id:'char_245_cello',name:'塑心',cls:'重装'},{id:'char_2025_shu',name:'黍',cls:'重装'},{id:'char_2026_yu',name:'余',cls:'重装'},{id:'char_311_mudrok',name:'泥岩',cls:'重装'},{id:'char_4194_rmixer',name:'信仰搅拌机',cls:'重装'},{id:'char_1044_hsgma2',name:'斩业星熊',cls:'重装'},{id:'char_610_acfend',name:'Mechanist',cls:'重装'},
-{id:'char_103_angel',name:'能天使',cls:'狙击'},{id:'char_1013_chen2',name:'假日威龙陈',cls:'狙击'},{id:'char_113_cqbw',name:'W',cls:'狙击'},{id:'char_340_shwaz',name:'黑',cls:'狙击'},{id:'char_197_poca',name:'早露',cls:'狙击'},{id:'char_391_rosmon',name:'迷迭香',cls:'狙击'},{id:'char_332_archet',name:'空弦',cls:'狙击'},{id:'char_430_fartth',name:'远牙',cls:'狙击'},{id:'char_300_phenxi',name:'菲亚梅塔',cls:'狙击'},{id:'char_4055_bgsnow',name:'鸿雪',cls:'狙击'},{id:'char_2012_typhon',name:'提丰',cls:'狙击'},{id:'char_4117_ray',name:'莱伊',cls:'狙击'},{id:'char_1035_wisdel',name:'维什戴尔',cls:'狙击'},{id:'char_4138_narant',name:'娜仁图亚',cls:'狙击'},{id:'char_4193_lemuen',name:'蕾缪安',cls:'狙击'},{id:'char_456_ash',name:'灰烬',cls:'狙击'},{id:'char_1048_orchd2',name:'焰狐龙梓兰',cls:'狙击'},{id:'char_611_acnipe',name:'Stormeye',cls:'狙击'},
-{id:'char_180_amgoat',name:'艾雅法拉',cls:'术士'},{id:'char_134_ifrit',name:'伊芙利特',cls:'术士'},{id:'char_213_mostma',name:'莫斯提马',cls:'术士'},{id:'char_2013_cerber',name:'刻俄柏',cls:'术士'},{id:'char_2015_dusk',name:'夕',cls:'术士'},{id:'char_426_billro',name:'卡涅利安',cls:'术士'},{id:'char_377_gdglow',name:'澄闪',cls:'术士'},{id:'char_4080_lin',name:'林',cls:'术士'},{id:'char_4027_heyak',name:'霍尔海雅',cls:'术士'},{id:'char_4133_logos',name:'逻各斯',cls:'术士'},{id:'char_472_pasngr',name:'异客',cls:'术士'},{id:'char_4046_ebnhlz',name:'黑键',cls:'术士'},{id:'char_4146_nymph',name:'妮芙',cls:'术士'},{id:'char_1038_whitw2',name:'荒芜拉普兰德',cls:'术士'},{id:'char_1040_blaze2',name:'烛煌',cls:'术士'},{id:'char_1046_sbell2',name:'圣聆初雪',cls:'术士'},{id:'char_4141_marcil',name:'玛露西尔',cls:'术士'},{id:'char_450_necras',name:'死芒',cls:'术士'},{id:'char_4204_mantra',name:'真言',cls:'术士'},{id:'char_4226_veen',name:'维伊',cls:'术士'},{id:'char_612_accast',name:'Pith',cls:'术士'},
-{id:'char_147_shining',name:'闪灵',cls:'医疗'},{id:'char_179_cgbird',name:'夜莺',cls:'医疗'},{id:'char_003_kalts',name:'凯尔希',cls:'医疗'},{id:'char_1020_reed2',name:'焰影苇草',cls:'医疗'},{id:'char_1016_agoat2',name:'纯烬艾雅法拉',cls:'医疗'},{id:'char_4042_lumen',name:'流明',cls:'医疗'},{id:'char_4056_titi',name:'缇缇',cls:'医疗'},{id:'char_1052_kalts2',name:'凯尔希·思衡托',cls:'医疗'},{id:'char_613_acmedc',name:'Touch',cls:'医疗'},
-{id:'char_291_aglina',name:'安洁莉娜',cls:'辅助'},{id:'char_358_lisa',name:'铃兰',cls:'辅助'},{id:'char_248_mgllan',name:'麦哲伦',cls:'辅助'},{id:'char_2023_ling',name:'令',cls:'辅助'},{id:'char_206_gnosis',name:'灵知',cls:'辅助'},{id:'char_4072_ironmn',name:'白铁',cls:'辅助'},{id:'char_1012_skadi2',name:'浊心斯卡蒂',cls:'辅助'},{id:'char_1031_slent2',name:'淬羽赫默',cls:'辅助'},{id:'char_4134_cetsyr',name:'魔王',cls:'辅助'},{id:'char_1042_phatm2',name:'酒神',cls:'辅助'},{id:'char_1047_halo2',name:'溯光星源',cls:'辅助'},{id:'char_4195_radian',name:'电弧',cls:'辅助'},{id:'char_4202_haruka',name:'遥',cls:'辅助'},{id:'char_4212_nasti',name:'娜斯提',cls:'辅助'},{id:'char_614_acsupo',name:'Raidian',cls:'辅助'},
-{id:'char_225_haak',name:'阿',cls:'特种'},{id:'char_400_weedy',name:'温蒂',cls:'特种'},{id:'char_474_glady',name:'歌蕾蒂娅',cls:'特种'},{id:'char_437_mizuki',name:'水月',cls:'特种'},{id:'char_1023_ghost2',name:'归溟幽灵鲨',cls:'特种'},{id:'char_1028_texas2',name:'缄默德克萨斯',cls:'特种'},{id:'char_1029_yato2',name:'麒麟R夜刀',cls:'特种'},{id:'char_4132_ascln',name:'阿斯卡纶',cls:'特种'},{id:'char_250_phatom',name:'傀影',cls:'特种'},{id:'char_322_lmlee',name:'老鲤',cls:'特种'},{id:'char_1033_swire2',name:'琳琅诗怀雅',cls:'特种'},{id:'char_4048_doroth',name:'多萝西',cls:'特种'},{id:'char_4123_ela',name:'艾拉',cls:'特种'},{id:'char_1039_thorn2',name:'引星棘刺',cls:'特种'},{id:'char_1041_angel2',name:'新约能天使',cls:'特种'},{id:'char_1502_crosly',name:'弑君者',cls:'特种'},{id:'char_2027_wang',name:'望',cls:'特种'},{id:'char_615_acspec',name:'Misery',cls:'特种'}];
+{id:'char_103_angel',name:'能天使',cls:'狙击'},{id:'char_1013_chen2',name:'假日威龙陈',cls:'狙击'},{id:'char_113_cqbw',name:'W',cls:'狙击'},{id:'char_340_shwaz',name:'黑',cls:'狙击'},{id:'char_197_poca',name:'早露',cls:'狙击'},{id:'char_391_rosmon',name:'迷迭香',cls:'狙击'},{id:'char_332_archet',name:'空弦',cls:'狙击'},{id:'char_430_fartth',name:'远牙',cls:'狙击'},{id:'char_300_phenxi',name:'菲亚梅塔',cls:'狙击'},{id:'char_4055_bgsnow',name:'鸿雪',cls:'狙击'},{id:'char_2012_typhon',name:'提丰',cls:'狙击'},{id:'char_4117_ray',name:'莱伊',cls:'狙击'},{id:'char_1035_wisdel',name:'维什戴尔',cls:'狙击'},{id:'char_4138_narant',name:'娜仁图亚',cls:'狙击'},{id:'char_4193_lemuen',name:'蕾缪安',cls:'狙击'},{id:'char_456_ash',name:'灰烬',cls:'狙击'},{id:'char_1048_orchd2',name:'焰狐龙梓兰',cls:'狙击'},
+{id:'char_180_amgoat',name:'艾雅法拉',cls:'术士'},{id:'char_134_ifrit',name:'伊芙利特',cls:'术士'},{id:'char_213_mostma',name:'莫斯提马',cls:'术士'},{id:'char_2013_cerber',name:'刻俄柏',cls:'术士'},{id:'char_2015_dusk',name:'夕',cls:'术士'},{id:'char_426_billro',name:'卡涅利安',cls:'术士'},{id:'char_377_gdglow',name:'澄闪',cls:'术士'},{id:'char_4080_lin',name:'林',cls:'术士'},{id:'char_4027_heyak',name:'霍尔海雅',cls:'术士'},{id:'char_4133_logos',name:'逻各斯',cls:'术士'},{id:'char_472_pasngr',name:'异客',cls:'术士'},{id:'char_4046_ebnhlz',name:'黑键',cls:'术士'},{id:'char_4146_nymph',name:'妮芙',cls:'术士'},{id:'char_1038_whitw2',name:'荒芜拉普兰德',cls:'术士'},{id:'char_1040_blaze2',name:'烛煌',cls:'术士'},{id:'char_1046_sbell2',name:'圣聆初雪',cls:'术士'},{id:'char_4141_marcil',name:'玛露西尔',cls:'术士'},{id:'char_450_necras',name:'死芒',cls:'术士'},{id:'char_4204_mantra',name:'真言',cls:'术士'},{id:'char_4226_veen',name:'维伊',cls:'术士'},
+{id:'char_147_shining',name:'闪灵',cls:'医疗'},{id:'char_179_cgbird',name:'夜莺',cls:'医疗'},{id:'char_003_kalts',name:'凯尔希',cls:'医疗'},{id:'char_1020_reed2',name:'焰影苇草',cls:'医疗'},{id:'char_1016_agoat2',name:'纯烬艾雅法拉',cls:'医疗'},{id:'char_4042_lumen',name:'流明',cls:'医疗'},{id:'char_4056_titi',name:'缇缇',cls:'医疗'},{id:'char_1052_kalts2',name:'凯尔希·思衡托',cls:'医疗'},
+{id:'char_291_aglina',name:'安洁莉娜',cls:'辅助'},{id:'char_358_lisa',name:'铃兰',cls:'辅助'},{id:'char_248_mgllan',name:'麦哲伦',cls:'辅助'},{id:'char_2023_ling',name:'令',cls:'辅助'},{id:'char_206_gnosis',name:'灵知',cls:'辅助'},{id:'char_4072_ironmn',name:'白铁',cls:'辅助'},{id:'char_1012_skadi2',name:'浊心斯卡蒂',cls:'辅助'},{id:'char_1031_slent2',name:'淬羽赫默',cls:'辅助'},{id:'char_4134_cetsyr',name:'魔王',cls:'辅助'},{id:'char_1042_phatm2',name:'酒神',cls:'辅助'},{id:'char_1047_halo2',name:'溯光星源',cls:'辅助'},{id:'char_4195_radian',name:'电弧',cls:'辅助'},{id:'char_4202_haruka',name:'遥',cls:'辅助'},{id:'char_4212_nasti',name:'娜斯提',cls:'辅助'},
+{id:'char_225_haak',name:'阿',cls:'特种'},{id:'char_400_weedy',name:'温蒂',cls:'特种'},{id:'char_474_glady',name:'歌蕾蒂娅',cls:'特种'},{id:'char_437_mizuki',name:'水月',cls:'特种'},{id:'char_1023_ghost2',name:'归溟幽灵鲨',cls:'特种'},{id:'char_1028_texas2',name:'缄默德克萨斯',cls:'特种'},{id:'char_1029_yato2',name:'麒麟R夜刀',cls:'特种'},{id:'char_4132_ascln',name:'阿斯卡纶',cls:'特种'},{id:'char_250_phatom',name:'傀影',cls:'特种'},{id:'char_322_lmlee',name:'老鲤',cls:'特种'},{id:'char_1033_swire2',name:'琳琅诗怀雅',cls:'特种'},{id:'char_4048_doroth',name:'多萝西',cls:'特种'},{id:'char_4123_ela',name:'艾拉',cls:'特种'},{id:'char_1039_thorn2',name:'引星棘刺',cls:'特种'},{id:'char_1041_angel2',name:'新约能天使',cls:'特种'},{id:'char_1502_crosly',name:'弑君者',cls:'特种'},{id:'char_2027_wang',name:'望',cls:'特种'}];
 
 var CLS_ORDER = ['先锋','近卫','重装','狙击','术士','医疗','辅助','特种'];
 var CLS_ICON = {'先锋':'⚔','近卫':'🗡','重装':'🛡','狙击':'🎯','术士':'🔮','医疗':'💉','辅助':'✨','特种':'🌀'};
 var S = {
   teamA:{name:'泰拉联合',player:'选手A'},teamB:{name:'萨卡兹王庭',player:'选手B'},
-  maxBan:4,maxPick:6,maxGuest:1,sched:'2026-07-04',
+  maxBan:3,maxPick:3,maxGuest:1,sched:'',
   ingA:300,ingB:300,budgetA:500,budgetB:500,side:'ab',
   ops:[],banA:[],banB:[],pickA:[],pickB:[],guestA:[],guestB:[],pubBan:[],
   curAct:'ban_a',curCls:'all',history:[],
   bo:1,round:1,lockedOps:[],historyRounds:[],
-  countdown:120,cdRemain:120,cdEnabled:true,cdPaused:false
+  countdown:120,cdRemain:120,cdEnabled:true,cdPaused:false,
+  restartSwA:false,restartCntA:0,restartSwB:false,restartCntB:0
 };
 
 function iu(op){return imgUrl(op,'halfbody')}
@@ -382,8 +396,9 @@ function init(keepBO){
   S.round=1;S.history=[];
   if(!keepBO){S.bo=1}
   S.curAct=S.side==='ab'?'ban_a':'ban_b';S.curCls='all';
-  S.ingA=300;S.ingB=300;S.budgetA=500;S.budgetB=500;S.cdRemain=S.countdown;S.cdPaused=false;
+  S.ingA=300;S.ingB=300;S.budgetA=500;S.budgetB=500;S.cdRemain=S.countdown;S.cdPaused=false;S._viewingRound=undefined;S._savedCurrent=undefined;
   var r1=document.getElementById('taRestartSw'),r2=document.getElementById('tbRestartSw');
+  S.restartSwA=false;S.restartCntA=0;S.restartSwB=false;S.restartCntB=0;
   if(r1){r1.checked=false;document.getElementById('taRestCnt').value=0;document.getElementById('taRestCnt').disabled=true}
   if(r2){r2.checked=false;document.getElementById('tbRestCnt').value=0;document.getElementById('tbRestCnt').disabled=true}
   saveState();
@@ -426,14 +441,14 @@ function renderUI(){
     var ph='';
     e[1].forEach(function(op){
       var tag=e[2];
-      ph+='<div class="slot '+tag+'" title="'+op.name+'"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async" onerror="this.onerror=null;this.style.display=\'none\'">'+(isPick?'<span class="sname">'+op.name+'</span>':'')+'</div>';
+      ph+='<div class="slot '+tag+'" title="'+op.name+'"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async" onerror="imgRetry(this,\'\',\''+op.id+'\')">'+(isPick?'<span class="sname">'+op.name+'</span>':'')+'</div>';
     });
     for(var i=e[1].length;i<e[3];i++)ph+='<div class="slot empty"></div>';
     c.innerHTML=ph;
   });
   // Public ban 栏
   var pr=document.getElementById('pubBanRow'),po=document.getElementById('pubBanOps');
-  if(S.pubBan.length){pr.style.display='flex';var ph='';S.pubBan.forEach(function(op){ph+='<div class="pbslot" title="'+op.name+' (点击移除)" onclick="removePubBan(\''+op.id+'\')"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy"><span class="pbdel">✕</span></div>'});po.innerHTML=ph}else{pr.style.display='none'}
+  if(S.pubBan.length){pr.style.display='flex';var ph='';S.pubBan.forEach(function(op){ph+='<div class="pbslot" title="'+op.name+' (点击移除)" onclick="removePubBan(\''+op.id+'\')"><img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" onerror="imgRetry(this,\'\',\''+op.id+'\')"><span class="pbdel">✕</span></div>'});po.innerHTML=ph}else{pr.style.display='none'}
   document.getElementById('taName').textContent=S.teamA.name;
   document.getElementById('taPlayer').textContent=S.teamA.player;
   document.getElementById('tbName').textContent=S.teamB.name;
@@ -447,8 +462,8 @@ function renderUI(){
     var pMap={ban_a:'禁用阶段，A队禁用一名角色',ban_b:'禁用阶段，B队禁用一名角色',pick_a:'选取阶段，A队选择一名角色',pick_b:'选取阶段，B队选择一名角色',guest_a:'外援阶段，A队选择一名角色',guest_b:'外援阶段，B队选择一名角色',pubban:'公ban阶段，全局禁用一名角色'};
     var pt='';
     if(S.bo>1)pt='第'+S.round+'轮';
-    pt+=(pMap[a]||'');
-    psEl.textContent='当前'+pt;
+    if(S._viewingRound!==undefined)pt='📋查看第'+(S._viewingRound+1)+'轮BP结果（历史）';else{if(S.bo>1)pt='第'+S.round+'轮';pt+=(pMap[a]||'');}
+    psEl.textContent=pt;
   }
   // 倒计时显示
   var cdEl=document.getElementById('cdDisplay');
@@ -480,13 +495,13 @@ function renderUI(){
   var rEl=document.getElementById('roundInfo');
   if(S.bo>1){
     if(!rEl){rEl=document.createElement('span');rEl.id='roundInfo';rEl.style.cssText='font-size:11px;color:var(--gold);margin-left:8px';document.querySelector('.grid-hd .gt').after(rEl)}
-    var pl=S.historyRounds.length+1;rEl.textContent='第'+pl+'/'+S.bo+'轮';
+    if(S._viewingRound!==undefined)rEl.textContent='[历史]第'+(S._viewingRound+1)+'/'+S.historyRounds.length+'轮';else rEl.textContent='第'+(S.historyRounds.length+1)+'/'+S.bo+'轮';
     // 历史按钮
     var hb=document.getElementById('roundHistBtn');
     if(!hb&&S.historyRounds.length){hb=document.createElement('button');hb.id='roundHistBtn';hb.textContent='📜';hb.title='查看历史回合';hb.style.cssText='margin-left:4px;background:none;border:none;cursor:pointer;font-size:13px;color:var(--gold);padding:0 2px;vertical-align:middle';hb.onclick=showRoundHist;rEl.after(hb)}
     if(hb&&!S.historyRounds.length)hb.remove()
   }else{if(rEl)rEl.remove();var hb2=document.getElementById('roundHistBtn');if(hb2)hb2.remove()}
-  updBal();fitPools();
+  updRoundNav();updBal();fitPools();
 }
 
 // BP栏自适应缩放：线性比例缩小，网格+选取池都参与；允许缩到很小
@@ -528,15 +543,17 @@ function renderGrid(){
   var g=document.getElementById('opGrid');if(!g)return;
   var list=S.curCls==='all'?[...S.ops]:S.ops.filter(function(o){return o.cls===S.curCls});
   var h='';
-  list.forEach(function(op){
+  list.forEach(function(op,idx){
     var st=op.status,sc=st==='avail'?'avail':st==='ban'||st==='pubban'||st==='locked'?'banned':st==='pa'?'picked-a':st==='pb'?'picked-b':st==='ga'?'guest-a':'guest-b';
     var ic=CLS_ICON[op.cls]||'',init=op.name.charAt(0),safe=op.id.replace(/\W/g,'');
     var ttl=op.name+'('+op.cls+')'+(st==='locked'?'[已锁定]':st==='pubban'?'[公ban]':'');
+    // 前24个优先加载（可见区域），其余懒加载
+    var lp = idx < 24 ? ' fetchpriority="high" loading="eager"' : ' loading="lazy"';
     h+='<div class="op-card '+sc+'" data-opid="'+op.id+'" onclick="onOp(\''+op.id+'\')" title="'+ttl+'">'
       +'<div class="plh-bg" id="plh-'+safe+'">'+init+'</div>'
-      +'<img src="'+iu(op)+'" alt="'+op.name+'" loading="lazy" decoding="async"'
-      +' onload="document.getElementById(\'plh-'+safe+'\')?.classList.add(\'hide\')"'
-      +' onerror="var p=document.getElementById(\'plh-'+safe+'\');this.onerror=null;this.style.display=\'none\';if(p)p.style.opacity=\'1\'">'
+      +'<img src="'+iu(op)+'" alt="'+op.name+'" decoding="async"'+lp
+      +' onerror="imgRetry(this,\''+safe+'\',\''+op.id+'\')"'
+      +' onload="document.getElementById(\'plh-'+safe+'\')?.classList.add(\'hide\')">'
       +'<span class="oclass">'+ic+'</span>'
       +'<span class="oname">'+op.name+'</span></div>';
   });
@@ -637,10 +654,23 @@ try{var ab=localStorage.getItem('ytb_av_tbAvatar');if(ab)document.getElementById
 try{var pla=localStorage.getItem('ytb_pl_taPlAvatar');if(pla)document.getElementById('taPlAvatar').src=pla}catch(e){}
 try{var plb=localStorage.getItem('ytb_pl_tbPlAvatar');if(plb)document.getElementById('tbPlAvatar').src=plb}catch(e){}
 
-function swapSide(){S.side=document.getElementById('sideSelect').value;if(S.history.length>0&&!confirm('切换红蓝方将重置当前BP，是否继续？')){document.getElementById('sideSelect').value=S.side;return}init(true);render();toast('🔀已切换红蓝方')}
-function toggleRest(t){var sw=document.getElementById(t==='A'?'taRestartSw':'tbRestartSw'),inp=document.getElementById(t==='A'?'taRestCnt':'tbRestCnt');inp.disabled=!sw.checked;if(!sw.checked)inp.value=0}
+function swapSide(){S.side=document.getElementById('sideSelect').value;if(S.history.length>0&&!confirm('切换红蓝方将重置当前BP，是否继续？')){document.getElementById('sideSelect').value=S.side;return}memSave();init(true);memLoad();document.getElementById('schedDate').value=S.sched;updBal();render();toast('🔀已切换红蓝方')}
+function toggleRest(t){
+  var isA=t==='A',sw=document.getElementById(isA?'taRestartSw':'tbRestartSw'),inp=document.getElementById(isA?'taRestCnt':'tbRestCnt');
+  inp.disabled=!sw.checked;if(!sw.checked)inp.value=0;
+  if(isA){S.restartSwA=sw.checked;S.restartCntA=parseInt(inp.value)||0}
+  else{S.restartSwB=sw.checked;S.restartCntB=parseInt(inp.value)||0}
+  saveState()
+}
+function saveRestCnt(t){
+  var isA=t==='A';
+  if(isA)S.restartCntA=parseInt(document.getElementById('taRestCnt').value)||0;
+  else S.restartCntB=parseInt(document.getElementById('tbRestCnt').value)||0;
+  saveState()
+}
 function setAct(a){S.curAct=a;renderUI()}
 function onOp(id){
+  if(S._viewingRound!==undefined){toast('历史查看模式无法操作BP');return}
   var op=S.ops.find(function(o){return o.id===id});if(!op||op.status!=='avail')return;
   var a=S.curAct;
   if(a==='pubban'){S.history.push({action:'pubban',opId:id});op.status='pubban';S.pubBan.push({...op});renderUI();saveState();return}
@@ -662,6 +692,7 @@ function nextAct(cur){
   return cur
 }
 function undo(){
+  if(S._viewingRound!==undefined){toast('历史查看模式无法撤销');return}
   if(!S.history.length){toast('没有可撤销的操作');return}
   var last=S.history.pop(),op=S.ops.find(function(o){return o.id===last.opId});if(!op)return;
   var a=last.action;
@@ -725,20 +756,145 @@ function applyCfg(){
   }
   S.maxBan=nb;S.maxPick=np;S.maxGuest=ng;S.bo=nbo;S.countdown=Math.min(300,Math.max(0,parseInt(document.getElementById('inpCd').value)||120));S.cdRemain=S.countdown;S.cdPaused=false;S.cdEnabled=document.getElementById('inpCdEn').checked;closeModal();toast('✅配置已更新');saveState();render()
 }
-function confirmReset(){document.getElementById('cfrm-msg').textContent='确定一键重置？所有BP数据将被清空！';document.getElementById('cfrm-y').onclick=function(){document.getElementById('cfrm').classList.remove('open');resetAll()};document.getElementById('cfrm-n').onclick=function(){document.getElementById('cfrm').classList.remove('open')};document.getElementById('cfrm').classList.add('open')}
-function resetAll(){localStorage.removeItem('ytb_bp');init();render();toast('↻已全部重置')}
+function showResetOptions(){
+  document.getElementById('cfrm-msg').textContent='选择重置方式：';
+  document.getElementById('cfrm-y').textContent='🗑全部重置';
+  document.getElementById('cfrm-y').onclick=function(){
+    document.getElementById('cfrm').classList.remove('open');
+    document.getElementById('cfrm-y').textContent='✓确定';
+    document.getElementById('cfrm-3rd').style.display='none';
+    resetAll();
+  };
+  document.getElementById('cfrm-n').textContent='✕取消';
+  document.getElementById('cfrm-n').onclick=function(){
+    document.getElementById('cfrm').classList.remove('open');
+    document.getElementById('cfrm-y').textContent='✓确定';
+    document.getElementById('cfrm-3rd').style.display='none';
+  };
+  var btn3=document.getElementById('cfrm-3rd');
+  btn3.style.display='';btn3.textContent='↻重置本轮';
+  btn3.onclick=function(){
+    document.getElementById('cfrm').classList.remove('open');
+    btn3.style.display='none';
+    document.getElementById('cfrm-y').textContent='✓确定';
+    resetCurrentRound();
+  };
+  document.getElementById('cfrm').classList.add('open');
+}
+function resetAll(){
+  memSave(); // 先保存记忆数据（会被init重置，稍后恢复）
+  localStorage.removeItem('ytb_bp');
+  S._viewingRound=undefined;S._savedCurrent=undefined;
+  init();
+  memLoad(); // 恢复记忆数据（重开/源石锭/预算）
+  // 日期始终同步到当天
+  var _d=new Date();S.sched=_d.getFullYear()+'-'+('0'+(_d.getMonth()+1)).slice(-2)+'-'+('0'+_d.getDate()).slice(-2);
+  document.getElementById('schedDate').value=S.sched;
+  var ra=document.getElementById('taRestartSw'),rb=document.getElementById('tbRestartSw');
+  if(ra){ra.checked=S.restartSwA;document.getElementById('taRestCnt').value=S.restartCntA;document.getElementById('taRestCnt').disabled=!S.restartSwA}
+  if(rb){rb.checked=S.restartSwB;document.getElementById('tbRestCnt').value=S.restartCntB;document.getElementById('tbRestCnt').disabled=!S.restartSwB}
+  updBal();
+  render();toast('🗑已全部重置')
+}
+function resetCurrentRound(){
+  S.ops.forEach(function(o){if(o.status!=='locked')o.status='avail'});
+  S.banA=[];S.banB=[];S.pickA=[];S.pickB=[];S.guestA=[];S.guestB=[];S.pubBan=[];S.history=[];
+  S.cdRemain=S.countdown;S.cdPaused=false;
+  S.curAct=S.side==='ab'?'ban_a':'ban_b';
+  saveState();render();toast('↻已重置当前一轮');
+}
+// === 轮次导航 ===
+function showRound(idx){
+  if(S._viewingRound===undefined){
+    S._savedCurrent={
+      banA:S.banA.slice(),banB:S.banB.slice(),pickA:S.pickA.slice(),pickB:S.pickB.slice(),
+      guestA:S.guestA.slice(),guestB:S.guestB.slice(),pubBan:S.pubBan.slice(),
+      history:S.history.slice(),curAct:S.curAct
+    };
+  }
+  S._viewingRound=idx;
+  var r=S.historyRounds[idx];
+  S.banA=r.banA.slice();S.banB=r.banB.slice();
+  S.pickA=r.pickA.slice();S.pickB=r.pickB.slice();
+  S.guestA=r.guestA.slice();S.guestB=r.guestB.slice();
+  S.pubBan=(r.pubBan||[]).slice();
+  S.history=[];S.curAct='ban_a';
+  renderUI();
+}
+function exitRoundView(){
+  if(S._viewingRound===undefined)return;
+  var s=S._savedCurrent;
+  S.banA=s.banA;S.banB=s.banB;S.pickA=s.pickA;S.pickB=s.pickB;
+  S.guestA=s.guestA;S.guestB=s.guestB;S.pubBan=s.pubBan;
+  S.history=s.history;S.curAct=s.curAct;
+  S._viewingRound=undefined;S._savedCurrent=undefined;
+  renderUI();
+}
+function prevRound(){
+  if(!S.historyRounds.length){toast('没有历史轮次');return}
+  if(S._viewingRound!==undefined&&S._viewingRound>0){showRound(S._viewingRound-1);return}
+  if(S._viewingRound===undefined&&S.historyRounds.length){showRound(S.historyRounds.length-1);return}
+  toast('已是第一轮');
+}
+function nextRound(){
+  if(S._viewingRound!==undefined){
+    if(S._viewingRound<S.historyRounds.length-1){showRound(S._viewingRound+1);return}
+    exitRoundView();toast('已返回当前轮次');return
+  }
+  if(S.banA.length>=S.maxBan&&S.banB.length>=S.maxBan&&S.pickA.length>=S.maxPick&&S.pickB.length>=S.maxPick&&S.guestA.length>=S.maxGuest&&S.guestB.length>=S.maxGuest){
+    if(S.bo>1&&S.round<S.bo){completeRound();return}
+    toast('🎉全部BO已完成！');return
+  }
+  toast('⛔当前轮BP尚未完成');
+}
+
+function updRoundNav(){
+  var navEl=document.getElementById('roundNavInfo');
+  if(navEl){
+    if(S.bo>1||S.historyRounds.length){
+      var rt='';
+      if(S._viewingRound!==undefined)rt='历史'+(S._viewingRound+1)+'/'+S.historyRounds.length+'轮  ';
+      else if(S.historyRounds.length)rt='第'+(S.historyRounds.length+1)+'/'+S.bo+'轮  ';
+      else rt='第1/'+S.bo+'轮  ';
+      navEl.textContent=rt;
+    }else{navEl.textContent=''}
+  }
+  document.querySelectorAll('.abtn').forEach(function(b){
+    if(b.id==='btnPrevRound'||b.id==='btnNextRound')return;
+    b.style.pointerEvents=S._viewingRound!==undefined?'none':'';
+    b.style.opacity=S._viewingRound!==undefined?'.5':'';
+  });
+}
 var tt=null;
 function toast(m,c){if(!c)c='';var e=document.getElementById('toast');e.textContent=m;e.className='toast '+c;clearTimeout(tt);void e.offsetWidth;e.classList.add('sh');tt=setTimeout(function(){e.classList.remove('sh')},2200)}
 // === 持久化存储：每次BP操作后自动保存 ===
 var SAVE_VER=1;
+// "记忆"数据：不会被重置清除，只能手动修改
+var MEM_KEYS = ['restartSwA','restartCntA','restartSwB','restartCntB','ingA','ingB','budgetA','budgetB'];
+function memSave(){
+  var data={};
+  MEM_KEYS.forEach(function(k){data[k]=S[k]});
+  try{localStorage.setItem('ytb_bp_mem',JSON.stringify(data))}catch(e){}
+}
+function memLoad(){
+  try{
+    var raw=localStorage.getItem('ytb_bp_mem');if(!raw)return;
+    var d=JSON.parse(raw);
+    MEM_KEYS.forEach(function(k){if(d[k]!==undefined)S[k]=d[k]});
+  }catch(e){}
+}
 function saveState(){
+  if(S._viewingRound!==undefined)return;
   var data={_v:SAVE_VER,teamA:S.teamA,teamB:S.teamB,maxBan:S.maxBan,maxPick:S.maxPick,maxGuest:S.maxGuest,bo:S.bo,round:S.round,
     ingA:S.ingA,ingB:S.ingB,budgetA:S.budgetA,budgetB:S.budgetB,side:S.side,sched:S.sched,
     countdown:S.countdown,cdRemain:S.cdRemain,cdEnabled:S.cdEnabled,cdPaused:S.cdPaused,
     banA:S.banA,banB:S.banB,pickA:S.pickA,pickB:S.pickB,guestA:S.guestA,guestB:S.guestB,pubBan:S.pubBan,
     lockedOps:S.lockedOps,historyRounds:S.historyRounds,
+    restartSwA:S.restartSwA,restartCntA:S.restartCntA,
+    restartSwB:S.restartSwB,restartCntB:S.restartCntB,
     history:S.history.map(function(h){return{action:h.action,opId:h.opId}})};
   try{localStorage.setItem('ytb_bp',JSON.stringify(data))}catch(e){}
+  memSave(); // 同步保存记忆数据到独立存储
 }
 function loadState(){
   try{
@@ -748,7 +904,8 @@ function loadState(){
     // 必须先初始化干员列表，因为loadState成功后不会走init()
     S.ops=OPERATORS.map(function(o){o=Object.assign({},o);o.status='avail';return o});
     ['teamA','teamB','maxBan','maxPick','maxGuest','bo','round','ingA','ingB','budgetA','budgetB','side','sched',
-     'banA','banB','pickA','pickB','guestA','guestB','pubBan','lockedOps','historyRounds','history','countdown','cdRemain','cdEnabled','cdPaused'].forEach(function(k){
+     'banA','banB','pickA','pickB','guestA','guestB','pubBan','lockedOps','historyRounds','history','countdown','cdRemain','cdEnabled','cdPaused',
+     'restartSwA','restartCntA','restartSwB','restartCntB'].forEach(function(k){
       if(d[k]!==undefined)S[k]=d[k];
     });
     S.ops.forEach(function(o){o.status='avail'});
@@ -795,20 +952,20 @@ function exportImage(){
   var hasBan = S.banA.length || S.banB.length;
   var hasPick = S.pickA.length || S.pickB.length;
   var hasGuest = S.guestA.length || S.guestB.length;
-  var banSz = 115, pickW = 200, pickH = 400, guestSz = 140, gap = 10, labelH = 30, titleH = 135;
+  var banSz = 115, pickW = 200, pickH = 400, guestSz = 140, gap = 10, labelH = 34, titleH = 135;
   var c = document.createElement('canvas');
   var imgCache = {};
   // 加载队伍头像
   var teamImgA = null, teamImgB = null, plImgA = null, plImgB = null;
   try{
     var taEl = document.getElementById('taAvatar');
-    if(taEl && taEl.src && taEl.src.length>100){teamImgA=new Image();teamImgA.crossOrigin='anonymous';teamImgA.src=taEl.src}
+    if(taEl && taEl.src && taEl.src.length>100){teamImgA=new Image();teamImgA.src=taEl.src}
     var tbEl = document.getElementById('tbAvatar');
-    if(tbEl && tbEl.src && tbEl.src.length>100){teamImgB=new Image();teamImgB.crossOrigin='anonymous';teamImgB.src=tbEl.src}
+    if(tbEl && tbEl.src && tbEl.src.length>100){teamImgB=new Image();teamImgB.src=tbEl.src}
     var plAEl = document.getElementById('taPlAvatar');
-    if(plAEl && plAEl.src && plAEl.src.length>100){plImgA=new Image();plImgA.crossOrigin='anonymous';plImgA.src=plAEl.src}
+    if(plAEl && plAEl.src && plAEl.src.length>100){plImgA=new Image();plImgA.src=plAEl.src}
     var plBEl = document.getElementById('tbPlAvatar');
-    if(plBEl && plBEl.src && plBEl.src.length>100){plImgB=new Image();plImgB.crossOrigin='anonymous';plImgB.src=plBEl.src}
+    if(plBEl && plBEl.src && plBEl.src.length>100){plImgB=new Image();plImgB.src=plBEl.src}
   }catch(e){}
 
   // 底图渲染：默认红→蓝渐变 + 可选的用户上传底图（淡化）
@@ -832,50 +989,57 @@ function exportImage(){
     ctx.textAlign = 'left';
     // 队伍头像
     if(teamImgA && teamImgA.complete && teamImgA.naturalWidth>0){
-      ctx.save(); ctx.beginPath(); ctx.arc(padX+26, padY+26, 26, 0, Math.PI*2); ctx.clip();
-      ctx.drawImage(teamImgA, padX, padY, 52, 52); ctx.restore();
+      ctx.save(); ctx.beginPath(); ctx.arc(padX+45, padY+45, 45, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(teamImgA, padX, padY, 90, 90); ctx.restore();
     }else{
-      ctx.beginPath(); ctx.arc(padX+26, padY+26, 26, 0, Math.PI*2);
+      ctx.beginPath(); ctx.arc(padX+45, padY+45, 45, 0, Math.PI*2);
       ctx.fillStyle = 'rgba(255,51,17,0.15)'; ctx.fill();
     }
-    ctx.beginPath(); ctx.arc(padX+26, padY+26, 26, 0, Math.PI*2);
+    ctx.beginPath(); ctx.arc(padX+45, padY+45, 45, 0, Math.PI*2);
     ctx.strokeStyle = 'rgba(255,51,17,0.3)'; ctx.lineWidth = 2; ctx.stroke();
     ctx.fillStyle = '#FF5522'; ctx.font = 'bold 38px "Microsoft YaHei",sans-serif';
-    ctx.fillText(S.teamA.name, padX+90, padY+4);
+    ctx.fillText(S.teamA.name, padX+130, padY+14);
     ctx.fillStyle = '#D4A854'; ctx.font = '30px "Microsoft YaHei",sans-serif';
     if(plImgA&&plImgA.complete&&plImgA.naturalWidth>0){
-      ctx.save(); ctx.beginPath(); ctx.arc(padX+90, padY+53, 18, 0, Math.PI*2); ctx.clip();
-      ctx.drawImage(plImgA, padX+72, padY+35, 36, 36); ctx.restore();
-      ctx.fillText(S.teamA.player, padX+114, padY+44);
+      ctx.save(); ctx.beginPath(); ctx.arc(padX+130, padY+90, 35, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(plImgA, padX+95, padY+55, 70, 70); ctx.restore();
+      ctx.fillText(S.teamA.player, padX+185, padY+78);
     }else{
-      ctx.fillText(S.teamA.player, padX+90, padY+46);
+      ctx.fillText(S.teamA.player, padX+130, padY+78);
     }
-    // B队 右侧
-    ctx.textAlign = 'right';
+    // B队 右侧（头像在名称左边，左对齐）
+    ctx.textAlign = 'left';
+    var bRef = 1920 * 0.75; // =1440
+    var bNameX = W - padX - 200;
+    // B侧坐标 = A侧对应坐标 + bRef
+    // 队徽: 中心75+1440=1515, 图片左1515-45=1470
+    // 队名: 160+1440=1600
+    // 选手头像: 中心160+1440=1600(不变), 图片左1600-35=1565(不变)
+    // 选手名: 215+1440=1655
     if(teamImgB && teamImgB.complete && teamImgB.naturalWidth>0){
-      ctx.save(); ctx.beginPath(); ctx.arc(W-padX-26, padY+26, 26, 0, Math.PI*2); ctx.clip();
-      ctx.drawImage(teamImgB, W-padX-52, padY, 52, 52); ctx.restore();
+      ctx.save(); ctx.beginPath(); ctx.arc(bNameX-175, padY+45, 45, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(teamImgB, bNameX-220, padY, 90, 90); ctx.restore();
     }else{
-      ctx.beginPath(); ctx.arc(W-padX-26, padY+26, 26, 0, Math.PI*2);
+      ctx.beginPath(); ctx.arc(bNameX-175, padY+45, 45, 0, Math.PI*2);
       ctx.fillStyle = 'rgba(34,136,255,0.15)'; ctx.fill();
     }
-    ctx.beginPath(); ctx.arc(W-padX-26, padY+26, 26, 0, Math.PI*2);
+    ctx.beginPath(); ctx.arc(bNameX-175, padY+45, 45, 0, Math.PI*2);
     ctx.strokeStyle = 'rgba(34,136,255,0.3)'; ctx.lineWidth = 2; ctx.stroke();
     ctx.fillStyle = '#2288FF'; ctx.font = 'bold 38px "Microsoft YaHei",sans-serif';
-    ctx.fillText(S.teamB.name, W-padX-90, padY+4);
+    ctx.fillText(S.teamB.name, bNameX-90, padY+14);
     ctx.fillStyle = '#D4A854'; ctx.font = '30px "Microsoft YaHei",sans-serif';
     if(plImgB&&plImgB.complete&&plImgB.naturalWidth>0){
-      ctx.save(); ctx.beginPath(); ctx.arc(W-padX-112, padY+53, 18, 0, Math.PI*2); ctx.clip();
-      ctx.drawImage(plImgB, W-padX-130, padY+35, 36, 36); ctx.restore();
-      ctx.fillText(S.teamB.player, W-padX-90, padY+44);
+      ctx.save(); ctx.beginPath(); ctx.arc(bNameX-90, padY+90, 35, 0, Math.PI*2); ctx.clip();
+      ctx.drawImage(plImgB, bNameX-125, padY+55, 70, 70); ctx.restore();
+      ctx.fillText(S.teamB.player, bNameX-35, padY+78);
     }else{
-      ctx.fillText(S.teamB.player, W-padX-90, padY+46);
+      ctx.fillText(S.teamB.player, bNameX-35, padY+78);
     }
     // 中标题
     ctx.textAlign = 'center';
     ctx.fillStyle = '#FFE88A'; ctx.font = 'bold 42px "Microsoft YaHei",sans-serif';
     ctx.fillText('🏆应天杯 · '+boText+' · BP定阵', W/2, padY+16);
-    ctx.fillStyle = '#A09080'; ctx.font = '18px "Microsoft YaHei",sans-serif';
+    ctx.fillStyle = '#A09080'; ctx.font = '30px "Microsoft YaHei",sans-serif';
     ctx.fillText('「萨卡兹的无终奇语」 '+(S.side==='ab'?'🔴A先手':'🔵B先手'), W/2, padY+78);
     var sepY = padY + titleH;
     ctx.strokeStyle = 'rgba(212,168,84,0.2)'; ctx.lineWidth=1;
@@ -886,31 +1050,31 @@ function exportImage(){
       // A队 左→右（朝向中间）
       ctx.textAlign = 'left';
       var aLx = padX + 20;
-      ctx.fillStyle = '#FF3B3B'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillStyle = '#888'; ctx.font = 'bold 30px "Microsoft YaHei",sans-serif';
       ctx.fillText('⛔禁用', aLx, curY);
-      aLx += 70;
-      S.banA.forEach(function(op,i){ placeHead(ctx, aLx+(banSz+gap)*i, curY+labelH+4, banSz, op, '#FF3B3B'); });
+      aLx += 100;
+      S.banA.forEach(function(op,i){ placeHead(ctx, aLx+(banSz+gap)*i, curY+labelH+4, banSz, op, '#888'); });
       aLx += Math.max(1, S.banA.length) * (banSz + gap);
       if(S.guestA.length){
         aLx += 16;
-        ctx.fillStyle = '#D4A854'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+        ctx.fillStyle = '#D4A854'; ctx.font = 'bold 30px "Microsoft YaHei",sans-serif';
         ctx.fillText('🔄外援', aLx, curY);
-        aLx += 70;
+        aLx += 100;
         S.guestA.forEach(function(op,i){ placeHead(ctx, aLx+(guestSz+gap)*i, curY+labelH+4, guestSz, op, '#D4A854'); });
       }
       // B队 右→左（朝向中间，对称）
       ctx.textAlign = 'right';
       var bRx = W - padX - 20;
-      ctx.fillStyle = '#FF3B3B'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillStyle = '#888'; ctx.font = 'bold 30px "Microsoft YaHei",sans-serif';
       ctx.fillText('⛔禁用', bRx, curY);
-      bRx -= 70;
-      S.banB.forEach(function(op,i){ placeHead(ctx, bRx-(banSz+gap)*i-banSz, curY+labelH+4, banSz, op, '#FF3B3B'); });
+      bRx -= 100;
+      S.banB.forEach(function(op,i){ placeHead(ctx, bRx-(banSz+gap)*i-banSz, curY+labelH+4, banSz, op, '#888'); });
       bRx -= Math.max(1, S.banB.length) * (banSz + gap);
       if(S.guestB.length){
         bRx -= 16;
-        ctx.fillStyle = '#D4A854'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+        ctx.fillStyle = '#D4A854'; ctx.font = 'bold 30px "Microsoft YaHei",sans-serif';
         ctx.fillText('🔄外援', bRx, curY);
-        bRx -= 70;
+        bRx -= 100;
         S.guestB.forEach(function(op,i){ placeHead(ctx, bRx-(guestSz+gap)*i-guestSz, curY+labelH+4, guestSz, op, '#D4A854'); });
       }
       curY += labelH + Math.max(banSz, guestSz) + 18;
@@ -928,7 +1092,7 @@ function exportImage(){
       var aCnt = S.pickA.length, aTotal = aCnt * pW + (aCnt-1) * autoGap;
       var aStartX = aCenterX - aTotal/2;
       ctx.textAlign = 'left';
-      ctx.fillStyle = '#FF5522'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillStyle = '#FF5522'; ctx.font = 'bold 30px "Microsoft YaHei",sans-serif';
       ctx.fillText('⭐选取', padX+20, curY);
       S.pickA.forEach(function(op,i){
         placePick(ctx, aStartX + i*(pW+autoGap), curY+labelH+6, pW, pH, op, '#FF5522');
@@ -938,7 +1102,7 @@ function exportImage(){
       var bCnt = S.pickB.length, bTotal = bCnt * pW + (bCnt-1) * autoGap;
       var bStartX = bCenterX - bTotal/2;
       ctx.textAlign = 'right';
-      ctx.fillStyle = '#2288FF'; ctx.font = 'bold 18px "Microsoft YaHei",sans-serif';
+      ctx.fillStyle = '#2288FF'; ctx.font = 'bold 30px "Microsoft YaHei",sans-serif';
       ctx.fillText('⭐选取', W-padX-20, curY);
       S.pickB.forEach(function(op,i){
         placePick(ctx, bStartX + (bCnt-1-i)*(pW+autoGap), curY+labelH+6, pW, pH, op, '#2288FF');
@@ -951,15 +1115,16 @@ function exportImage(){
     ctx.beginPath(); ctx.moveTo(padX+80, curY); ctx.lineTo(W-padX-80, curY); ctx.stroke();
     curY += 14;
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#A09080'; ctx.font = '17px "Microsoft YaHei",sans-serif';
+    ctx.fillStyle = '#A09080'; ctx.font = '24px "Microsoft YaHei",sans-serif';
     ctx.fillText('📅 '+S.sched+'  |  '+boText+'  |  '+(S.side==='ab'?'🔴A队先手':'🔵B队先手')+'  |  ⛔'+S.maxBan+'禁  ⭐'+S.maxPick+'选  🔄'+S.maxGuest+'援', W/2, curY);
   }
 
   function placeHead(ctx, x, y, sz, op, color){
-    var img = imgCache[iuHead(op)] || (imgCache[iuHead(op)] = new Image());
+    var url = iuHead(op), fallback = CDN_BASE + op.id + '_1.png';
+    var img = imgCache[url] || (imgCache[url] = new Image());
     img.crossOrigin = 'anonymous';
     allImgs.push(img);
-    (function(x2,y2,m){
+    (function(x2,y2,m,fb){
       m.onload=function(){
         ctx.save(); ctx.beginPath(); ctx.arc(x2+sz/2,y2+sz/2,sz/2,0,Math.PI*2); ctx.clip();
         ctx.drawImage(m,x2,y2,sz,sz); ctx.restore();
@@ -967,16 +1132,21 @@ function exportImage(){
         ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
         if(++loaded>=allImgs.length)showPreview();
       };
-      m.onerror=function(){if(++loaded>=allImgs.length)showPreview()};
-      if(!m._src){ m._src=1; m.src=iuHead(op); }
-    })(x,y,img);
+      m.onerror=function(){
+        var _fb = fb, _m = m;
+        if(!_m.dataset.rt){ _m.dataset.rt='1'; _m.src=_fb; return; }
+        if(++loaded>=allImgs.length)showPreview();
+      };
+      if(!m._src){ m._src=1; m.src=url; }
+    })(x,y,img,fallback);
   }
 
   function placePick(ctx, x, y, w, h, op, color){
-    var img = imgCache[iu(op)] || (imgCache[iu(op)] = new Image());
+    var url = iu(op), fallback = CDN_BASE + op.id + '_1.png';
+    var img = imgCache[url] || (imgCache[url] = new Image());
     img.crossOrigin = 'anonymous';
     allImgs.push(img);
-    (function(x2,y2,m){
+    (function(x2,y2,m,fb){
       m.onload=function(){
         ctx.save(); ctx.beginPath();
         if(ctx.roundRect)ctx.roundRect(x2,y2,w,h,4);else ctx.rect(x2,y2,w,h);
@@ -986,9 +1156,13 @@ function exportImage(){
         ctx.stroke(); ctx.restore();
         if(++loaded>=allImgs.length)showPreview();
       };
-      m.onerror=function(){if(++loaded>=allImgs.length)showPreview()};
-      if(!m._src){ m._src=1; m.src=iu(op); }
-    })(x,y,img);
+      m.onerror=function(){
+        var _fb = fb, _m = m;
+        if(!_m.dataset.rt){ _m.dataset.rt='1'; _m.src=_fb; return; }
+        if(++loaded>=allImgs.length)showPreview();
+      };
+      if(!m._src){ m._src=1; m.src=url; }
+    })(x,y,img,fallback);
   }
 
 
@@ -1065,6 +1239,19 @@ function exportImage(){
 }
 function mkParticles(){var c=document.getElementById('particles');for(var i=0;i<30;i++){var p=document.createElement('div');p.className='p';p.style.left=Math.random()*100+'%';p.style.width=p.style.height=(1+Math.random()*2.5)+'px';p.style.animationDuration=(15+Math.random()*30)+'s';p.style.animationDelay=(Math.random()*20)+'s';p.style.opacity=.08+Math.random()*.25;c.appendChild(p)}}
 if(!loadState()){init()}
+memLoad(); // 记忆数据备份恢复（保险：主存储没有时从独立存储恢复）
+// 从存储恢复重开状态到界面
+(function(){
+  var ra=document.getElementById('taRestartSw'),rb=document.getElementById('tbRestartSw');
+  if(ra){ra.checked=S.restartSwA;document.getElementById('taRestCnt').value=S.restartCntA;document.getElementById('taRestCnt').disabled=!S.restartSwA}
+  if(rb){rb.checked=S.restartSwB;document.getElementById('tbRestCnt').value=S.restartCntB;document.getElementById('tbRestCnt').disabled=!S.restartSwB}
+})();
+// 日期同步到当天（刷新后自动对齐，session内可手动改）
+(function(){
+  var d=new Date(),y=d.getFullYear(),m=('0'+(d.getMonth()+1)).slice(-2),dd=('0'+d.getDate()).slice(-2);
+  S.sched=y+'-'+m+'-'+dd;
+  document.getElementById('schedDate').value=S.sched;
+})();
 render();mkParticles();
 // 倒计时实时更新（每秒）
 setInterval(function(){
